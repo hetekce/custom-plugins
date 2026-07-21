@@ -18,8 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Validate marketplace and plugins
-        run: ./scripts/validate-plugins.sh
+      - name: Validate and test
+        run: make check

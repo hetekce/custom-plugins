@@ -55,6 +55,8 @@ See `docs/plugin-authoring.md` for the full checklist and `docs/writing-style.md
 
 ## Validation and CI
 
+- `make check` is the gate: it runs `scripts/validate-plugins.sh` plus every plugin test suite
+  (`node --test` over `plugins/*/test/`), and is exactly what CI runs.
 - Run `scripts/validate-plugins.sh` before proposing a commit. It checks that every `plugin.json` and
   the `marketplace.json` are valid JSON with the required fields, names are kebab-case, and every
   plugin listed in the marketplace exists on disk.
