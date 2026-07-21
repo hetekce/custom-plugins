@@ -54,12 +54,15 @@ Derive the base name by slugging the model title (the `slug` helper in
 `${CLAUDE_PLUGIN_ROOT}/scripts/lib/tools.mjs` shows the rule). Then, for each
 format selected by `--format`:
 
-- **mermaid** — run the `mermaid-diagrams` skill. It writes `<name>.mmd`
-  (source), `<name>.drawio` (the Mermaid embedded in an editable draw.io
-  file), and `<name>.jpeg` (rendered raster).
-- **drawio** — run the `drawio-diagrams` skill. It writes a native, fully
-  editable `<name>.drawio` (mxGraph XML with orthogonal edges, role-based
-  styling, and embedded icons) plus a `<name>.jpeg` export.
+- **mermaid** — best for flows (auth, request lifecycles, sequences) and quick
+  architecture. Run the `mermaid-diagrams` skill: it writes `<name>.mmd`
+  (source), `<name>.drawio`, and `<name>.jpeg` (rendered raster).
+- **drawio** — best for general architecture, drawn the draw.io way. Run the
+  `drawio-diagrams` skill: it emits a raw `.drawio`, then lets **draw.io's own
+  layout engine** arrange it (`--layout horizontalFlow`) and writes the editable
+  `<name>.drawio` with that layout baked in. If the model has any `data`/`async`
+  flow edges, also write an animated `<name>.svg` (draw.io animates flows and the
+  SVG keeps the animation); otherwise a `<name>.jpeg` is fine.
 - **gliffy** — run the `gliffy-diagrams` skill. It writes `<name>.gliffy`,
   a best-effort basic-shapes JSON the user imports manually in Gliffy via
   "Import a Diagram".

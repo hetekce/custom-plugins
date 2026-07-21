@@ -34,36 +34,49 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/mermaid-to-drawio.mjs" model.json out.drawio
   the node renders as an image vertex with its label below; the PNG is embedded as a
   data URI so the file is self-contained. Run tech-stack-icons before this script when
   icons are wanted. Other icon values (Iconify ids) fall back to a plain vertex.
-- Layout is deterministic layered placement: ranks flow left to right for `LR`
-  (top-down for `TB`), group members stay adjacent, nothing overlaps.
+- The script gives every node a **fallback** position (group-major swimlane bands,
+  no overlaps) so the raw file opens sensibly. For general architecture, replace
+  this with draw.io's own layout in Path B — the fallback only matters when
+  drawio-desktop is unavailable.
 
 The script has no dependencies beyond Node; it always writes the `.drawio` file.
 
-## Path B — export an image
+## Path B — let draw.io lay it out, then export
 
-The output format follows the output extension (`svg`, `png`, `jpg`, `jpeg`, `pdf`):
+For general architecture, **do not ship the script's coordinates as the final
+layout** — that reads as auto-generated. Run draw.io's own layout engine so the
+diagram looks draw.io-native, then export. `export-drawio.sh` does both: it applies
+a `--layout` preset on open and writes the output (format from the extension:
+`svg`, `png`, `jpg`, `jpeg`, `pdf`, or `drawio`/`xml` for an editable file).
 
 ```sh
-"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" out.drawio out.svg    # animated flows preserved
-"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" out.drawio out.jpeg   # single static frame
+# editable .drawio with draw.io's own layout baked in (hand this to the user)
+"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" raw.drawio out.drawio --layout horizontalFlow
+
+# animated SVG of the same, laid out by draw.io
+"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" raw.drawio out.svg --layout horizontalFlow
 ```
 
-**If the diagram has any `data`/`async` (flow) edges, export `.svg`** — the animation
-is CSS the SVG export embeds, and raster formats (`jpeg`/`png`) freeze one frame.
-Export a raster only for a fully static diagram or a thumbnail.
-
-Requires the drawio-desktop CLI (`drawio`) on PATH. If it is missing, the script
-prints an install hint and exits non-zero — keep the `.drawio` anyway and tell the
-user it opens at https://app.diagrams.net, where they can export the image themselves.
+- **Presets** (draw.io's own): `horizontalFlow` (default, best for left-to-right
+  architecture), `verticalFlow`, `horizontalTree`, `verticalTree`, `radialTree`,
+  `organic`. Use `--layout none` only when you deliberately want the script's own
+  coordinates (e.g. no drawio-desktop available downstream).
+- **If the diagram has any `data`/`async` (flow) edges, export `.svg`** — the
+  animation is CSS the SVG embeds; raster formats (`jpeg`/`png`) freeze one frame.
+- Requires the drawio-desktop CLI (`drawio`) on PATH. If it is missing, the script
+  exits non-zero — hand over the raw `.drawio` and tell the user to open it at
+  https://app.diagrams.net and run **Arrange → Layout** there (same engine).
 
 ## Typical run
 
 1. Get the diagram-model JSON from the diagram-architect agent.
 2. If nodes carry `tech` slugs, resolve icons first with the tech-stack-icons skill
    so `node.icon` points at rasterized PNGs.
-3. Run `mermaid-to-drawio.mjs` to produce `<name>.drawio`.
-4. Export: `.svg` if the model has any `data`/`async` flow edges (keeps the
-   animation), otherwise `.jpeg`/`.png` is fine. Best effort — needs drawio-desktop.
+3. Run `mermaid-to-drawio.mjs` to produce `raw.drawio` (nodes, edges, containers;
+   its coordinates are only a fallback).
+4. Run `export-drawio.sh` with `--layout horizontalFlow` to produce the editable
+   `<name>.drawio` (draw.io's layout baked in) and, if there are flow edges, an
+   animated `<name>.svg`. Best effort — needs drawio-desktop.
 5. Hand the files over; mention the Confluence import path when relevant.
 
 ## When output needs tweaking
