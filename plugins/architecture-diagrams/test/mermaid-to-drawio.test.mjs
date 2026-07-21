@@ -145,3 +145,48 @@ test("flow edges (async/data) carry draw.io's flow animation", () => {
   assert.ok(asyncEdge, "edge e_1 not found");
   assert.ok(asyncEdge.includes("flowAnimation=1"), "async (flow) edge must animate");
 });
+
+test("group containers do not overlap (swimlane bands keep all nodes visible)", () => {
+  // Groups whose members span several ranks must still land in separate bands,
+  // or one container covers another and hides its nodes.
+  const d = tmpdir();
+  try {
+    const m = {
+      title: "Two groups",
+      direction: "LR",
+      groups: [
+        { id: "a", label: "A" },
+        { id: "b", label: "B" },
+      ],
+      nodes: [
+        { id: "a1", label: "A1", role: "service", group: "a" },
+        { id: "a2", label: "A2", role: "service", group: "a" },
+        { id: "b1", label: "B1", role: "service", group: "b" },
+        { id: "b2", label: "B2", role: "service", group: "b" },
+      ],
+      edges: [
+        { from: "a1", to: "a2" },
+        { from: "a2", to: "b1" },
+        { from: "b1", to: "b2" },
+        { from: "a1", to: "b2" },
+      ],
+    };
+    const input = path.join(d, "m.json");
+    const output = path.join(d, "m.drawio");
+    writeFileSync(input, JSON.stringify(m));
+    const r = runScript("scripts/mermaid-to-drawio.mjs", [input, output]);
+    assert.equal(r.code, 0, r.stderr);
+    const out = readFileSync(output, "utf8");
+    const geo = (id) => {
+      const cell = out.match(new RegExp(`id="g_${id}"[\\s\\S]*?<mxGeometry x="(\\d+)" y="\\d+" width="(\\d+)"`));
+      assert.ok(cell, `group ${id} container not found`);
+      return { x: Number(cell[1]), w: Number(cell[2]) };
+    };
+    const a = geo("a");
+    const b = geo("b");
+    const disjoint = a.x + a.w <= b.x || b.x + b.w <= a.x;
+    assert.ok(disjoint, `group boxes overlap: A[${a.x},${a.x + a.w}] B[${b.x},${b.x + b.w}]`);
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});

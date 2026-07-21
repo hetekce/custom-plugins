@@ -255,19 +255,6 @@ function computeRanks(nodes, edges) {
   return rank;
 }
 
-/** "cloud/vpc" style path used to keep group members adjacent when sorting. */
-function groupPathOf(groupId, groupById) {
-  const parts = [];
-  const seen = new Set();
-  let cur = groupId;
-  while (cur && groupById.has(cur) && !seen.has(cur)) {
-    seen.add(cur);
-    parts.unshift(cur);
-    cur = groupById.get(cur).parent;
-  }
-  return parts.join("/");
-}
-
 function layout(model, iconById) {
   const groupById = new Map((model.groups ?? []).map((g) => [g.id, g]));
   const rank = computeRanks(model.nodes, model.edges ?? []);
@@ -285,45 +272,57 @@ function layout(model, iconById) {
     });
   }
 
-  // Bucket nodes by rank, sorted so group members are contiguous.
-  const maxRank = Math.max(...model.nodes.map((n) => rank.get(n.id)));
-  const buckets = [];
-  for (let r = 0; r <= maxRank; r++) {
-    const inRank = model.nodes.filter((n) => rank.get(n.id) === r);
-    inRank.sort((a, b) => {
-      const pa = groupPathOf(a.group, groupById);
-      const pb = groupPathOf(b.group, groupById);
-      return pa === pb ? a.id.localeCompare(b.id) : pa.localeCompare(pb);
-    });
-    buckets.push(inRank);
-  }
-  // RL and BT reverse the visual order of ranks.
-  const visual = direction === "RL" || direction === "BT" ? [...buckets].reverse() : buckets;
+  // Group-major banding (swimlanes). Each top-level group is one band — a column
+  // for LR/RL, a row for TB/BT — and every ungrouped node is its own single-node
+  // band. A group's members all live inside its band, so its box is one
+  // contiguous region that never overlaps another group's box. This is what keeps
+  // multi-group diagrams from hiding nodes behind an overlapping container.
+  const rootGroupOf = (groupId) => {
+    let cur = groupId;
+    const seen = new Set();
+    while (cur && groupById.has(cur) && groupById.get(cur).parent && !seen.has(cur)) {
+      seen.add(cur);
+      cur = groupById.get(cur).parent;
+    }
+    return cur && groupById.has(cur) ? cur : null;
+  };
 
-  // Walk ranks along the main axis, stack nodes along the cross axis.
+  const units = new Map();
+  for (const n of model.nodes) {
+    const root = rootGroupOf(n.group);
+    const key = root ? `g:${root}` : `n:${n.id}`;
+    if (!units.has(key)) units.set(key, { key, isGroup: Boolean(root), nodes: [] });
+    units.get(key).nodes.push(n);
+  }
+  const unitList = [...units.values()];
+  for (const u of unitList) u.rankKey = Math.min(...u.nodes.map((n) => rank.get(n.id)));
+  // Upstream bands first; stable tiebreak keeps output deterministic.
+  unitList.sort((a, b) => a.rankKey - b.rankKey || a.key.localeCompare(b.key));
+  if (direction === "RL" || direction === "BT") unitList.reverse();
+
+  // Place each band along the main axis; stack its members along the cross axis
+  // in rank order so intra-group flow still reads in sequence.
   const pos = new Map();
   let mainCursor = MARGIN;
-  for (const bucket of visual) {
-    if (bucket.length === 0) continue;
+  for (const u of unitList) {
+    u.nodes.sort((a, b) => rank.get(a.id) - rank.get(b.id) || a.id.localeCompare(b.id));
+    const pad = u.isGroup ? GROUP_PAD : 0;
+    const labelPad = u.isGroup ? GROUP_LABEL_PAD : 0;
     const mainExtent = Math.max(
-      ...bucket.map((n) => (horizontal ? size.get(n.id).w : size.get(n.id).h + size.get(n.id).clearance)),
+      ...u.nodes.map((n) => (horizontal ? size.get(n.id).w : size.get(n.id).h + size.get(n.id).clearance)),
     );
-    let crossCursor = MARGIN + GROUP_LABEL_PAD;
-    let prevPath = null;
-    for (const n of bucket) {
-      const p = groupPathOf(n.group, groupById);
-      if (prevPath !== null && p !== prevPath && (p || prevPath)) crossCursor += GROUP_GAP;
-      prevPath = p;
+    let crossCursor = MARGIN + labelPad;
+    for (const n of u.nodes) {
       const s = size.get(n.id);
       if (horizontal) {
-        pos.set(n.id, { x: mainCursor + (mainExtent - s.w) / 2, y: crossCursor, ...s });
+        pos.set(n.id, { x: mainCursor + pad + (mainExtent - s.w) / 2, y: crossCursor, ...s });
         crossCursor += s.h + s.clearance + STACK_GAP;
       } else {
-        pos.set(n.id, { x: crossCursor, y: mainCursor + (mainExtent - s.h) / 2, ...s });
+        pos.set(n.id, { x: crossCursor, y: mainCursor + pad + (mainExtent - s.h) / 2, ...s });
         crossCursor += s.w + STACK_GAP;
       }
     }
-    mainCursor += mainExtent + RANK_GAP;
+    mainCursor += mainExtent + 2 * pad + RANK_GAP;
   }
   return { pos, groupById };
 }
