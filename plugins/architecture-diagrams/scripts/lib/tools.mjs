@@ -1,0 +1,79 @@
+// Shared helpers for architecture-diagrams scripts: tool detection, process
+// spawning, logging, and filename slugs. Node built-ins only.
+
+import { spawn } from "node:child_process";
+import process from "node:process";
+
+/**
+ * Resolve true if a binary is on PATH, false otherwise.
+ * Uses `where` on Windows and `which` everywhere else.
+ * @param {string} name
+ * @returns {Promise<boolean>}
+ */
+export function hasTool(name) {
+  const finder = process.platform === "win32" ? "where" : "which";
+  return new Promise((resolve) => {
+    const child = spawn(finder, [name], { stdio: "ignore" });
+    child.on("error", () => resolve(false));
+    child.on("close", (code) => resolve(code === 0));
+  });
+}
+
+/**
+ * Spawn a command, capture its output, never inherit stdio.
+ * Rejects only on spawn failure (e.g. binary missing); a non-zero exit
+ * resolves normally so callers can decide what to do with `code`.
+ * @param {string} cmd
+ * @param {string[]} [args]
+ * @param {import("node:child_process").SpawnOptions} [opts]
+ * @returns {Promise<{code: number, stdout: string, stderr: string}>}
+ */
+export function run(cmd, args = [], opts = {}) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(cmd, args, {
+      ...opts,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+    child.stdout.on("data", (chunk) => (stdout += chunk));
+    child.stderr.on("data", (chunk) => (stderr += chunk));
+    child.on("error", reject);
+    child.on("close", (code) => resolve({ code: code ?? 1, stdout, stderr }));
+  });
+}
+
+/**
+ * Print an error (and an optional actionable hint) to stderr, then exit 1.
+ * @param {string} msg
+ * @param {string} [hint]
+ * @returns {never}
+ */
+export function die(msg, hint) {
+  process.stderr.write(`error: ${msg}\n`);
+  if (hint) process.stderr.write(`hint: ${hint}\n`);
+  process.exit(1);
+}
+
+/**
+ * Write a progress line to stderr, keeping stdout clean for data.
+ * @param {string} msg
+ */
+export function log(msg) {
+  process.stderr.write(`${msg}\n`);
+}
+
+/**
+ * Lowercase kebab-case a string for safe filenames.
+ * "Checkout flow — container view" -> "checkout-flow-container-view"
+ * @param {string} s
+ * @returns {string}
+ */
+export function slug(s) {
+  return String(s)
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/\p{M}+/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}

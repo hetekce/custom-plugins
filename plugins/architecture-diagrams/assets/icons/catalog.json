@@ -1,0 +1,1999 @@
+[
+  {
+    "slug": "airflow",
+    "name": "Apache Airflow",
+    "category": "data-engineering",
+    "iconify": "logos:airflow-icon",
+    "devicon": "apacheairflow/apacheairflow-original",
+    "simple": "apacheairflow"
+  },
+  {
+    "slug": "spark",
+    "name": "Apache Spark",
+    "category": "data-engineering",
+    "iconify": "logos:apache-spark",
+    "devicon": "apachespark/apachespark-original",
+    "simple": "apachespark"
+  },
+  {
+    "slug": "kafka",
+    "name": "Apache Kafka",
+    "category": "data-engineering",
+    "iconify": "logos:kafka-icon",
+    "devicon": "apachekafka/apachekafka-original",
+    "simple": "apachekafka"
+  },
+  {
+    "slug": "flink",
+    "name": "Apache Flink",
+    "category": "data-engineering",
+    "iconify": "logos:flink",
+    "simple": "apacheflink"
+  },
+  {
+    "slug": "hadoop",
+    "name": "Apache Hadoop",
+    "category": "data-engineering",
+    "iconify": "logos:hadoop",
+    "devicon": "hadoop/hadoop-original",
+    "simple": "apachehadoop"
+  },
+  {
+    "slug": "hive",
+    "name": "Apache Hive",
+    "category": "data-engineering",
+    "iconify": "logos:hive",
+    "simple": "apachehive"
+  },
+  {
+    "slug": "nifi",
+    "name": "Apache NiFi",
+    "category": "data-engineering",
+    "iconify": "logos:nifi",
+    "simple": "apachenifi"
+  },
+  {
+    "slug": "pulsar",
+    "name": "Apache Pulsar",
+    "category": "data-engineering",
+    "iconify": "logos:pulsar",
+    "simple": "apachepulsar"
+  },
+  {
+    "slug": "beam",
+    "name": "Apache Beam",
+    "category": "data-engineering",
+    "iconify": "logos:apache-beam",
+    "simple": "apachebeam"
+  },
+  {
+    "slug": "dbt",
+    "name": "dbt",
+    "category": "data-engineering",
+    "iconify": "logos:dbt-icon",
+    "simple": "dbt"
+  },
+  {
+    "slug": "databricks",
+    "name": "Databricks",
+    "category": "data-engineering",
+    "iconify": "logos:databricks",
+    "simple": "databricks"
+  },
+  {
+    "slug": "snowflake",
+    "name": "Snowflake",
+    "category": "data-engineering",
+    "iconify": "logos:snowflake-icon",
+    "simple": "snowflake"
+  },
+  {
+    "slug": "bigquery",
+    "name": "Google BigQuery",
+    "category": "data-engineering",
+    "iconify": "logos:bigquery",
+    "simple": "googlebigquery"
+  },
+  {
+    "slug": "redshift",
+    "name": "Amazon Redshift",
+    "category": "data-engineering",
+    "iconify": "logos:aws-redshift",
+    "simple": "amazonredshift"
+  },
+  {
+    "slug": "clickhouse",
+    "name": "ClickHouse",
+    "category": "data-engineering",
+    "iconify": "logos:clickhouse",
+    "simple": "clickhouse"
+  },
+  {
+    "slug": "duckdb",
+    "name": "DuckDB",
+    "category": "data-engineering",
+    "iconify": "logos:duckdb",
+    "simple": "duckdb"
+  },
+  {
+    "slug": "trino",
+    "name": "Trino",
+    "category": "data-engineering",
+    "iconify": "logos:trino",
+    "simple": "trino"
+  },
+  {
+    "slug": "presto",
+    "name": "Presto",
+    "category": "data-engineering",
+    "iconify": "logos:presto",
+    "simple": "presto"
+  },
+  {
+    "slug": "dagster",
+    "name": "Dagster",
+    "category": "data-engineering",
+    "iconify": "logos:dagster-icon",
+    "simple": "dagster"
+  },
+  {
+    "slug": "prefect",
+    "name": "Prefect",
+    "category": "data-engineering",
+    "iconify": "logos:prefect",
+    "simple": "prefect"
+  },
+  {
+    "slug": "airbyte",
+    "name": "Airbyte",
+    "category": "data-engineering",
+    "iconify": "logos:airbyte",
+    "simple": "airbyte"
+  },
+  {
+    "slug": "fivetran",
+    "name": "Fivetran",
+    "category": "data-engineering",
+    "iconify": "logos:fivetran",
+    "simple": "fivetran"
+  },
+  {
+    "slug": "druid",
+    "name": "Apache Druid",
+    "category": "data-engineering",
+    "iconify": "logos:druid",
+    "simple": "apachedruid"
+  },
+  {
+    "slug": "iceberg",
+    "name": "Apache Iceberg",
+    "category": "data-engineering",
+    "iconify": "logos:apache-iceberg",
+    "simple": "apacheiceberg"
+  },
+  {
+    "slug": "delta-lake",
+    "name": "Delta Lake",
+    "category": "data-engineering",
+    "iconify": "logos:delta-lake",
+    "simple": "delta"
+  },
+  {
+    "slug": "parquet",
+    "name": "Apache Parquet",
+    "category": "data-engineering",
+    "iconify": "logos:apache-parquet",
+    "simple": "apacheparquet"
+  },
+  {
+    "slug": "arrow",
+    "name": "Apache Arrow",
+    "category": "data-engineering",
+    "iconify": "logos:apache-arrow",
+    "simple": "apachearrow"
+  },
+  {
+    "slug": "superset",
+    "name": "Apache Superset",
+    "category": "data-engineering",
+    "iconify": "logos:superset",
+    "simple": "apachesuperset"
+  },
+  {
+    "slug": "zookeeper",
+    "name": "Apache ZooKeeper",
+    "category": "data-engineering",
+    "iconify": "logos:zookeeper",
+    "simple": "apachezookeeper"
+  },
+  {
+    "slug": "debezium",
+    "name": "Debezium",
+    "category": "data-engineering",
+    "iconify": "logos:debezium",
+    "simple": "debezium"
+  },
+  {
+    "slug": "minio",
+    "name": "MinIO",
+    "category": "data-engineering",
+    "iconify": "logos:minio",
+    "simple": "minio"
+  },
+  {
+    "slug": "dremio",
+    "name": "Dremio",
+    "category": "data-engineering",
+    "iconify": "logos:dremio",
+    "simple": "dremio"
+  },
+  {
+    "slug": "starrocks",
+    "name": "StarRocks",
+    "category": "data-engineering",
+    "iconify": "logos:starrocks",
+    "simple": "starrocks"
+  },
+  {
+    "slug": "greatexpectations",
+    "name": "Great Expectations",
+    "category": "data-engineering",
+    "iconify": "logos:greatexpectations",
+    "simple": "greatexpectations"
+  },
+  {
+    "slug": "hudi",
+    "name": "Apache Hudi",
+    "category": "data-engineering",
+    "iconify": "logos:apache-hudi",
+    "simple": "apachehudi"
+  },
+  {
+    "slug": "talend",
+    "name": "Talend",
+    "category": "data-engineering",
+    "iconify": "logos:talend",
+    "simple": "talend"
+  },
+  {
+    "slug": "cloudera",
+    "name": "Cloudera",
+    "category": "data-engineering",
+    "iconify": "logos:cloudera",
+    "simple": "cloudera"
+  },
+  {
+    "slug": "singlestore",
+    "name": "SingleStore",
+    "category": "data-engineering",
+    "iconify": "logos:singlestore-icon",
+    "simple": "singlestore"
+  },
+  {
+    "slug": "azure-data-factory",
+    "name": "Azure Data Factory",
+    "category": "cloud-data-service",
+    "iconify": "logos:azure-data-factory",
+    "devicon": "azure/azure-original",
+    "note": "No permissive service-specific mark; falls back to the Microsoft Azure parent logo (Devicon, MIT)."
+  },
+  {
+    "slug": "azure-synapse",
+    "name": "Azure Synapse Analytics",
+    "category": "cloud-data-service",
+    "iconify": "logos:azure-synapse",
+    "devicon": "azure/azure-original",
+    "note": "No permissive service-specific mark; falls back to the Microsoft Azure parent logo (Devicon, MIT)."
+  },
+  {
+    "slug": "aws-glue",
+    "name": "AWS Glue",
+    "category": "cloud-data-service",
+    "iconify": "logos:aws-glue",
+    "devicon": "amazonwebservices/amazonwebservices-original-wordmark",
+    "note": "Prefers the CC0 aws-glue mark from gilbarbara/logos; otherwise falls back to the AWS parent logo (Devicon, MIT)."
+  },
+  {
+    "slug": "aws-emr",
+    "name": "Amazon EMR",
+    "category": "cloud-data-service",
+    "iconify": "logos:aws-emr",
+    "devicon": "amazonwebservices/amazonwebservices-original-wordmark",
+    "note": "Falls back to the AWS parent logo if no service-specific permissive mark exists."
+  },
+  {
+    "slug": "aws-kinesis",
+    "name": "Amazon Kinesis",
+    "category": "cloud-data-service",
+    "iconify": "logos:aws-kinesis",
+    "devicon": "amazonwebservices/amazonwebservices-original-wordmark",
+    "note": "Prefers the CC0 aws-kinesis mark from gilbarbara/logos; otherwise falls back to the AWS parent logo."
+  },
+  {
+    "slug": "aws-athena",
+    "name": "Amazon Athena",
+    "category": "cloud-data-service",
+    "iconify": "logos:aws-athena",
+    "devicon": "amazonwebservices/amazonwebservices-original-wordmark",
+    "note": "Falls back to the AWS parent logo if no service-specific permissive mark exists."
+  },
+  {
+    "slug": "gcp-dataflow",
+    "name": "Google Cloud Dataflow",
+    "category": "cloud-data-service",
+    "iconify": "logos:google-dataflow",
+    "devicon": "googlecloud/googlecloud-original",
+    "note": "No permissive service-specific mark; falls back to the Google Cloud parent logo (Devicon, MIT)."
+  },
+  {
+    "slug": "gcp-dataproc",
+    "name": "Google Cloud Dataproc",
+    "category": "cloud-data-service",
+    "iconify": "logos:google-dataproc",
+    "devicon": "googlecloud/googlecloud-original",
+    "note": "No permissive service-specific mark; falls back to the Google Cloud parent logo (Devicon, MIT)."
+  },
+  {
+    "slug": "gcp-pubsub",
+    "name": "Google Cloud Pub/Sub",
+    "category": "cloud-data-service",
+    "iconify": "logos:google-pubsub",
+    "devicon": "googlecloud/googlecloud-original",
+    "note": "No permissive service-specific mark; falls back to the Google Cloud parent logo (Devicon, MIT)."
+  },
+  {
+    "slug": "postgresql",
+    "name": "PostgreSQL",
+    "category": "database",
+    "iconify": "logos:postgresql",
+    "devicon": "postgresql/postgresql-original",
+    "simple": "postgresql"
+  },
+  {
+    "slug": "mysql",
+    "name": "MySQL",
+    "category": "database",
+    "iconify": "logos:mysql-icon",
+    "devicon": "mysql/mysql-original",
+    "simple": "mysql"
+  },
+  {
+    "slug": "mariadb",
+    "name": "MariaDB",
+    "category": "database",
+    "iconify": "logos:mariadb-icon",
+    "devicon": "mariadb/mariadb-original",
+    "simple": "mariadb"
+  },
+  {
+    "slug": "mongodb",
+    "name": "MongoDB",
+    "category": "database",
+    "iconify": "logos:mongodb-icon",
+    "devicon": "mongodb/mongodb-original",
+    "simple": "mongodb"
+  },
+  {
+    "slug": "redis",
+    "name": "Redis",
+    "category": "database",
+    "iconify": "logos:redis",
+    "devicon": "redis/redis-original",
+    "simple": "redis"
+  },
+  {
+    "slug": "sqlite",
+    "name": "SQLite",
+    "category": "database",
+    "iconify": "logos:sqlite",
+    "devicon": "sqlite/sqlite-original",
+    "simple": "sqlite"
+  },
+  {
+    "slug": "cassandra",
+    "name": "Apache Cassandra",
+    "category": "database",
+    "iconify": "logos:cassandra",
+    "devicon": "cassandra/cassandra-original",
+    "simple": "apachecassandra"
+  },
+  {
+    "slug": "couchbase",
+    "name": "Couchbase",
+    "category": "database",
+    "iconify": "logos:couchbase",
+    "devicon": "couchbase/couchbase-original",
+    "simple": "couchbase"
+  },
+  {
+    "slug": "couchdb",
+    "name": "Apache CouchDB",
+    "category": "database",
+    "iconify": "logos:couchdb",
+    "devicon": "couchdb/couchdb-original",
+    "simple": "apachecouchdb"
+  },
+  {
+    "slug": "neo4j",
+    "name": "Neo4j",
+    "category": "database",
+    "iconify": "logos:neo4j",
+    "devicon": "neo4j/neo4j-original",
+    "simple": "neo4j"
+  },
+  {
+    "slug": "influxdb",
+    "name": "InfluxDB",
+    "category": "database",
+    "iconify": "logos:influxdb",
+    "devicon": "influxdb/influxdb-original",
+    "simple": "influxdb"
+  },
+  {
+    "slug": "elasticsearch",
+    "name": "Elasticsearch",
+    "category": "database",
+    "iconify": "logos:elasticsearch",
+    "devicon": "elasticsearch/elasticsearch-original",
+    "simple": "elasticsearch"
+  },
+  {
+    "slug": "opensearch",
+    "name": "OpenSearch",
+    "category": "database",
+    "iconify": "logos:opensearch",
+    "devicon": "opensearch/opensearch-original",
+    "simple": "opensearch"
+  },
+  {
+    "slug": "cockroachdb",
+    "name": "CockroachDB",
+    "category": "database",
+    "iconify": "logos:cockroachdb",
+    "simple": "cockroachlabs"
+  },
+  {
+    "slug": "dynamodb",
+    "name": "Amazon DynamoDB",
+    "category": "database",
+    "iconify": "logos:aws-dynamodb",
+    "simple": "amazondynamodb"
+  },
+  {
+    "slug": "firebase",
+    "name": "Firebase",
+    "category": "database",
+    "iconify": "logos:firebase",
+    "devicon": "firebase/firebase-original",
+    "simple": "firebase"
+  },
+  {
+    "slug": "supabase",
+    "name": "Supabase",
+    "category": "database",
+    "iconify": "logos:supabase-icon",
+    "devicon": "supabase/supabase-original",
+    "simple": "supabase"
+  },
+  {
+    "slug": "timescaledb",
+    "name": "TimescaleDB",
+    "category": "database",
+    "iconify": "logos:timescale",
+    "simple": "timescale"
+  },
+  {
+    "slug": "prisma",
+    "name": "Prisma",
+    "category": "database",
+    "iconify": "logos:prisma",
+    "devicon": "prisma/prisma-original",
+    "simple": "prisma"
+  },
+  {
+    "slug": "oracle",
+    "name": "Oracle Database",
+    "category": "database",
+    "iconify": "logos:oracle",
+    "devicon": "oracle/oracle-original",
+    "simple": "oracle"
+  },
+  {
+    "slug": "microsoftsqlserver",
+    "name": "Microsoft SQL Server",
+    "category": "database",
+    "iconify": "logos:microsoft-sql-server",
+    "devicon": "microsoftsqlserver/microsoftsqlserver-plain",
+    "simple": "microsoftsqlserver"
+  },
+  {
+    "slug": "memcached",
+    "name": "Memcached",
+    "category": "database",
+    "iconify": "logos:memcached",
+    "devicon": "memcached/memcached-original",
+    "simple": "memcached"
+  },
+  {
+    "slug": "etcd",
+    "name": "etcd",
+    "category": "database",
+    "iconify": "logos:etcd",
+    "simple": "etcd"
+  },
+  {
+    "slug": "hbase",
+    "name": "Apache HBase",
+    "category": "database",
+    "iconify": "logos:hbase",
+    "simple": "apachehbase"
+  },
+  {
+    "slug": "solr",
+    "name": "Apache Solr",
+    "category": "database",
+    "iconify": "logos:solr",
+    "simple": "apachesolr"
+  },
+  {
+    "slug": "milvus",
+    "name": "Milvus",
+    "category": "database",
+    "iconify": "logos:milvus",
+    "simple": "milvus"
+  },
+  {
+    "slug": "qdrant",
+    "name": "Qdrant",
+    "category": "database",
+    "iconify": "logos:qdrant",
+    "simple": "qdrant"
+  },
+  {
+    "slug": "weaviate",
+    "name": "Weaviate",
+    "category": "database",
+    "iconify": "logos:weaviate",
+    "simple": "weaviate"
+  },
+  {
+    "slug": "pinecone",
+    "name": "Pinecone",
+    "category": "database",
+    "iconify": "logos:pinecone",
+    "simple": "pinecone"
+  },
+  {
+    "slug": "scylladb",
+    "name": "ScyllaDB",
+    "category": "database",
+    "iconify": "logos:scylladb",
+    "simple": "scylladb"
+  },
+  {
+    "slug": "rethinkdb",
+    "name": "RethinkDB",
+    "category": "database",
+    "iconify": "logos:rethinkdb",
+    "simple": "rethinkdb"
+  },
+  {
+    "slug": "surrealdb",
+    "name": "SurrealDB",
+    "category": "database",
+    "iconify": "logos:surrealdb-icon",
+    "simple": "surrealdb"
+  },
+  {
+    "slug": "planetscale",
+    "name": "PlanetScale",
+    "category": "database",
+    "iconify": "logos:planetscale",
+    "simple": "planetscale"
+  },
+  {
+    "slug": "jupyter",
+    "name": "Jupyter",
+    "category": "data-science",
+    "iconify": "logos:jupyter",
+    "devicon": "jupyter/jupyter-original",
+    "simple": "jupyter"
+  },
+  {
+    "slug": "pandas",
+    "name": "pandas",
+    "category": "data-science",
+    "iconify": "logos:pandas-icon",
+    "devicon": "pandas/pandas-original",
+    "simple": "pandas"
+  },
+  {
+    "slug": "numpy",
+    "name": "NumPy",
+    "category": "data-science",
+    "iconify": "logos:numpy",
+    "devicon": "numpy/numpy-original",
+    "simple": "numpy"
+  },
+  {
+    "slug": "scipy",
+    "name": "SciPy",
+    "category": "data-science",
+    "iconify": "logos:scipy",
+    "devicon": "scipy/scipy-original",
+    "simple": "scipy"
+  },
+  {
+    "slug": "scikit-learn",
+    "name": "scikit-learn",
+    "category": "data-science",
+    "iconify": "logos:scikit-learn",
+    "devicon": "scikitlearn/scikitlearn-original",
+    "simple": "scikitlearn"
+  },
+  {
+    "slug": "pytorch",
+    "name": "PyTorch",
+    "category": "data-science",
+    "iconify": "logos:pytorch-icon",
+    "devicon": "pytorch/pytorch-original",
+    "simple": "pytorch"
+  },
+  {
+    "slug": "tensorflow",
+    "name": "TensorFlow",
+    "category": "data-science",
+    "iconify": "logos:tensorflow",
+    "devicon": "tensorflow/tensorflow-original",
+    "simple": "tensorflow"
+  },
+  {
+    "slug": "keras",
+    "name": "Keras",
+    "category": "data-science",
+    "iconify": "logos:keras",
+    "devicon": "keras/keras-original",
+    "simple": "keras"
+  },
+  {
+    "slug": "huggingface",
+    "name": "Hugging Face",
+    "category": "data-science",
+    "iconify": "logos:hugging-face-icon",
+    "simple": "huggingface"
+  },
+  {
+    "slug": "openai",
+    "name": "OpenAI",
+    "category": "data-science",
+    "iconify": "logos:openai-icon",
+    "simple": "openai"
+  },
+  {
+    "slug": "anthropic",
+    "name": "Anthropic",
+    "category": "data-science",
+    "iconify": "logos:anthropic",
+    "simple": "anthropic"
+  },
+  {
+    "slug": "langchain",
+    "name": "LangChain",
+    "category": "data-science",
+    "iconify": "logos:langchain",
+    "simple": "langchain"
+  },
+  {
+    "slug": "mlflow",
+    "name": "MLflow",
+    "category": "data-science",
+    "iconify": "logos:mlflow",
+    "simple": "mlflow"
+  },
+  {
+    "slug": "kubeflow",
+    "name": "Kubeflow",
+    "category": "data-science",
+    "iconify": "logos:kubeflow",
+    "devicon": "kubeflow/kubeflow-original",
+    "simple": "kubeflow"
+  },
+  {
+    "slug": "ray",
+    "name": "Ray",
+    "category": "data-science",
+    "iconify": "logos:ray",
+    "simple": "ray"
+  },
+  {
+    "slug": "dask",
+    "name": "Dask",
+    "category": "data-science",
+    "iconify": "logos:dask",
+    "simple": "dask"
+  },
+  {
+    "slug": "anaconda",
+    "name": "Anaconda",
+    "category": "data-science",
+    "iconify": "logos:anaconda-icon",
+    "devicon": "anaconda/anaconda-original",
+    "simple": "anaconda"
+  },
+  {
+    "slug": "r",
+    "name": "R",
+    "category": "data-science",
+    "iconify": "logos:r-lang",
+    "devicon": "r/r-original",
+    "simple": "r"
+  },
+  {
+    "slug": "rstudio",
+    "name": "RStudio (Posit)",
+    "category": "data-science",
+    "iconify": "logos:rstudio-icon",
+    "devicon": "rstudio/rstudio-original",
+    "simple": "rstudioide"
+  },
+  {
+    "slug": "matplotlib",
+    "name": "Matplotlib",
+    "category": "data-science",
+    "iconify": "logos:matplotlib-icon",
+    "devicon": "matplotlib/matplotlib-original",
+    "simple": "matplotlib"
+  },
+  {
+    "slug": "plotly",
+    "name": "Plotly",
+    "category": "data-science",
+    "iconify": "logos:plotly",
+    "devicon": "plotly/plotly-original",
+    "simple": "plotly"
+  },
+  {
+    "slug": "opencv",
+    "name": "OpenCV",
+    "category": "data-science",
+    "iconify": "logos:opencv",
+    "devicon": "opencv/opencv-original",
+    "simple": "opencv"
+  },
+  {
+    "slug": "onnx",
+    "name": "ONNX",
+    "category": "data-science",
+    "iconify": "logos:onnx",
+    "simple": "onnx"
+  },
+  {
+    "slug": "nvidia",
+    "name": "NVIDIA",
+    "category": "data-science",
+    "iconify": "logos:nvidia",
+    "simple": "nvidia"
+  },
+  {
+    "slug": "spacy",
+    "name": "spaCy",
+    "category": "data-science",
+    "iconify": "logos:spacy",
+    "simple": "spacy"
+  },
+  {
+    "slug": "streamlit",
+    "name": "Streamlit",
+    "category": "data-science",
+    "iconify": "logos:streamlit",
+    "simple": "streamlit"
+  },
+  {
+    "slug": "gradio",
+    "name": "Gradio",
+    "category": "data-science",
+    "iconify": "logos:gradio",
+    "simple": "gradio"
+  },
+  {
+    "slug": "polars",
+    "name": "Polars",
+    "category": "data-science",
+    "iconify": "logos:polars",
+    "simple": "polars"
+  },
+  {
+    "slug": "weightsandbiases",
+    "name": "Weights & Biases",
+    "category": "data-science",
+    "iconify": "logos:weights-and-biases",
+    "simple": "weightsandbiases"
+  },
+  {
+    "slug": "dvc",
+    "name": "DVC",
+    "category": "data-science",
+    "iconify": "logos:dvc",
+    "simple": "dvc"
+  },
+  {
+    "slug": "ollama",
+    "name": "Ollama",
+    "category": "data-science",
+    "iconify": "logos:ollama",
+    "simple": "ollama"
+  },
+  {
+    "slug": "docker",
+    "name": "Docker",
+    "category": "infra",
+    "iconify": "logos:docker-icon",
+    "devicon": "docker/docker-original",
+    "simple": "docker"
+  },
+  {
+    "slug": "kubernetes",
+    "name": "Kubernetes",
+    "category": "infra",
+    "iconify": "logos:kubernetes",
+    "devicon": "kubernetes/kubernetes-plain",
+    "simple": "kubernetes"
+  },
+  {
+    "slug": "helm",
+    "name": "Helm",
+    "category": "infra",
+    "iconify": "logos:helm",
+    "devicon": "helm/helm-original",
+    "simple": "helm"
+  },
+  {
+    "slug": "terraform",
+    "name": "Terraform",
+    "category": "infra",
+    "iconify": "logos:terraform-icon",
+    "devicon": "terraform/terraform-original",
+    "simple": "terraform"
+  },
+  {
+    "slug": "ansible",
+    "name": "Ansible",
+    "category": "infra",
+    "iconify": "logos:ansible",
+    "devicon": "ansible/ansible-original",
+    "simple": "ansible"
+  },
+  {
+    "slug": "vault",
+    "name": "HashiCorp Vault",
+    "category": "infra",
+    "iconify": "logos:vault-icon",
+    "devicon": "vault/vault-original",
+    "simple": "vault"
+  },
+  {
+    "slug": "consul",
+    "name": "HashiCorp Consul",
+    "category": "infra",
+    "iconify": "logos:consul",
+    "devicon": "consul/consul-original",
+    "simple": "consul"
+  },
+  {
+    "slug": "argocd",
+    "name": "Argo CD",
+    "category": "infra",
+    "iconify": "logos:argo-icon",
+    "devicon": "argocd/argocd-original",
+    "simple": "argo"
+  },
+  {
+    "slug": "istio",
+    "name": "Istio",
+    "category": "infra",
+    "iconify": "logos:istio",
+    "simple": "istio"
+  },
+  {
+    "slug": "envoy",
+    "name": "Envoy",
+    "category": "infra",
+    "iconify": "logos:envoy-icon",
+    "simple": "envoyproxy"
+  },
+  {
+    "slug": "nginx",
+    "name": "NGINX",
+    "category": "infra",
+    "iconify": "logos:nginx",
+    "devicon": "nginx/nginx-original",
+    "simple": "nginx"
+  },
+  {
+    "slug": "haproxy",
+    "name": "HAProxy",
+    "category": "infra",
+    "iconify": "devicon:haproxy",
+    "devicon": "haproxy/haproxy-original",
+    "simple": "haproxy",
+    "note": "Served from the Devicon collection (MIT) via the Iconify API; the icon is newer than the latest Devicon release tag on jsDelivr."
+  },
+  {
+    "slug": "traefik",
+    "name": "Traefik",
+    "category": "infra",
+    "iconify": "logos:traefik",
+    "simple": "traefikproxy"
+  },
+  {
+    "slug": "podman",
+    "name": "Podman",
+    "category": "infra",
+    "iconify": "logos:podman",
+    "devicon": "podman/podman-original",
+    "simple": "podman"
+  },
+  {
+    "slug": "containerd",
+    "name": "containerd",
+    "category": "infra",
+    "iconify": "logos:containerd",
+    "simple": "containerd"
+  },
+  {
+    "slug": "linux",
+    "name": "Linux",
+    "category": "infra",
+    "iconify": "logos:linux-tux",
+    "devicon": "linux/linux-original",
+    "simple": "linux"
+  },
+  {
+    "slug": "ubuntu",
+    "name": "Ubuntu",
+    "category": "infra",
+    "iconify": "logos:ubuntu",
+    "devicon": "ubuntu/ubuntu-original",
+    "simple": "ubuntu"
+  },
+  {
+    "slug": "debian",
+    "name": "Debian",
+    "category": "infra",
+    "iconify": "logos:debian",
+    "devicon": "debian/debian-original",
+    "simple": "debian"
+  },
+  {
+    "slug": "redhat",
+    "name": "Red Hat",
+    "category": "infra",
+    "iconify": "logos:redhat-icon",
+    "devicon": "redhat/redhat-original",
+    "simple": "redhat"
+  },
+  {
+    "slug": "centos",
+    "name": "CentOS",
+    "category": "infra",
+    "iconify": "logos:centos-icon",
+    "devicon": "centos/centos-original",
+    "simple": "centos"
+  },
+  {
+    "slug": "alpinelinux",
+    "name": "Alpine Linux",
+    "category": "infra",
+    "iconify": "logos:alpinelinux",
+    "simple": "alpinelinux"
+  },
+  {
+    "slug": "vagrant",
+    "name": "Vagrant",
+    "category": "infra",
+    "iconify": "logos:vagrant-icon",
+    "devicon": "vagrant/vagrant-original",
+    "simple": "vagrant"
+  },
+  {
+    "slug": "packer",
+    "name": "Packer",
+    "category": "infra",
+    "iconify": "logos:packer",
+    "simple": "packer"
+  },
+  {
+    "slug": "pulumi",
+    "name": "Pulumi",
+    "category": "infra",
+    "iconify": "logos:pulumi-icon",
+    "simple": "pulumi"
+  },
+  {
+    "slug": "openstack",
+    "name": "OpenStack",
+    "category": "infra",
+    "iconify": "logos:openstack-icon",
+    "simple": "openstack"
+  },
+  {
+    "slug": "vmware",
+    "name": "VMware",
+    "category": "infra",
+    "iconify": "logos:vmware",
+    "simple": "vmware"
+  },
+  {
+    "slug": "proxmox",
+    "name": "Proxmox",
+    "category": "infra",
+    "iconify": "logos:proxmox",
+    "simple": "proxmox"
+  },
+  {
+    "slug": "openshift",
+    "name": "Red Hat OpenShift",
+    "category": "infra",
+    "iconify": "logos:openshift",
+    "simple": "redhatopenshift"
+  },
+  {
+    "slug": "rancher",
+    "name": "Rancher",
+    "category": "infra",
+    "iconify": "logos:rancher-icon",
+    "simple": "rancher"
+  },
+  {
+    "slug": "kong",
+    "name": "Kong",
+    "category": "infra",
+    "iconify": "logos:kong-icon",
+    "simple": "kong"
+  },
+  {
+    "slug": "keycloak",
+    "name": "Keycloak",
+    "category": "infra",
+    "iconify": "logos:keycloak",
+    "simple": "keycloak"
+  },
+  {
+    "slug": "temporal",
+    "name": "Temporal",
+    "category": "infra",
+    "iconify": "logos:temporal-icon",
+    "simple": "temporal"
+  },
+  {
+    "slug": "prometheus",
+    "name": "Prometheus",
+    "category": "observability",
+    "iconify": "logos:prometheus",
+    "devicon": "prometheus/prometheus-original",
+    "simple": "prometheus"
+  },
+  {
+    "slug": "grafana",
+    "name": "Grafana",
+    "category": "observability",
+    "iconify": "logos:grafana",
+    "devicon": "grafana/grafana-original",
+    "simple": "grafana"
+  },
+  {
+    "slug": "datadog",
+    "name": "Datadog",
+    "category": "observability",
+    "iconify": "logos:datadog",
+    "simple": "datadog"
+  },
+  {
+    "slug": "opentelemetry",
+    "name": "OpenTelemetry",
+    "category": "observability",
+    "iconify": "logos:opentelemetry-icon",
+    "simple": "opentelemetry"
+  },
+  {
+    "slug": "jaeger",
+    "name": "Jaeger",
+    "category": "observability",
+    "iconify": "logos:jaeger",
+    "simple": "jaeger"
+  },
+  {
+    "slug": "kibana",
+    "name": "Kibana",
+    "category": "observability",
+    "iconify": "logos:kibana",
+    "devicon": "kibana/kibana-original",
+    "simple": "kibana"
+  },
+  {
+    "slug": "logstash",
+    "name": "Logstash",
+    "category": "observability",
+    "iconify": "logos:logstash",
+    "devicon": "logstash/logstash-original",
+    "simple": "logstash"
+  },
+  {
+    "slug": "elastic",
+    "name": "Elastic",
+    "category": "observability",
+    "iconify": "logos:elastic",
+    "simple": "elastic"
+  },
+  {
+    "slug": "sentry",
+    "name": "Sentry",
+    "category": "observability",
+    "iconify": "logos:sentry-icon",
+    "simple": "sentry"
+  },
+  {
+    "slug": "fluentd",
+    "name": "Fluentd",
+    "category": "observability",
+    "iconify": "logos:fluentd",
+    "simple": "fluentd"
+  },
+  {
+    "slug": "fluentbit",
+    "name": "Fluent Bit",
+    "category": "observability",
+    "iconify": "logos:fluent-bit",
+    "simple": "fluentbit"
+  },
+  {
+    "slug": "zabbix",
+    "name": "Zabbix",
+    "category": "observability",
+    "iconify": "logos:zabbix",
+    "simple": "zabbix"
+  },
+  {
+    "slug": "nagios",
+    "name": "Nagios",
+    "category": "observability",
+    "iconify": "logos:nagios",
+    "simple": "nagios"
+  },
+  {
+    "slug": "splunk",
+    "name": "Splunk",
+    "category": "observability",
+    "iconify": "logos:splunk",
+    "simple": "splunk"
+  },
+  {
+    "slug": "newrelic",
+    "name": "New Relic",
+    "category": "observability",
+    "iconify": "logos:new-relic-icon",
+    "simple": "newrelic"
+  },
+  {
+    "slug": "git",
+    "name": "Git",
+    "category": "cicd-vcs",
+    "iconify": "logos:git-icon",
+    "devicon": "git/git-original",
+    "simple": "git"
+  },
+  {
+    "slug": "github",
+    "name": "GitHub",
+    "category": "cicd-vcs",
+    "iconify": "logos:github-icon",
+    "devicon": "github/github-original",
+    "simple": "github"
+  },
+  {
+    "slug": "githubactions",
+    "name": "GitHub Actions",
+    "category": "cicd-vcs",
+    "iconify": "logos:github-actions",
+    "devicon": "githubactions/githubactions-original",
+    "simple": "githubactions"
+  },
+  {
+    "slug": "gitlab",
+    "name": "GitLab",
+    "category": "cicd-vcs",
+    "iconify": "logos:gitlab",
+    "devicon": "gitlab/gitlab-original",
+    "simple": "gitlab"
+  },
+  {
+    "slug": "jenkins",
+    "name": "Jenkins",
+    "category": "cicd-vcs",
+    "iconify": "logos:jenkins",
+    "devicon": "jenkins/jenkins-original",
+    "simple": "jenkins"
+  },
+  {
+    "slug": "circleci",
+    "name": "CircleCI",
+    "category": "cicd-vcs",
+    "iconify": "logos:circleci",
+    "simple": "circleci"
+  },
+  {
+    "slug": "argo",
+    "name": "Argo",
+    "category": "cicd-vcs",
+    "iconify": "logos:argo",
+    "simple": "argo"
+  },
+  {
+    "slug": "sonarqube",
+    "name": "SonarQube",
+    "category": "cicd-vcs",
+    "iconify": "logos:sonarqube",
+    "simple": "sonarqube"
+  },
+  {
+    "slug": "travisci",
+    "name": "Travis CI",
+    "category": "cicd-vcs",
+    "iconify": "logos:travis-ci",
+    "simple": "travisci"
+  },
+  {
+    "slug": "bitbucket",
+    "name": "Bitbucket",
+    "category": "cicd-vcs",
+    "iconify": "logos:bitbucket",
+    "devicon": "bitbucket/bitbucket-original",
+    "simple": "bitbucket"
+  },
+  {
+    "slug": "gitea",
+    "name": "Gitea",
+    "category": "cicd-vcs",
+    "iconify": "logos:gitea",
+    "simple": "gitea"
+  },
+  {
+    "slug": "harbor",
+    "name": "Harbor",
+    "category": "cicd-vcs",
+    "iconify": "logos:harbor",
+    "simple": "harbor"
+  },
+  {
+    "slug": "azuredevops",
+    "name": "Azure DevOps",
+    "category": "cicd-vcs",
+    "iconify": "logos:azure-devops",
+    "devicon": "azuredevops/azuredevops-original"
+  },
+  {
+    "slug": "amazonaws",
+    "name": "Amazon Web Services",
+    "category": "cloud",
+    "iconify": "logos:aws",
+    "devicon": "amazonwebservices/amazonwebservices-original-wordmark"
+  },
+  {
+    "slug": "azure",
+    "name": "Microsoft Azure",
+    "category": "cloud",
+    "iconify": "logos:microsoft-azure",
+    "devicon": "azure/azure-original"
+  },
+  {
+    "slug": "googlecloud",
+    "name": "Google Cloud",
+    "category": "cloud",
+    "iconify": "logos:google-cloud",
+    "devicon": "googlecloud/googlecloud-original",
+    "simple": "googlecloud"
+  },
+  {
+    "slug": "digitalocean",
+    "name": "DigitalOcean",
+    "category": "cloud",
+    "iconify": "logos:digital-ocean",
+    "devicon": "digitalocean/digitalocean-original",
+    "simple": "digitalocean"
+  },
+  {
+    "slug": "cloudflare",
+    "name": "Cloudflare",
+    "category": "cloud",
+    "iconify": "logos:cloudflare",
+    "devicon": "cloudflare/cloudflare-original",
+    "simple": "cloudflare"
+  },
+  {
+    "slug": "vercel",
+    "name": "Vercel",
+    "category": "cloud",
+    "iconify": "logos:vercel-icon",
+    "devicon": "vercel/vercel-original",
+    "simple": "vercel"
+  },
+  {
+    "slug": "heroku",
+    "name": "Heroku",
+    "category": "cloud",
+    "iconify": "logos:heroku-icon",
+    "devicon": "heroku/heroku-original",
+    "simple": "heroku"
+  },
+  {
+    "slug": "netlify",
+    "name": "Netlify",
+    "category": "cloud",
+    "iconify": "logos:netlify-icon",
+    "devicon": "netlify/netlify-original",
+    "simple": "netlify"
+  },
+  {
+    "slug": "hetzner",
+    "name": "Hetzner",
+    "category": "cloud",
+    "iconify": "logos:hetzner",
+    "simple": "hetzner"
+  },
+  {
+    "slug": "python",
+    "name": "Python",
+    "category": "language",
+    "iconify": "logos:python",
+    "devicon": "python/python-original",
+    "simple": "python"
+  },
+  {
+    "slug": "javascript",
+    "name": "JavaScript",
+    "category": "language",
+    "iconify": "logos:javascript",
+    "devicon": "javascript/javascript-original",
+    "simple": "javascript"
+  },
+  {
+    "slug": "typescript",
+    "name": "TypeScript",
+    "category": "language",
+    "iconify": "logos:typescript-icon",
+    "devicon": "typescript/typescript-original",
+    "simple": "typescript"
+  },
+  {
+    "slug": "go",
+    "name": "Go",
+    "category": "language",
+    "iconify": "logos:go",
+    "devicon": "go/go-original",
+    "simple": "go"
+  },
+  {
+    "slug": "rust",
+    "name": "Rust",
+    "category": "language",
+    "iconify": "logos:rust",
+    "devicon": "rust/rust-original",
+    "simple": "rust"
+  },
+  {
+    "slug": "java",
+    "name": "Java",
+    "category": "language",
+    "iconify": "logos:java",
+    "devicon": "java/java-original",
+    "simple": "openjdk"
+  },
+  {
+    "slug": "kotlin",
+    "name": "Kotlin",
+    "category": "language",
+    "iconify": "logos:kotlin-icon",
+    "devicon": "kotlin/kotlin-original",
+    "simple": "kotlin"
+  },
+  {
+    "slug": "scala",
+    "name": "Scala",
+    "category": "language",
+    "iconify": "logos:scala",
+    "devicon": "scala/scala-original",
+    "simple": "scala"
+  },
+  {
+    "slug": "ruby",
+    "name": "Ruby",
+    "category": "language",
+    "iconify": "logos:ruby",
+    "devicon": "ruby/ruby-original",
+    "simple": "ruby"
+  },
+  {
+    "slug": "php",
+    "name": "PHP",
+    "category": "language",
+    "iconify": "logos:php",
+    "devicon": "php/php-original",
+    "simple": "php"
+  },
+  {
+    "slug": "csharp",
+    "name": "C#",
+    "category": "language",
+    "iconify": "logos:c-sharp",
+    "devicon": "csharp/csharp-original"
+  },
+  {
+    "slug": "cplusplus",
+    "name": "C++",
+    "category": "language",
+    "iconify": "logos:c-plusplus",
+    "devicon": "cplusplus/cplusplus-original",
+    "simple": "cplusplus"
+  },
+  {
+    "slug": "c",
+    "name": "C",
+    "category": "language",
+    "iconify": "logos:c",
+    "devicon": "c/c-original",
+    "simple": "c"
+  },
+  {
+    "slug": "swift",
+    "name": "Swift",
+    "category": "language",
+    "iconify": "logos:swift",
+    "devicon": "swift/swift-original",
+    "simple": "swift"
+  },
+  {
+    "slug": "elixir",
+    "name": "Elixir",
+    "category": "language",
+    "iconify": "logos:elixir",
+    "devicon": "elixir/elixir-original",
+    "simple": "elixir"
+  },
+  {
+    "slug": "julia",
+    "name": "Julia",
+    "category": "language",
+    "iconify": "logos:julia",
+    "devicon": "julia/julia-original",
+    "simple": "julia"
+  },
+  {
+    "slug": "bash",
+    "name": "Bash",
+    "category": "language",
+    "iconify": "logos:bash-icon",
+    "devicon": "bash/bash-original",
+    "simple": "gnubash"
+  },
+  {
+    "slug": "dart",
+    "name": "Dart",
+    "category": "language",
+    "iconify": "logos:dart",
+    "devicon": "dart/dart-original",
+    "simple": "dart"
+  },
+  {
+    "slug": "lua",
+    "name": "Lua",
+    "category": "language",
+    "iconify": "logos:lua",
+    "devicon": "lua/lua-original",
+    "simple": "lua"
+  },
+  {
+    "slug": "perl",
+    "name": "Perl",
+    "category": "language",
+    "iconify": "logos:perl",
+    "devicon": "perl/perl-original",
+    "simple": "perl"
+  },
+  {
+    "slug": "haskell",
+    "name": "Haskell",
+    "category": "language",
+    "iconify": "logos:haskell-icon",
+    "devicon": "haskell/haskell-original",
+    "simple": "haskell"
+  },
+  {
+    "slug": "react",
+    "name": "React",
+    "category": "web",
+    "iconify": "logos:react",
+    "devicon": "react/react-original",
+    "simple": "react"
+  },
+  {
+    "slug": "vue",
+    "name": "Vue.js",
+    "category": "web",
+    "iconify": "logos:vue",
+    "devicon": "vuejs/vuejs-original",
+    "simple": "vuedotjs"
+  },
+  {
+    "slug": "angular",
+    "name": "Angular",
+    "category": "web",
+    "iconify": "logos:angular-icon",
+    "devicon": "angular/angular-original",
+    "simple": "angular"
+  },
+  {
+    "slug": "svelte",
+    "name": "Svelte",
+    "category": "web",
+    "iconify": "logos:svelte-icon",
+    "devicon": "svelte/svelte-original",
+    "simple": "svelte"
+  },
+  {
+    "slug": "nextjs",
+    "name": "Next.js",
+    "category": "web",
+    "iconify": "logos:nextjs-icon",
+    "devicon": "nextjs/nextjs-original",
+    "simple": "nextdotjs"
+  },
+  {
+    "slug": "nuxt",
+    "name": "Nuxt",
+    "category": "web",
+    "iconify": "logos:nuxt-icon",
+    "devicon": "nuxtjs/nuxtjs-original",
+    "simple": "nuxtdotjs"
+  },
+  {
+    "slug": "remix",
+    "name": "Remix",
+    "category": "web",
+    "iconify": "logos:remix-icon",
+    "simple": "remix"
+  },
+  {
+    "slug": "astro",
+    "name": "Astro",
+    "category": "web",
+    "iconify": "logos:astro-icon",
+    "simple": "astro"
+  },
+  {
+    "slug": "vite",
+    "name": "Vite",
+    "category": "web",
+    "iconify": "logos:vitejs",
+    "devicon": "vitejs/vitejs-original",
+    "simple": "vite"
+  },
+  {
+    "slug": "webpack",
+    "name": "webpack",
+    "category": "web",
+    "iconify": "logos:webpack",
+    "devicon": "webpack/webpack-original",
+    "simple": "webpack"
+  },
+  {
+    "slug": "nodejs",
+    "name": "Node.js",
+    "category": "web",
+    "iconify": "logos:nodejs-icon",
+    "devicon": "nodejs/nodejs-original",
+    "simple": "nodedotjs"
+  },
+  {
+    "slug": "deno",
+    "name": "Deno",
+    "category": "web",
+    "iconify": "logos:deno",
+    "devicon": "denojs/denojs-original",
+    "simple": "deno"
+  },
+  {
+    "slug": "bun",
+    "name": "Bun",
+    "category": "web",
+    "iconify": "logos:bun",
+    "simple": "bun"
+  },
+  {
+    "slug": "express",
+    "name": "Express",
+    "category": "web",
+    "iconify": "logos:express",
+    "devicon": "express/express-original",
+    "simple": "express"
+  },
+  {
+    "slug": "nestjs",
+    "name": "NestJS",
+    "category": "web",
+    "iconify": "logos:nestjs",
+    "devicon": "nestjs/nestjs-original",
+    "simple": "nestjs"
+  },
+  {
+    "slug": "fastapi",
+    "name": "FastAPI",
+    "category": "web",
+    "iconify": "logos:fastapi-icon",
+    "devicon": "fastapi/fastapi-original",
+    "simple": "fastapi"
+  },
+  {
+    "slug": "flask",
+    "name": "Flask",
+    "category": "web",
+    "iconify": "logos:flask",
+    "devicon": "flask/flask-original",
+    "simple": "flask"
+  },
+  {
+    "slug": "django",
+    "name": "Django",
+    "category": "web",
+    "iconify": "logos:django-icon",
+    "devicon": "django/django-plain",
+    "simple": "django"
+  },
+  {
+    "slug": "spring",
+    "name": "Spring",
+    "category": "web",
+    "iconify": "logos:spring-icon",
+    "devicon": "spring/spring-original",
+    "simple": "spring"
+  },
+  {
+    "slug": "rails",
+    "name": "Ruby on Rails",
+    "category": "web",
+    "iconify": "logos:rails",
+    "devicon": "rails/rails-original-wordmark",
+    "simple": "rubyonrails"
+  },
+  {
+    "slug": "laravel",
+    "name": "Laravel",
+    "category": "web",
+    "iconify": "logos:laravel",
+    "devicon": "laravel/laravel-original",
+    "simple": "laravel"
+  },
+  {
+    "slug": "dotnet",
+    "name": ".NET",
+    "category": "web",
+    "iconify": "logos:dotnet",
+    "devicon": "dotnetcore/dotnetcore-original",
+    "simple": "dotnet"
+  },
+  {
+    "slug": "graphql",
+    "name": "GraphQL",
+    "category": "web",
+    "iconify": "logos:graphql",
+    "devicon": "graphql/graphql-plain",
+    "simple": "graphql"
+  },
+  {
+    "slug": "tailwindcss",
+    "name": "Tailwind CSS",
+    "category": "web",
+    "iconify": "logos:tailwindcss-icon",
+    "devicon": "tailwindcss/tailwindcss-original",
+    "simple": "tailwindcss"
+  },
+  {
+    "slug": "htmx",
+    "name": "htmx",
+    "category": "web",
+    "iconify": "logos:htmx",
+    "simple": "htmx"
+  },
+  {
+    "slug": "rabbitmq",
+    "name": "RabbitMQ",
+    "category": "messaging",
+    "iconify": "logos:rabbitmq-icon",
+    "devicon": "rabbitmq/rabbitmq-original",
+    "simple": "rabbitmq"
+  },
+  {
+    "slug": "nats",
+    "name": "NATS",
+    "category": "messaging",
+    "iconify": "logos:nats-icon",
+    "simple": "natsdotio"
+  },
+  {
+    "slug": "activemq",
+    "name": "Apache ActiveMQ",
+    "category": "messaging",
+    "iconify": "logos:activemq",
+    "simple": "apacheactivemq"
+  },
+  {
+    "slug": "mqtt",
+    "name": "MQTT",
+    "category": "messaging",
+    "iconify": "logos:mqtt",
+    "simple": "mqtt"
+  },
+  {
+    "slug": "redpanda",
+    "name": "Redpanda",
+    "category": "messaging",
+    "iconify": "logos:redpanda",
+    "simple": "redpanda"
+  },
+  {
+    "slug": "celery",
+    "name": "Celery",
+    "category": "messaging",
+    "iconify": "logos:celery",
+    "simple": "celery"
+  },
+  {
+    "slug": "amazonsqs",
+    "name": "Amazon SQS",
+    "category": "messaging",
+    "iconify": "logos:aws-sqs",
+    "simple": "amazonsqs"
+  },
+  {
+    "slug": "amazonsns",
+    "name": "Amazon SNS",
+    "category": "messaging",
+    "iconify": "logos:aws-sns",
+    "simple": "amazonsns"
+  },
+  {
+    "slug": "tableau",
+    "name": "Tableau",
+    "category": "bi",
+    "iconify": "logos:tableau-icon",
+    "simple": "tableau"
+  },
+  {
+    "slug": "powerbi",
+    "name": "Microsoft Power BI",
+    "category": "bi",
+    "iconify": "logos:microsoft-power-bi",
+    "simple": "powerbi",
+    "note": "Simple Icons removed Microsoft marks; relies on the CC0 mark in gilbarbara/logos."
+  },
+  {
+    "slug": "looker",
+    "name": "Looker",
+    "category": "bi",
+    "iconify": "logos:looker-icon",
+    "simple": "looker"
+  },
+  {
+    "slug": "metabase",
+    "name": "Metabase",
+    "category": "bi",
+    "iconify": "logos:metabase",
+    "simple": "metabase"
+  },
+  {
+    "slug": "redash",
+    "name": "Redash",
+    "category": "bi",
+    "iconify": "logos:redash",
+    "simple": "redash"
+  },
+  {
+    "slug": "qlik",
+    "name": "Qlik",
+    "category": "bi",
+    "iconify": "logos:qlik",
+    "simple": "qlik"
+  },
+  {
+    "slug": "d3",
+    "name": "D3.js",
+    "category": "bi",
+    "iconify": "logos:d3",
+    "devicon": "d3js/d3js-original",
+    "simple": "d3dotjs"
+  },
+  {
+    "slug": "apacheecharts",
+    "name": "Apache ECharts",
+    "category": "bi",
+    "iconify": "logos:echarts",
+    "simple": "apacheecharts"
+  },
+  {
+    "slug": "vscode",
+    "name": "Visual Studio Code",
+    "category": "tooling",
+    "iconify": "logos:visual-studio-code",
+    "devicon": "vscode/vscode-original"
+  },
+  {
+    "slug": "intellij",
+    "name": "IntelliJ IDEA",
+    "category": "tooling",
+    "iconify": "logos:intellij-idea",
+    "devicon": "intellij/intellij-original"
+  },
+  {
+    "slug": "postman",
+    "name": "Postman",
+    "category": "tooling",
+    "iconify": "logos:postman-icon",
+    "devicon": "postman/postman-original",
+    "simple": "postman"
+  },
+  {
+    "slug": "swagger",
+    "name": "Swagger",
+    "category": "tooling",
+    "iconify": "logos:swagger",
+    "devicon": "swagger/swagger-original",
+    "simple": "swagger"
+  },
+  {
+    "slug": "openapi",
+    "name": "OpenAPI",
+    "category": "tooling",
+    "iconify": "logos:openapi-icon",
+    "simple": "openapiinitiative"
+  },
+  {
+    "slug": "jira",
+    "name": "Jira",
+    "category": "tooling",
+    "iconify": "logos:jira",
+    "devicon": "jira/jira-original",
+    "simple": "jira"
+  },
+  {
+    "slug": "confluence",
+    "name": "Confluence",
+    "category": "tooling",
+    "iconify": "logos:confluence",
+    "devicon": "confluence/confluence-original",
+    "simple": "confluence"
+  },
+  {
+    "slug": "slack",
+    "name": "Slack",
+    "category": "tooling",
+    "iconify": "logos:slack-icon",
+    "devicon": "slack/slack-original",
+    "simple": "slack"
+  },
+  {
+    "slug": "npm",
+    "name": "npm",
+    "category": "tooling",
+    "iconify": "logos:npm-icon",
+    "devicon": "npm/npm-original-wordmark",
+    "simple": "npm"
+  },
+  {
+    "slug": "yarn",
+    "name": "Yarn",
+    "category": "tooling",
+    "iconify": "logos:yarn",
+    "devicon": "yarn/yarn-original",
+    "simple": "yarn"
+  },
+  {
+    "slug": "pnpm",
+    "name": "pnpm",
+    "category": "tooling",
+    "iconify": "logos:pnpm",
+    "devicon": "pnpm/pnpm-original",
+    "simple": "pnpm"
+  },
+  {
+    "slug": "maven",
+    "name": "Apache Maven",
+    "category": "tooling",
+    "iconify": "logos:maven",
+    "devicon": "maven/maven-original",
+    "simple": "apachemaven"
+  },
+  {
+    "slug": "gradle",
+    "name": "Gradle",
+    "category": "tooling",
+    "iconify": "logos:gradle",
+    "devicon": "gradle/gradle-original",
+    "simple": "gradle"
+  },
+  {
+    "slug": "apache",
+    "name": "Apache HTTP Server",
+    "category": "tooling",
+    "iconify": "logos:apache",
+    "devicon": "apache/apache-original",
+    "simple": "apache"
+  },
+  {
+    "slug": "tomcat",
+    "name": "Apache Tomcat",
+    "category": "tooling",
+    "iconify": "logos:tomcat",
+    "devicon": "tomcat/tomcat-original",
+    "simple": "apachetomcat"
+  },
+  {
+    "slug": "poetry",
+    "name": "Poetry",
+    "category": "tooling",
+    "iconify": "logos:poetry",
+    "simple": "poetry"
+  },
+  {
+    "slug": "circle-user-round",
+    "name": "User (actor)",
+    "category": "ui-default",
+    "iconify": "lucide:circle-user-round"
+  },
+  {
+    "slug": "monitor",
+    "name": "Client",
+    "category": "ui-default",
+    "iconify": "lucide:monitor"
+  },
+  {
+    "slug": "box",
+    "name": "Service",
+    "category": "ui-default",
+    "iconify": "lucide:box"
+  },
+  {
+    "slug": "route",
+    "name": "Gateway",
+    "category": "ui-default",
+    "iconify": "lucide:route"
+  },
+  {
+    "slug": "database",
+    "name": "Data store",
+    "category": "ui-default",
+    "iconify": "lucide:database"
+  },
+  {
+    "slug": "zap",
+    "name": "Cache",
+    "category": "ui-default",
+    "iconify": "lucide:zap"
+  },
+  {
+    "slug": "list-ordered",
+    "name": "Queue",
+    "category": "ui-default",
+    "iconify": "lucide:list-ordered"
+  },
+  {
+    "slug": "globe",
+    "name": "External system",
+    "category": "ui-default",
+    "iconify": "lucide:globe"
+  },
+  {
+    "slug": "cog",
+    "name": "Job",
+    "category": "ui-default",
+    "iconify": "lucide:cog"
+  }
+]

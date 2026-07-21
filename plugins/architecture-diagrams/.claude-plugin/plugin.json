@@ -1,0 +1,20 @@
+{
+  "name": "architecture-diagrams",
+  "version": "0.1.0",
+  "description": "Turn a system description into clean architecture diagrams as Mermaid and Gliffy, with tech-stack icons, aligned labels, and human-sounding copy.",
+  "author": {
+    "name": "Hasan Emre Tekce",
+    "url": "https://github.com/hetekce"
+  },
+  "homepage": "https://github.com/hetekce/custom-plugins/tree/main/plugins/architecture-diagrams",
+  "license": "MIT",
+  "keywords": [
+    "diagrams",
+    "architecture",
+    "mermaid",
+    "gliffy",
+    "c4",
+    "documentation",
+    "icons"
+  ]
+}

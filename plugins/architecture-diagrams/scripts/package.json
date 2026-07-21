@@ -1,0 +1,12 @@
+{
+  "name": "architecture-diagrams-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Maintainer scripts for the architecture-diagrams plugin (icon bundling, rendering helpers).",
+  "scripts": {
+    "build:icons": "node build-icons.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

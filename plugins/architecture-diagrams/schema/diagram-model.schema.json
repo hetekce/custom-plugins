@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/hetekce/custom-plugins/architecture-diagrams/diagram-model.schema.json",
+  "title": "Diagram model",
+  "description": "The format-neutral model the diagram-architect produces and every renderer skill (Mermaid, draw.io, Gliffy) consumes. Adding a new output format means adding a skill that reads this model — nothing upstream changes.",
+  "type": "object",
+  "required": ["title", "kind", "nodes"],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Human title of the diagram and its view, e.g. 'Checkout flow — container view'. Sentence case, no trailing punctuation."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Two or three plain sentences describing the system, written to the writing-style bar (no AI tells). Used as a caption / doc paragraph."
+    },
+    "kind": {
+      "type": "string",
+      "description": "The view being drawn. Renderers map this to a concrete diagram type.",
+      "enum": ["architecture", "flowchart", "c4-context", "c4-container", "sequence", "block", "er", "class"]
+    },
+    "direction": {
+      "type": "string",
+      "enum": ["LR", "RL", "TB", "BT"],
+      "default": "LR"
+    },
+    "theme": {
+      "type": "string",
+      "enum": ["light", "dark"],
+      "default": "light"
+    },
+    "groups": {
+      "type": "array",
+      "description": "Optional containers (a cloud, a bounded context, a subsystem).",
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$" },
+          "label": { "type": "string" },
+          "parent": { "type": "string", "description": "id of an enclosing group, for nesting" },
+          "icon": { "type": "string", "description": "optional icon token (see nodes.icon)" }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$" },
+          "label": { "type": "string", "description": "Real name of the thing. Sentence case, no trailing punctuation." },
+          "group": { "type": "string", "description": "id of the group this node sits in" },
+          "role": {
+            "type": "string",
+            "description": "Semantic role — drives consistent, role-based styling across formats.",
+            "enum": ["service", "datastore", "queue", "cache", "gateway", "external", "actor", "client", "job"]
+          },
+          "tech": {
+            "type": "string",
+            "description": "Canonical technology slug used to resolve an icon, e.g. 'postgresql', 'kafka', 'react', 'aws-lambda'. See tech-stack-icons."
+          },
+          "icon": {
+            "type": "string",
+            "description": "Resolved icon token: an Iconify id like 'logos:postgresql' for Mermaid, or a path to a rasterized PNG for draw.io/Gliffy. Filled by tech-stack-icons; may be omitted."
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "additionalProperties": false,
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "label": { "type": "string", "description": "A verb or protocol/noun — 'writes to', 'gRPC', 'publishes order.created'. A few words, keeps routing clean." },
+          "kind": {
+            "type": "string",
+            "description": "sync = solid arrow, async = dashed arrow, data = open line.",
+            "enum": ["sync", "async", "data", "bidirectional"],
+            "default": "sync"
+          },
+          "fromSide": { "type": "string", "enum": ["L", "R", "T", "B"], "description": "optional port hint for aligned, orthogonal routing" },
+          "toSide": { "type": "string", "enum": ["L", "R", "T", "B"] }
+        }
+      }
+    }
+  }
+}

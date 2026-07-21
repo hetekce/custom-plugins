@@ -1,0 +1,18 @@
+# Node
+node_modules/
+npm-debug.log*
+.npm/
+
+# Build / tool caches
+.cache/
+*.tmp
+
+# Local diagram output (the /diagram default out dir)
+diagrams/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

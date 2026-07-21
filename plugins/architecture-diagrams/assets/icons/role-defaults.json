@@ -1,0 +1,14 @@
+{
+  "note": "Modern default icons per node role, used when a node has no specific tech logo. Iconify ids from the Lucide set (MIT) — clean, consistent line icons. Mermaid references these ids directly; draw.io and Gliffy rasterize them via fetch-icon.mjs --iconify <id>.",
+  "roles": {
+    "actor": "lucide:circle-user-round",
+    "client": "lucide:monitor",
+    "service": "lucide:box",
+    "gateway": "lucide:route",
+    "datastore": "lucide:database",
+    "cache": "lucide:zap",
+    "queue": "lucide:list-ordered",
+    "external": "lucide:globe",
+    "job": "lucide:cog"
+  }
+}
