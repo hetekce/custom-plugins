@@ -56,8 +56,12 @@ tech-stack icons, and renders the result.
 - **Mermaid rendering:** [`@mermaid-js/mermaid-cli`](https://github.com/mermaid-js/mermaid-cli) (`mmdc`).
   The render script checks for it and prints an install hint if it's missing. `.mmd` source is always
   written even when `mmdc` isn't installed.
-- **Icon rasterization (optional):** `resvg` or `rsvg-convert` for SVG→PNG. Falls back to inline SVG or
-  Iconify pack references when neither is present.
+- **JPEG output (optional):** ImageMagick (`magick`) or `sharp` converts the rendered PNG to JPEG. With
+  neither, a high-resolution PNG is kept instead — no failure.
+- **draw.io JPEG (optional):** [`drawio-desktop`](https://github.com/jgraph/drawio-desktop) exports the
+  `.drawio` to an image. Without it, the `.drawio` is still written and opens at diagrams.net.
+- **Icon rasterization (optional):** `resvg` or `rsvg-convert` for SVG→PNG when embedding logos into
+  draw.io/Gliffy. The bundled icons are pre-rasterized, so this only matters for icons fetched live.
 
 ## License
 

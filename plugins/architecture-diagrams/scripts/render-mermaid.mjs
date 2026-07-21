@@ -10,9 +10,10 @@
 
 import { access, copyFile, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { die, hasTool, log, run } from "./lib/tools.mjs";
 
 const USAGE =
@@ -66,11 +67,26 @@ async function pngToJpeg(png, jpeg, background) {
     if (res.code === 0) return "convert";
     log(`warning: convert failed (${res.stderr.trim() || "no output"})`);
   }
-  // Optional peer: sharp. Not vendored — used only when already installed.
-  try {
-    const { default: sharp } = await import("sharp");
+  // Optional peer: sharp. Not vendored — used only when already installed,
+  // resolved from this script's location or from the project's node_modules.
+  const sharp = await loadSharp();
+  if (sharp) {
     await sharp(png).flatten({ background }).jpeg({ quality: 92 }).toFile(jpeg);
     return "sharp";
+  }
+  return null;
+}
+
+/** Load sharp if available: try the script's module path, then the caller's cwd. */
+async function loadSharp() {
+  try {
+    return (await import("sharp")).default;
+  } catch {
+    // ignore
+  }
+  try {
+    const require = createRequire(path.join(process.cwd(), "package.json"));
+    return (await import(pathToFileURL(require.resolve("sharp")).href)).default;
   } catch {
     return null;
   }
