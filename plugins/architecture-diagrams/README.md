@@ -12,7 +12,7 @@ Mermaid for flows, draw.io for architecture — both built by the plugin:
 
 | Auth flow — Mermaid sequence | Data platform — draw.io, animated |
 | :---: | :---: |
-| ![Auth flow](examples/auth-flow.svg) | ![Data platform](examples/data-platform.gif) |
+| ![Auth flow](examples/auth-flow.png) | ![Data platform](examples/data-platform.gif) |
 
 More, with the source and how to reproduce them, in [`examples/`](examples).
 

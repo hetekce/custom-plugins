@@ -5,7 +5,7 @@ engineering. Each one is community-grade, MIT-licensed, and installable in a sin
 
 | Auth flow — Mermaid sequence | Data platform — draw.io, animated |
 | :---: | :---: |
-| ![Auth flow](plugins/architecture-diagrams/examples/auth-flow.svg) | ![Data platform](plugins/architecture-diagrams/examples/data-platform.gif) |
+| ![Auth flow](plugins/architecture-diagrams/examples/auth-flow.png) | ![Data platform](plugins/architecture-diagrams/examples/data-platform.gif) |
 
 <sub>Built by [`architecture-diagrams`](plugins/architecture-diagrams): Mermaid for flows, draw.io for architecture.</sub>
 

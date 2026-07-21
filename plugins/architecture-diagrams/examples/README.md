@@ -8,9 +8,9 @@ flows, draw.io for architecture.**
 An OAuth2 authorization-code + PKCE login as a sequence diagram.
 
 - [`auth-flow.mmd`](auth-flow.mmd) — the source
-- [`auth-flow.svg`](auth-flow.svg) — the render
+- [`auth-flow.svg`](auth-flow.svg) — vector render · [`auth-flow.png`](auth-flow.png) — raster
 
-![Auth flow](auth-flow.svg)
+![Auth flow](auth-flow.png)
 
 Reproduce:
 
