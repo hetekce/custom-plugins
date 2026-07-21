@@ -458,16 +458,19 @@ function main() {
 
     const children = [];
     if (edge.label) {
-      // Wrap long labels to a few short lines so they do not overflow the line.
+      // Wrap long labels to a few short lines so they do not overflow the line,
+      // and lift the label clear of the line (perpendicular offset) so the line
+      // does not run through the text.
       const lines = wrapWords(edge.label, 16);
       const labelW = Math.max(60, ...lines.map((l) => l.length * 7));
+      const labelH = 14 * lines.length;
       children.push(
         textChild(
           nextId++,
           labelW,
-          14 * lines.length,
+          labelH,
           textHtml(edge.label, palette.mutedText, { size: 11, wrap: 16 }),
-          { lineTValue: 0.5, linePerpValue: 0, cardinalityType: null },
+          { lineTValue: 0.5, linePerpValue: -(labelH / 2 + 6), cardinalityType: null },
         ),
       );
     }
