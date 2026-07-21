@@ -66,3 +66,39 @@ test("object count covers nodes, valid edges, and group rectangles", () => {
 test("the dangling edge is skipped with a warning", () => {
   assert.match(result.stderr, /skipping edge with unknown endpoint: orders -> ghost/);
 });
+
+test("edges leaving one node fan out onto distinct anchor points", () => {
+  // Two edges from one node must not share a start anchor, or their lines and
+  // labels overlap. Render a small branch and assert the anchors differ.
+  const d = tmpdir();
+  try {
+    const branch = {
+      title: "Branch",
+      direction: "LR",
+      nodes: [
+        { id: "svc", label: "Service", role: "service" },
+        { id: "cache", label: "Cache", role: "cache" },
+        { id: "store", label: "Store", role: "datastore" },
+      ],
+      edges: [
+        { from: "svc", to: "cache", label: "reads" },
+        { from: "svc", to: "store", label: "writes to" },
+      ],
+    };
+    const input = path.join(d, "b.json");
+    const output = path.join(d, "b.gliffy");
+    writeFileSync(input, JSON.stringify(branch));
+    const r = runScript("scripts/model-to-gliffy.mjs", [input, output]);
+    assert.equal(r.code, 0, r.stderr);
+    const doc = JSON.parse(readFileSync(output, "utf8"));
+    const anchors = doc.stage.objects
+      .filter((o) => o.graphic?.type === "Line")
+      .map((o) => {
+        const c = o.constraints.startConstraint.StartPositionConstraint;
+        return `${c.px},${c.py}`;
+      });
+    assert.equal(new Set(anchors).size, anchors.length, "sibling edges must use distinct start anchors");
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});

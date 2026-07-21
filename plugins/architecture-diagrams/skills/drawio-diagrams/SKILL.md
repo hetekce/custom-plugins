@@ -59,3 +59,18 @@ user it opens at https://app.diagrams.net, where they can export the JPEG themse
 Edit the `.drawio` XML directly — it is plain mxGraph. See
 `references/mxgraph.md` for the file skeleton, cell styles, the role color palette
 in both themes, how model fields map to cells, and the export CLI flags.
+
+## Layout guarantees
+
+The converter keeps branchy diagrams readable without manual cleanup:
+
+- **Edges leave and enter on the side that faces the other node**, and several
+  edges sharing one node side fan out onto parallel ports — so a node with two
+  outgoing edges (for example writes-to-database and publishes-to-bus) never
+  stacks them into one overlapping line.
+- **Edge labels are word-wrapped** and drawn on an opaque background, so long
+  text neither overflows the line nor becomes unreadable where it crosses one.
+
+If you hand-edit the XML, keep these invariants: distinct `exitX/exitY` +
+`entryX/entryY` per sibling edge, and `&lt;br&gt;` (never a raw `<br>`) inside a
+`value="..."` attribute — a raw break makes draw.io drop the whole cell.

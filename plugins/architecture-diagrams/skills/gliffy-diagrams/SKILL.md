@@ -50,3 +50,13 @@ Object envelopes, the rectangle/line/text structures, constraint anchoring,
 arrow codes, and a complete minimal example live in
 `${CLAUDE_PLUGIN_ROOT}/skills/gliffy-diagrams/references/gliffy-format.md`.
 Read it before touching the generated JSON by hand.
+
+## Layout guarantees
+
+The generator mirrors the draw.io layout rules so both formats read the same:
+
+- Edges attach to the side of each box that faces the other node, and edges
+  sharing a node side fan out onto distinct anchor points (`px/py`) — siblings
+  never overlap into a single line.
+- Long labels are word-wrapped and lifted clear of the line (`linePerpValue`),
+  so a connector never runs through its own text.

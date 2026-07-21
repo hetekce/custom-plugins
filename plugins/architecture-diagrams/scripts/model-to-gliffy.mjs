@@ -354,8 +354,16 @@ function pickSide(from, to, hint) {
   return dy >= 0 ? "B" : "T";
 }
 
-function anchorPoint(box, side) {
-  const [px, py] = SIDE_ANCHOR[side];
+/** Fractional anchor [px, py] on `side`, offset `frac` along that side (0.5 = centre). */
+function anchorFrac(side, frac) {
+  if (side === "R") return [1, frac];
+  if (side === "L") return [0, frac];
+  if (side === "T") return [frac, 0];
+  return [frac, 1]; // B
+}
+
+function anchorPoint(box, side, frac = 0.5) {
+  const [px, py] = anchorFrac(side, frac);
   return { x: box.x + box.w * px, y: box.y + box.h * py };
 }
 
@@ -439,7 +447,12 @@ function main() {
   }
 
   // One orthogonal line per edge, endpoints glued to the two shapes.
+  //
+  // First resolve every edge's sides, then fan edges that share a node side onto
+  // distinct anchor points along that side. Without this, two edges leaving the
+  // same node overlap and their labels collide.
   let skippedEdges = 0;
+  const routed = [];
   for (const edge of model.edges || []) {
     const fromBox = positions.get(edge.from);
     const toBox = positions.get(edge.to);
@@ -448,10 +461,36 @@ function main() {
       skippedEdges++;
       continue;
     }
-    const fromSide = pickSide(fromBox, toBox, edge.fromSide);
-    const toSide = pickSide(toBox, fromBox, edge.toSide);
-    const start = anchorPoint(fromBox, fromSide);
-    const end = anchorPoint(toBox, toSide);
+    routed.push({
+      edge,
+      fromBox,
+      toBox,
+      fromSide: pickSide(fromBox, toBox, edge.fromSide),
+      toSide: pickSide(toBox, fromBox, edge.toSide),
+    });
+  }
+  // Fractional offset of each edge within its (node, side) bundle.
+  const fracsBy = (keyOf) => {
+    const lists = new Map();
+    routed.forEach((r, i) => {
+      const k = keyOf(r);
+      if (!lists.has(k)) lists.set(k, []);
+      lists.get(k).push(i);
+    });
+    const frac = new Map();
+    for (const list of lists.values())
+      list.forEach((i, idx) => frac.set(i, list.length > 1 ? (idx + 1) / (list.length + 1) : 0.5));
+    return frac;
+  };
+  const startFrac = fracsBy((r) => `${r.edge.from}|${r.fromSide}`);
+  const endFrac = fracsBy((r) => `${r.edge.to}|${r.toSide}`);
+
+  routed.forEach((r, ri) => {
+    const { edge, fromBox, toBox, fromSide, toSide } = r;
+    const sf = startFrac.get(ri);
+    const ef = endFrac.get(ri);
+    const start = anchorPoint(fromBox, fromSide, sf);
+    const end = anchorPoint(toBox, toSide, ef);
     const dx = end.x - start.x;
     const dy = end.y - start.y;
     const { startArrow, endArrow, dashStyle } = edgeStyle(edge.kind || "sync");
@@ -459,8 +498,7 @@ function main() {
     const children = [];
     if (edge.label) {
       // Wrap long labels to a few short lines so they do not overflow the line,
-      // and lift the label clear of the line (perpendicular offset) so the line
-      // does not run through the text.
+      // and lift the label well clear of the line so it never runs through text.
       const lines = wrapWords(edge.label, 16);
       const labelW = Math.max(60, ...lines.map((l) => l.length * 7));
       const labelH = 14 * lines.length;
@@ -470,13 +508,13 @@ function main() {
           labelW,
           labelH,
           textHtml(edge.label, palette.mutedText, { size: 11, wrap: 16 }),
-          { lineTValue: 0.5, linePerpValue: -(labelH / 2 + 6), cardinalityType: null },
+          { lineTValue: 0.5, linePerpValue: -(labelH / 2 + 12), cardinalityType: null },
         ),
       );
     }
 
-    const [fpx, fpy] = SIDE_ANCHOR[fromSide];
-    const [tpx, tpy] = SIDE_ANCHOR[toSide];
+    const [fpx, fpy] = anchorFrac(fromSide, sf);
+    const [tpx, tpy] = anchorFrac(toSide, ef);
     objects.push({
       x: start.x,
       y: start.y,
@@ -520,7 +558,7 @@ function main() {
       },
       linkMap: [],
     });
-  }
+  });
 
   // Stage size = content bounding box + margin.
   const maxX = Math.max(...objects.map((o) => o.x + (o.width || 0)));
