@@ -23,7 +23,7 @@ const model = {
   ],
   edges: [
     { from: "web", to: "api", label: "HTTPS", kind: "sync" },
-    { from: "api", to: "db", kind: "async" },
+    { from: "api", to: "db", label: "publishes order.created", kind: "async" }, // long -> wraps
     { from: "api", to: "ghost" }, // dangling on purpose — must be skipped, not fatal
   ],
 };
@@ -87,4 +87,21 @@ test("a bundled PNG icon path is embedded as an image vertex", () => {
   assert.ok(dbCell, "db vertex not found");
   assert.ok(dbCell.includes("shape=image"), "icon node must use shape=image");
   assert.ok(dbCell.includes("image=data:image/png"), "icon must be embedded as a PNG data URI");
+});
+
+test("long edge labels wrap using an encoded line break, never a raw <br>", () => {
+  // A raw "<br>" inside an XML value="..." attribute is invalid and draw.io
+  // silently drops the whole cell, so the edge would vanish. The break must be
+  // the entity-encoded &lt;br&gt; instead.
+  assert.ok(xml.includes("&lt;br&gt;"), "expected a wrapped label to contain an encoded <br>");
+  assert.ok(
+    !/value="[^"]*<br>/.test(xml),
+    "a raw <br> inside a value attribute would make draw.io drop the edge",
+  );
+});
+
+test("the long-labelled async edge is present with its wrapped label", () => {
+  const edge = xml.split("\n").find((l) => l.includes('id="e_1"'));
+  assert.ok(edge, "edge e_1 not found");
+  assert.ok(edge.includes('value="publishes&lt;br&gt;order.created"'), "wrapped label missing");
 });

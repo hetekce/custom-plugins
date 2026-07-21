@@ -95,6 +95,28 @@ function esc(s) {
     .replace(/"/g, "&quot;");
 }
 
+/** Word-wrap an edge label into short lines so it never overflows. Returns a
+ *  value for an mxCell `value="..."` attribute: each line is XML-escaped and the
+ *  breaks are the entity-encoded `&lt;br&gt;`, which draw.io decodes back to a
+ *  real <br> and (with html=1) renders as a line break. Using a raw "<br>" here
+ *  would be invalid inside an XML attribute and draw.io would drop the cell.
+ *  Long single words are kept whole rather than split mid-word. */
+function wrapLabel(text, maxChars = 16) {
+  const words = String(text).trim().split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = "";
+  for (const w of words) {
+    if (line && line.length + 1 + w.length > maxChars) {
+      lines.push(line);
+      line = w;
+    } else {
+      line = line ? `${line} ${w}` : w;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.map(esc).join("&lt;br&gt;");
+}
+
 // ---------------------------------------------------------------------------
 // CLI parsing
 // ---------------------------------------------------------------------------
@@ -402,12 +424,15 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
   }
 
   // Edges. All edges live on the root layer so source/target geometry stays
-  // simple; draw.io routes them across containers without trouble.
+  // simple; draw.io routes them across containers without trouble. Labels are
+  // word-wrapped in code and drawn on an opaque background so long text neither
+  // overflows nor becomes unreadable where it crosses a line.
   (model.edges ?? []).forEach((e, i) => {
     const kind = e.kind ?? "sync";
     let style =
       `edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;` +
-      `strokeColor=${pal.edge};fontColor=${pal.font};fontSize=11;labelBackgroundColor=${pal.edgeLabelBg};`;
+      `fontSize=11;fontColor=${pal.font};strokeColor=${pal.edge};` +
+      `labelBackgroundColor=${pal.edgeLabelBg};spacing=4;`;
     if (kind === "async") style += "endArrow=block;endFill=1;dashed=1;";
     else if (kind === "data") style += "endArrow=open;endFill=0;";
     else if (kind === "bidirectional") style += "startArrow=block;startFill=1;endArrow=block;endFill=1;";
@@ -421,7 +446,7 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
       style += `entryX=${s.x};entryY=${s.y};entryDx=0;entryDy=0;`;
     }
     cells.push(
-      `        <mxCell id="e_${i}"${e.label ? ` value="${esc(e.label)}"` : ""} style="${esc(style)}" edge="1" parent="1" source="${esc(nodeCellId(e.from))}" target="${esc(nodeCellId(e.to))}">\n` +
+      `        <mxCell id="e_${i}"${e.label ? ` value="${wrapLabel(e.label)}"` : ""} style="${esc(style)}" edge="1" parent="1" source="${esc(nodeCellId(e.from))}" target="${esc(nodeCellId(e.to))}">\n` +
         `          <mxGeometry relative="1" as="geometry"/>\n` +
         `        </mxCell>`,
     );
