@@ -1,0 +1,28 @@
+---
+title: Login — OAuth2 authorization code with PKCE
+---
+sequenceDiagram
+    autonumber
+    actor U as Customer
+    participant SPA as Web app
+    participant AS as Auth server
+    participant API as Orders API
+    participant DB as Session store
+
+    U->>SPA: Click "Log in"
+    SPA->>AS: Redirect to /authorize (PKCE challenge)
+    AS-->>U: Login page
+    U->>AS: Username and password
+    AS->>DB: Create session
+    AS-->>SPA: Redirect with auth code
+    SPA->>AS: POST /token (code + verifier)
+    AS-->>SPA: Access token + refresh token (JWT)
+    Note over SPA: Keep tokens in memory
+
+    SPA->>API: GET /orders (Bearer access token)
+    API->>AS: Fetch signing keys (JWKS, cached)
+    API-->>SPA: 200 — orders
+
+    Note over SPA,AS: Access token expires
+    SPA->>AS: POST /token (refresh token)
+    AS-->>SPA: New access token

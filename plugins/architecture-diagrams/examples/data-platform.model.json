@@ -1,0 +1,256 @@
+{
+  "title": "Data platform — flow view",
+  "summary": "Clickstream and CDC feed a stream and batch layer that lands in the lake and warehouse. BI and a metrics API serve the results; Airflow schedules the batch jobs.",
+  "kind": "architecture",
+  "direction": "LR",
+  "theme": "light",
+  "groups": [
+    {
+      "id": "sources",
+      "label": "Sources"
+    },
+    {
+      "id": "ingest",
+      "label": "Ingestion"
+    },
+    {
+      "id": "process",
+      "label": "Processing"
+    },
+    {
+      "id": "storage",
+      "label": "Storage"
+    },
+    {
+      "id": "serving",
+      "label": "Serving"
+    },
+    {
+      "id": "orch",
+      "label": "Orchestration"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "webapp",
+      "label": "Web app",
+      "role": "client",
+      "group": "sources",
+      "tech": "react"
+    },
+    {
+      "id": "appdb",
+      "label": "App DB",
+      "role": "datastore",
+      "group": "sources",
+      "tech": "postgresql"
+    },
+    {
+      "id": "extapi",
+      "label": "Partner API",
+      "role": "external",
+      "group": "sources"
+    },
+    {
+      "id": "kafka",
+      "label": "Event bus",
+      "role": "queue",
+      "group": "ingest",
+      "tech": "kafka"
+    },
+    {
+      "id": "airbyte",
+      "label": "Airbyte",
+      "role": "service",
+      "group": "ingest",
+      "tech": "airbyte"
+    },
+    {
+      "id": "flink",
+      "label": "Stream processor",
+      "role": "service",
+      "group": "process",
+      "tech": "flink"
+    },
+    {
+      "id": "spark",
+      "label": "Batch jobs",
+      "role": "service",
+      "group": "process",
+      "tech": "spark"
+    },
+    {
+      "id": "dbt",
+      "label": "dbt transforms",
+      "role": "job",
+      "group": "process",
+      "tech": "dbt"
+    },
+    {
+      "id": "lake",
+      "label": "Data lake",
+      "role": "datastore",
+      "group": "storage",
+      "tech": "minio"
+    },
+    {
+      "id": "warehouse",
+      "label": "Snowflake",
+      "role": "datastore",
+      "group": "storage",
+      "tech": "snowflake"
+    },
+    {
+      "id": "olap",
+      "label": "ClickHouse",
+      "role": "datastore",
+      "group": "storage",
+      "tech": "clickhouse"
+    },
+    {
+      "id": "superset",
+      "label": "Superset BI",
+      "role": "service",
+      "group": "serving",
+      "tech": "superset"
+    },
+    {
+      "id": "mlflow",
+      "label": "Model registry",
+      "role": "service",
+      "group": "serving",
+      "tech": "mlflow"
+    },
+    {
+      "id": "apisvc",
+      "label": "Metrics API",
+      "role": "service",
+      "group": "serving",
+      "tech": "nodejs"
+    },
+    {
+      "id": "cache",
+      "label": "Redis cache",
+      "role": "cache",
+      "group": "serving",
+      "tech": "redis"
+    },
+    {
+      "id": "airflow",
+      "label": "Airflow",
+      "role": "job",
+      "group": "orch",
+      "tech": "airflow"
+    }
+  ],
+  "edges": [
+    {
+      "from": "webapp",
+      "to": "kafka",
+      "label": "clickstream events",
+      "kind": "async"
+    },
+    {
+      "from": "appdb",
+      "to": "airbyte",
+      "label": "CDC extract",
+      "kind": "data"
+    },
+    {
+      "from": "extapi",
+      "to": "airbyte",
+      "label": "REST pull",
+      "kind": "sync"
+    },
+    {
+      "from": "kafka",
+      "to": "flink",
+      "label": "consumes events",
+      "kind": "async"
+    },
+    {
+      "from": "airbyte",
+      "to": "lake",
+      "label": "lands raw",
+      "kind": "data"
+    },
+    {
+      "from": "flink",
+      "to": "lake",
+      "label": "writes enriched",
+      "kind": "data"
+    },
+    {
+      "from": "flink",
+      "to": "olap",
+      "label": "streams metrics",
+      "kind": "async"
+    },
+    {
+      "from": "lake",
+      "to": "spark",
+      "label": "reads raw",
+      "kind": "data"
+    },
+    {
+      "from": "spark",
+      "to": "warehouse",
+      "label": "loads models",
+      "kind": "data"
+    },
+    {
+      "from": "dbt",
+      "to": "warehouse",
+      "label": "transforms",
+      "kind": "sync"
+    },
+    {
+      "from": "warehouse",
+      "to": "superset",
+      "label": "queries",
+      "kind": "sync"
+    },
+    {
+      "from": "olap",
+      "to": "superset",
+      "label": "queries",
+      "kind": "sync"
+    },
+    {
+      "from": "warehouse",
+      "to": "mlflow",
+      "label": "training data",
+      "kind": "data"
+    },
+    {
+      "from": "olap",
+      "to": "apisvc",
+      "label": "serves metrics",
+      "kind": "sync"
+    },
+    {
+      "from": "apisvc",
+      "to": "cache",
+      "label": "reads and writes",
+      "kind": "bidirectional"
+    },
+    {
+      "from": "airflow",
+      "to": "spark",
+      "label": "schedules",
+      "kind": "async"
+    },
+    {
+      "from": "airflow",
+      "to": "dbt",
+      "label": "schedules",
+      "kind": "async"
+    },
+    {
+      "from": "airflow",
+      "to": "airbyte",
+      "label": "schedules",
+      "kind": "async"
+    }
+  ]
+}

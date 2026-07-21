@@ -1,9 +1,20 @@
 # architecture-diagrams
 
-Turn a plain description of a system — or an existing codebase — into a clean architecture diagram.
-Outputs **Mermaid** (`.mmd` + rendered SVG/PNG) and **Gliffy** (`.gliffy` JSON you can import into
-Confluence or the Gliffy app). Diagrams come out with real tech-stack icons, aligned labels, a
-deliberate (non-default) visual style, and captions that read like a person wrote them.
+Turn a plain description of a system — or an existing codebase — into clean diagrams.
+**Mermaid** for flows (auth, request lifecycles, sequences) and **draw.io** for general
+architecture — laid out by draw.io's own engine, with animated flow edges — plus a
+best-effort **Gliffy** export. Real tech-stack icons, a deliberate non-default style,
+and copy that reads like a person wrote it.
+
+## Examples
+
+Mermaid for flows, draw.io for architecture — both built by the plugin:
+
+| Auth flow — Mermaid sequence | Data platform — draw.io, animated |
+| :---: | :---: |
+| ![Auth flow](examples/auth-flow.svg) | ![Data platform](examples/data-platform.gif) |
+
+More, with the source and how to reproduce them, in [`examples/`](examples).
 
 ## Install
 
