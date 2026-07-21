@@ -153,52 +153,47 @@ function rootGroupOf(groupId, groupById) {
 }
 
 /**
- * Place nodes on a grid: rank picks the position along the flow axis,
- * the index within the rank picks the cross-axis position. Nodes in the same
- * group are kept adjacent within a rank so group boxes stay tight.
- * Returns Map<nodeId, {x, y, w, h}> in absolute page coordinates.
+ * Group-major banding (swimlanes). Each top-level group is one band — a column
+ * for LR/RL, a row for TB/BT — and every ungrouped node is its own band. A
+ * group's members all stack inside its band in rank order, so its box is one
+ * contiguous region that never overlaps another group's box and never hides a
+ * node behind a container. Returns Map<nodeId, {x, y, w, h}> in page coordinates.
  */
 function layoutNodes(model) {
   const direction = model.direction || "LR";
   const groupById = new Map((model.groups || []).map((g) => [g.id, g]));
   const rank = computeRanks(model.nodes, model.edges || []);
-  const maxRank = Math.max(...rank.values());
-
-  // Bucket nodes per rank, keeping model order but clustering by root group.
-  const buckets = new Map();
-  model.nodes.forEach((n, i) => {
-    const r = rank.get(n.id);
-    if (!buckets.has(r)) buckets.set(r, []);
-    buckets.get(r).push({ node: n, index: i });
-  });
-  for (const list of buckets.values()) {
-    list.sort((a, b) => {
-      const ga = rootGroupOf(a.node.group, groupById);
-      const gb = rootGroupOf(b.node.group, groupById);
-      if (ga !== gb) return ga < gb ? -1 : 1;
-      return a.index - b.index;
-    });
-  }
-
   const horizontal = direction === "LR" || direction === "RL";
-  const reversed = direction === "RL" || direction === "BT";
+
+  // Assemble bands: one per top-level group, one per ungrouped node.
+  const units = new Map();
+  model.nodes.forEach((n, i) => {
+    const root = n.group ? rootGroupOf(n.group, groupById) : "";
+    const key = root ? `g:${root}` : `n:${n.id}`;
+    if (!units.has(key)) units.set(key, { key, nodes: [] });
+    units.get(key).nodes.push({ node: n, index: i });
+  });
+  const unitList = [...units.values()];
+  for (const u of unitList) u.rankKey = Math.min(...u.nodes.map((x) => rank.get(x.node.id)));
+  // Upstream bands first; stable tiebreak keeps output deterministic.
+  unitList.sort((a, b) => a.rankKey - b.rankKey || (a.key < b.key ? -1 : 1));
+  if (direction === "RL" || direction === "BT") unitList.reverse();
+
   const positions = new Map();
-  for (const [r, list] of buckets) {
-    const layer = reversed ? maxRank - r : r; // mirror for RL / BT
-    list.forEach(({ node }, i) => {
+  unitList.forEach((u, band) => {
+    u.nodes.sort((a, b) => rank.get(a.node.id) - rank.get(b.node.id) || a.index - b.index);
+    u.nodes.forEach(({ node }, i) => {
       if (horizontal) {
-        // Ranks advance left-to-right; siblings stack top-to-bottom.
-        const x = MARGIN + layer * (NODE_W + GAP_MAIN);
+        const x = MARGIN + band * (NODE_W + GAP_MAIN);
         const y = MARGIN + GROUP_LABEL_H + i * (NODE_H + GAP_CROSS);
         positions.set(node.id, { x, y, w: NODE_W, h: NODE_H });
       } else {
-        // Ranks advance top-to-bottom; siblings spread left-to-right.
         const x = MARGIN + i * (NODE_W + GAP_CROSS);
-        const y = MARGIN + GROUP_LABEL_H + layer * (NODE_H + GAP_MAIN);
+        const y = MARGIN + GROUP_LABEL_H + band * (NODE_H + GAP_MAIN);
         positions.set(node.id, { x, y, w: NODE_W, h: NODE_H });
       }
     });
-  }
+  });
   return positions;
 }
 
