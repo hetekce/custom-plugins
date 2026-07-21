@@ -268,12 +268,30 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
-function textHtml(text, color, { size = 12, bold = false, align = "center" } = {}) {
+/** Word-wrap into short lines (long single words kept whole). */
+function wrapWords(text, maxChars) {
+  const words = String(text).trim().split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = "";
+  for (const w of words) {
+    if (line && line.length + 1 + w.length > maxChars) {
+      lines.push(line);
+      line = w;
+    } else {
+      line = line ? `${line} ${w}` : w;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.length ? lines : [""];
+}
+
+function textHtml(text, color, { size = 12, bold = false, align = "center", wrap = 0 } = {}) {
   const weight = bold ? " font-weight: bold;" : "";
+  const body = wrap ? wrapWords(text, wrap).map(escapeHtml).join("<br/>") : escapeHtml(text);
   return (
     `<p style='text-align: ${align};'>` +
     `<span style='font-family: Arial; font-size: ${size}px; color: ${color};${weight}'>` +
-    escapeHtml(text) +
+    body +
     "</span></p>"
   );
 }
@@ -440,12 +458,15 @@ function main() {
 
     const children = [];
     if (edge.label) {
+      // Wrap long labels to a few short lines so they do not overflow the line.
+      const lines = wrapWords(edge.label, 16);
+      const labelW = Math.max(60, ...lines.map((l) => l.length * 7));
       children.push(
         textChild(
           nextId++,
-          Math.max(60, edge.label.length * 7),
-          14,
-          textHtml(edge.label, palette.mutedText, { size: 11 }),
+          labelW,
+          14 * lines.length,
+          textHtml(edge.label, palette.mutedText, { size: 11, wrap: 16 }),
           { lineTValue: 0.5, linePerpValue: 0, cardinalityType: null },
         ),
       );
