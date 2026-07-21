@@ -86,6 +86,26 @@ const SIDE_POINT = {
   B: { x: 0.5, y: 1 },
 };
 
+/** Natural exit/entry sides for an edge, from the two boxes' centres. */
+function portsFor(a, b) {
+  const dx = a.x + a.w / 2 - (b.x + b.w / 2);
+  const dy = a.y + a.h / 2 - (b.y + b.h / 2);
+  if (Math.abs(dx) >= Math.abs(dy)) return dx <= 0 ? { exit: "R", entry: "L" } : { exit: "L", entry: "R" };
+  return dy <= 0 ? { exit: "B", entry: "T" } : { exit: "T", entry: "B" };
+}
+
+/** Style fragment pinning an edge endpoint to `side` at fractional offset `off`
+ *  along that side. Spreading several edges that share one side into distinct
+ *  offsets turns overlapping lines into parallel ones with separated labels. */
+function portFragment(kind, side, off) {
+  const o = Number(off.toFixed(3));
+  if (side === "R") return `${kind}X=1;${kind}Y=${o};${kind}Dx=0;${kind}Dy=0;`;
+  if (side === "L") return `${kind}X=0;${kind}Y=${o};${kind}Dx=0;${kind}Dy=0;`;
+  if (side === "T") return `${kind}X=${o};${kind}Y=0;${kind}Dx=0;${kind}Dy=0;`;
+  if (side === "B") return `${kind}X=${o};${kind}Y=1;${kind}Dx=0;${kind}Dy=0;`;
+  return "";
+}
+
 /** Escape a string for use inside an XML attribute value. */
 function esc(s) {
   return String(s)
@@ -423,11 +443,34 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
     );
   }
 
-  // Edges. All edges live on the root layer so source/target geometry stays
-  // simple; draw.io routes them across containers without trouble. Labels are
-  // word-wrapped in code and drawn on an opaque background so long text neither
-  // overflows nor becomes unreadable where it crosses a line.
-  (model.edges ?? []).forEach((e, i) => {
+  // Edges. Pick each endpoint's side from the real geometry (an explicit
+  // fromSide/toSide wins), then spread edges that share a node side into parallel
+  // ports so their lines — and labels — separate instead of stacking. Labels are
+  // word-wrapped and drawn on an opaque background so long text stays readable.
+  const edges = model.edges ?? [];
+  const sides = edges.map((e) => {
+    const a = pos.get(e.from);
+    const b = pos.get(e.to);
+    const auto = a && b ? portsFor(a, b) : { exit: null, entry: null };
+    return { exit: e.fromSide ?? auto.exit, entry: e.toSide ?? auto.entry };
+  });
+  // Fractional offset of each edge within its (node, side) bundle.
+  const offsetsBy = (keyOf) => {
+    const lists = new Map();
+    edges.forEach((e, i) => {
+      const k = keyOf(e, i);
+      if (!lists.has(k)) lists.set(k, []);
+      lists.get(k).push(i);
+    });
+    const off = new Map();
+    for (const list of lists.values())
+      list.forEach((i, idx) => off.set(i, list.length > 1 ? (idx + 1) / (list.length + 1) : 0.5));
+    return off;
+  };
+  const exitOffset = offsetsBy((e, i) => `${e.from}|${sides[i].exit}`);
+  const entryOffset = offsetsBy((e, i) => `${e.to}|${sides[i].entry}`);
+
+  edges.forEach((e, i) => {
     const kind = e.kind ?? "sync";
     let style =
       `edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;` +
@@ -437,14 +480,8 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
     else if (kind === "data") style += "endArrow=open;endFill=0;";
     else if (kind === "bidirectional") style += "startArrow=block;startFill=1;endArrow=block;endFill=1;";
     else style += "endArrow=block;endFill=1;";
-    if (e.fromSide && SIDE_POINT[e.fromSide]) {
-      const s = SIDE_POINT[e.fromSide];
-      style += `exitX=${s.x};exitY=${s.y};exitDx=0;exitDy=0;`;
-    }
-    if (e.toSide && SIDE_POINT[e.toSide]) {
-      const s = SIDE_POINT[e.toSide];
-      style += `entryX=${s.x};entryY=${s.y};entryDx=0;entryDy=0;`;
-    }
+    if (sides[i].exit) style += portFragment("exit", sides[i].exit, exitOffset.get(i));
+    if (sides[i].entry) style += portFragment("entry", sides[i].entry, entryOffset.get(i));
     cells.push(
       `        <mxCell id="e_${i}"${e.label ? ` value="${wrapLabel(e.label)}"` : ""} style="${esc(style)}" edge="1" parent="1" source="${esc(nodeCellId(e.from))}" target="${esc(nodeCellId(e.to))}">\n` +
         `          <mxGeometry relative="1" as="geometry"/>\n` +

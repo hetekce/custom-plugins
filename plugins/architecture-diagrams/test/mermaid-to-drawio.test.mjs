@@ -105,3 +105,36 @@ test("the long-labelled async edge is present with its wrapped label", () => {
   assert.ok(edge, "edge e_1 not found");
   assert.ok(edge.includes('value="publishes&lt;br&gt;order.created"'), "wrapped label missing");
 });
+
+test("a node's multiple outgoing edges fan out onto distinct ports", () => {
+  // Two edges leaving one node must not share an exit point, or their lines and
+  // labels stack. Render a small branch and assert the offsets differ.
+  const d = tmpdir();
+  try {
+    const branch = {
+      title: "Branch",
+      direction: "LR",
+      nodes: [
+        { id: "svc", label: "Service", role: "service" },
+        { id: "cache", label: "Cache", role: "cache" },
+        { id: "store", label: "Store", role: "datastore" },
+      ],
+      edges: [
+        { from: "svc", to: "cache", label: "reads" },
+        { from: "svc", to: "store", label: "writes to" },
+      ],
+    };
+    const input = path.join(d, "b.json");
+    const output = path.join(d, "b.drawio");
+    writeFileSync(input, JSON.stringify(branch));
+    const r = runScript("scripts/mermaid-to-drawio.mjs", [input, output]);
+    assert.equal(r.code, 0, r.stderr);
+    const out = readFileSync(output, "utf8");
+    const ys = [...out.matchAll(/id="e_\d+"[^>]*?(?:exitY|entryY)=([\d.]+)/g)];
+    const exitYs = [...out.matchAll(/id="e_\d+"[^\n]*?exitY=([\d.]+)/g)].map((m) => m[1]);
+    assert.ok(ys.length > 0, "expected port offsets on the edges");
+    assert.equal(new Set(exitYs).size, exitYs.length, "sibling edges must use distinct exit offsets");
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
