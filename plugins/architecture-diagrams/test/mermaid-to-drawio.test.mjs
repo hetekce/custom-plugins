@@ -138,3 +138,10 @@ test("a node's multiple outgoing edges fan out onto distinct ports", () => {
     rmSync(d, { recursive: true, force: true });
   }
 });
+
+test("flow edges (async/data) carry draw.io's flow animation", () => {
+  // e_1 is the async edge in the fixture; async and data are flows and animate.
+  const asyncEdge = xml.split("\n").find((l) => l.includes('id="e_1"'));
+  assert.ok(asyncEdge, "edge e_1 not found");
+  assert.ok(asyncEdge.includes("flowAnimation=1"), "async (flow) edge must animate");
+});

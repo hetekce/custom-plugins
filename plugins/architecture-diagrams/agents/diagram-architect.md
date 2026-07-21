@@ -47,8 +47,11 @@ touch production code — you only read it.
    - Edges: `label` is a verb or protocol, a few words at most ("writes to",
      "gRPC", "publishes order.created"). Set `kind` honestly: `sync` for
      request/response, `async` for queues and events, `data` for plain data
-     flow, `bidirectional` when both sides initiate. Add `fromSide`/`toSide`
-     only when a specific port makes the layout cleaner.
+     flow, `bidirectional` when both sides initiate. This choice carries
+     meaning downstream: draw.io animates `data` and `async` as moving "flow"
+     edges, so reserve them for genuine flows (streams, event/data pipelines)
+     and keep request/response as `sync`. Add `fromSide`/`toSide` only when a
+     specific port makes the layout cleaner.
 5. Set `direction`: `LR` for pipelines and request paths, `TB` for layered
    stacks and org-style decomposition. Set `theme` as the caller asked
    (default `light`).

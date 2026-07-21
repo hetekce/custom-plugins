@@ -26,6 +26,10 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/mermaid-to-drawio.mjs" model.json out.drawio
 - Edges use `orthogonalEdgeStyle` with rounded corners: solid arrows for `sync`,
   dashed for `async`, open-arrow lines for `data`, double-headed for `bidirectional`.
   `fromSide`/`toSide` hints become exit/entry points.
+- **Flow edges animate.** `async` (events) and `data` (streams) carry
+  `flowAnimation=1`, so they show draw.io's moving-dash "flow" animation;
+  `sync` and `bidirectional` stay static. This is why the diagram-architect should
+  mark real flows as `data`/`async` and two-way relationships as `bidirectional`.
 - If `node.icon` is a PNG path or data URI (produced by the tech-stack-icons skill),
   the node renders as an image vertex with its label below; the PNG is embedded as a
   data URI so the file is self-contained. Run tech-stack-icons before this script when
@@ -35,15 +39,22 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/mermaid-to-drawio.mjs" model.json out.drawio
 
 The script has no dependencies beyond Node; it always writes the `.drawio` file.
 
-## Path B — export a raster
+## Path B — export an image
+
+The output format follows the output extension (`svg`, `png`, `jpg`, `jpeg`, `pdf`):
 
 ```sh
-"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" out.drawio out.jpeg
+"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" out.drawio out.svg    # animated flows preserved
+"${CLAUDE_PLUGIN_ROOT}/scripts/export-drawio.sh" out.drawio out.jpeg   # single static frame
 ```
+
+**If the diagram has any `data`/`async` (flow) edges, export `.svg`** — the animation
+is CSS the SVG export embeds, and raster formats (`jpeg`/`png`) freeze one frame.
+Export a raster only for a fully static diagram or a thumbnail.
 
 Requires the drawio-desktop CLI (`drawio`) on PATH. If it is missing, the script
 prints an install hint and exits non-zero — keep the `.drawio` anyway and tell the
-user it opens at https://app.diagrams.net, where they can export the JPEG themselves.
+user it opens at https://app.diagrams.net, where they can export the image themselves.
 
 ## Typical run
 
@@ -51,8 +62,9 @@ user it opens at https://app.diagrams.net, where they can export the JPEG themse
 2. If nodes carry `tech` slugs, resolve icons first with the tech-stack-icons skill
    so `node.icon` points at rasterized PNGs.
 3. Run `mermaid-to-drawio.mjs` to produce `<name>.drawio`.
-4. Run `export-drawio.sh` to produce `<name>.jpeg` (best effort).
-5. Hand both files over; mention the Confluence import path when relevant.
+4. Export: `.svg` if the model has any `data`/`async` flow edges (keeps the
+   animation), otherwise `.jpeg`/`.png` is fine. Best effort — needs drawio-desktop.
+5. Hand the files over; mention the Confluence import path when relevant.
 
 ## When output needs tweaking
 

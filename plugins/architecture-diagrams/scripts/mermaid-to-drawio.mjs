@@ -476,8 +476,10 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
       `edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;` +
       `fontSize=11;fontColor=${pal.font};strokeColor=${pal.edge};` +
       `labelBackgroundColor=${pal.edgeLabelBg};spacing=4;`;
-    if (kind === "async") style += "endArrow=block;endFill=1;dashed=1;";
-    else if (kind === "data") style += "endArrow=open;endFill=0;";
+    // Flows (events and data streams) get draw.io's marching-ants flow
+    // animation; request/response and relationship edges stay static.
+    if (kind === "async") style += "endArrow=block;endFill=1;dashed=1;flowAnimation=1;";
+    else if (kind === "data") style += "endArrow=open;endFill=0;flowAnimation=1;";
     else if (kind === "bidirectional") style += "startArrow=block;startFill=1;endArrow=block;endFill=1;";
     else style += "endArrow=block;endFill=1;";
     if (sides[i].exit) style += portFragment("exit", sides[i].exit, exitOffset.get(i));
