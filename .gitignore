@@ -10,6 +10,12 @@ npm-debug.log*
 # Local diagram output (the /diagram default out dir)
 diagrams/
 
+# Stray generated diagrams at the repo root (never commit these; real examples
+# live under plugins/*/examples/, which these root-only rules do not touch).
+/*.drawio
+/*.gliffy
+/*.mmd
+
 # OS / editor
 .DS_Store
 Thumbs.db
