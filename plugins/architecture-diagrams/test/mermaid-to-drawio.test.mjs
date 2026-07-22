@@ -114,9 +114,45 @@ test("the long-labelled async edge is present with its wrapped label", () => {
   assert.ok(edge.includes('value="publishes&lt;br&gt;order.created"'), "wrapped label missing");
 });
 
-test("a node's multiple outgoing edges fan out onto distinct ports", () => {
-  // Two edges leaving one node must not share an exit point, or their lines and
-  // labels stack. Render a small branch and assert the offsets differ.
+test("edges float by default so draw.io's layout engine routes them optimally", () => {
+  // The default output is the seed for draw.io's own layout. Baking in fixed
+  // ports here would go stale once the engine repositions nodes and pin arrows to
+  // odd points, so edges without an explicit side hint must carry no exit/entry
+  // port. The fixture has no fromSide/toSide, so no edge may declare a port.
+  assert.ok(!/id="e_\d+"[^\n]*exit[XY]=/.test(xml), "default edges must not pin an exit port");
+  assert.ok(!/id="e_\d+"[^\n]*entry[XY]=/.test(xml), "default edges must not pin an entry port");
+  // But the edges are still there and still orthogonal.
+  assert.ok((xml.match(/<mxCell id="e_\d+"/g) ?? []).length >= 2, "edges must still be emitted");
+});
+
+test("an explicit fromSide/toSide is honored even in the floating default", () => {
+  const d = tmpdir();
+  try {
+    const m = {
+      title: "Pinned side",
+      direction: "LR",
+      nodes: [
+        { id: "a", label: "A", role: "service" },
+        { id: "b", label: "B", role: "datastore" },
+      ],
+      edges: [{ from: "a", to: "b", label: "x", fromSide: "R", toSide: "L" }],
+    };
+    const input = path.join(d, "m.json");
+    const output = path.join(d, "m.drawio");
+    writeFileSync(input, JSON.stringify(m));
+    const r = runScript("scripts/mermaid-to-drawio.mjs", [input, output]);
+    assert.equal(r.code, 0, r.stderr);
+    const out = readFileSync(output, "utf8");
+    assert.match(out, /id="e_0"[^\n]*exitX=1/, "explicit fromSide R must pin exitX=1");
+    assert.match(out, /id="e_0"[^\n]*entryX=0/, "explicit toSide L must pin entryX=0");
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
+
+test("--pin-ports fans a node's sibling edges out onto distinct ports", () => {
+  // A static file opened without an auto-layout pass wants pinned, fanned-out
+  // ports so two edges leaving one node do not stack. --pin-ports restores that.
   const d = tmpdir();
   try {
     const branch = {
@@ -135,13 +171,49 @@ test("a node's multiple outgoing edges fan out onto distinct ports", () => {
     const input = path.join(d, "b.json");
     const output = path.join(d, "b.drawio");
     writeFileSync(input, JSON.stringify(branch));
+    const r = runScript("scripts/mermaid-to-drawio.mjs", [input, output, "--pin-ports"]);
+    assert.equal(r.code, 0, r.stderr);
+    const out = readFileSync(output, "utf8");
+    const exitYs = [...out.matchAll(/id="e_\d+"[^\n]*?exitY=([\d.]+)/g)].map((m) => m[1]);
+    assert.ok(exitYs.length > 0, "expected pinned port offsets on the edges");
+    assert.equal(new Set(exitYs).size, exitYs.length, "sibling edges must use distinct exit offsets");
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
+
+test("plain node boxes are sized to their label so text never overflows", () => {
+  const d = tmpdir();
+  try {
+    const m = {
+      title: "Sizes",
+      direction: "LR",
+      nodes: [
+        { id: "s", label: "Postgres", role: "datastore" }, // short -> min width
+        { id: "l", label: "Databricks processing cluster", role: "service" }, // long -> wraps
+      ],
+      edges: [{ from: "s", to: "l" }],
+    };
+    const input = path.join(d, "m.json");
+    const output = path.join(d, "m.drawio");
+    writeFileSync(input, JSON.stringify(m));
     const r = runScript("scripts/mermaid-to-drawio.mjs", [input, output]);
     assert.equal(r.code, 0, r.stderr);
     const out = readFileSync(output, "utf8");
-    const ys = [...out.matchAll(/id="e_\d+"[^>]*?(?:exitY|entryY)=([\d.]+)/g)];
-    const exitYs = [...out.matchAll(/id="e_\d+"[^\n]*?exitY=([\d.]+)/g)].map((m) => m[1]);
-    assert.ok(ys.length > 0, "expected port offsets on the edges");
-    assert.equal(new Set(exitYs).size, exitYs.length, "sibling edges must use distinct exit offsets");
+    const box = (id) => {
+      const cell = out.match(new RegExp(`id="n_${id}" value="([^"]*)"[\\s\\S]*?width="(\\d+)" height="(\\d+)"`));
+      assert.ok(cell, `node ${id} not found`);
+      return { value: cell[1], w: Number(cell[2]), h: Number(cell[3]) };
+    };
+    const s = box("s");
+    const l = box("l");
+    // Every plain box stays within the width clamp.
+    for (const b of [s, l]) {
+      assert.ok(b.w >= 120 && b.w <= 260, `box width ${b.w} must be within [120, 260]`);
+    }
+    // The long label wraps (so it does not overflow) and its box is taller.
+    assert.ok(l.value.includes("&lt;br&gt;"), "the long label must wrap onto multiple lines");
+    assert.ok(l.h > s.h, "a wrapped label must make the box taller than a one-line label");
   } finally {
     rmSync(d, { recursive: true, force: true });
   }

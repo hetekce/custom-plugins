@@ -1,6 +1,6 @@
 {
   "name": "architecture-diagrams",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Turn a system description into clean diagrams: Mermaid for flows and draw.io for architecture (laid out by draw.io's own engine), with tech-stack icons, aligned labels, and human-sounding copy.",
   "author": {
     "name": "Hasan Emre Tekce",

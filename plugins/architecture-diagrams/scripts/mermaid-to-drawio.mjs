@@ -22,15 +22,22 @@ import { CREDIT, die, log } from "./lib/tools.mjs";
 // Geometry constants (pixels). Tuned for readable spacing with orthogonal
 // edge routing; all layout below is deterministic.
 // ---------------------------------------------------------------------------
-const NODE_W = 160; // plain vertex width
-const NODE_H = 60; // plain vertex height
+const NODE_MIN_W = 120; // plain vertex never narrower than this
+const NODE_MAX_W = 260; // ...nor wider; labels wrap to stay within it
+const NODE_MIN_H = 48; // plain vertex minimum height
+const CHAR_W = 7.2; // approx label width per character at fontSize 13
+const LINE_H = 18; // label line height
+const NODE_PAD_X = 28; // horizontal padding inside a plain vertex
+const NODE_PAD_Y = 16; // vertical padding inside a plain vertex
+const NODE_WRAP = 22; // wrap plain labels near this many characters
+const ICON_WRAP = 14; // wrap icon labels tighter (they sit under the icon)
 const ICON_SIZE = 72; // image vertex is square
-const ICON_LABEL_CLEARANCE = 28; // room below an image vertex for its label
-const MARGIN = 48; // canvas margin
-const RANK_GAP = 140; // gap between ranks (columns for LR, rows for TB)
-const STACK_GAP = 40; // gap between nodes inside one rank
+const ICON_LABEL_CLEARANCE = 26; // room below an image vertex for one label line
+const MARGIN = 56; // canvas margin
+const RANK_GAP = 180; // gap between ranks (columns for LR, rows for TB)
+const STACK_GAP = 56; // gap between nodes inside one rank
 const GROUP_GAP = 56; // extra gap where group membership changes in a rank
-const GROUP_PAD = 24; // container padding around member cells
+const GROUP_PAD = 28; // container padding around member cells
 const GROUP_LABEL_PAD = 36; // extra top padding inside a container for its label
 
 // ---------------------------------------------------------------------------
@@ -115,13 +122,9 @@ function esc(s) {
     .replace(/"/g, "&quot;");
 }
 
-/** Word-wrap an edge label into short lines so it never overflows. Returns a
- *  value for an mxCell `value="..."` attribute: each line is XML-escaped and the
- *  breaks are the entity-encoded `&lt;br&gt;`, which draw.io decodes back to a
- *  real <br> and (with html=1) renders as a line break. Using a raw "<br>" here
- *  would be invalid inside an XML attribute and draw.io would drop the cell.
- *  Long single words are kept whole rather than split mid-word. */
-function wrapLabel(text, maxChars = 16) {
+/** Word-wrap text into short lines near `maxChars`, keeping long single words
+ *  whole rather than splitting mid-word. Returns the raw (unescaped) lines. */
+function wrapLines(text, maxChars) {
   const words = String(text).trim().split(/\s+/).filter(Boolean);
   const lines = [];
   let line = "";
@@ -134,28 +137,64 @@ function wrapLabel(text, maxChars = 16) {
     }
   }
   if (line) lines.push(line);
+  return lines.length ? lines : [""];
+}
+
+/** Join wrapped lines into an mxCell `value="..."` attribute: each line is
+ *  XML-escaped and the breaks are the entity-encoded `&lt;br&gt;`, which draw.io
+ *  decodes back to a real <br> and (with html=1) renders as a line break. A raw
+ *  "<br>" here would be invalid inside an XML attribute and draw.io would drop
+ *  the whole cell. */
+function joinBr(lines) {
   return lines.map(esc).join("&lt;br&gt;");
+}
+
+/** Wrapped, escaped value for an edge label. */
+function wrapLabel(text, maxChars = 16) {
+  return joinBr(wrapLines(text, maxChars));
+}
+
+/** Wrapped, escaped value for a node label. */
+function wrapNodeLabel(text, maxChars) {
+  return joinBr(wrapLines(text, maxChars));
+}
+
+/** Size a plain (non-icon) vertex to fit its wrapped label, so text never
+ *  overflows the box. Width is clamped to [NODE_MIN_W, NODE_MAX_W]; height grows
+ *  with the line count. draw.io's layout engine reads these sizes for spacing,
+ *  so a correctly sized box also improves the final auto-layout. */
+function plainBoxSize(label) {
+  const lines = wrapLines(label, NODE_WRAP);
+  const longest = Math.max(...lines.map((l) => l.length));
+  const w = Math.min(NODE_MAX_W, Math.max(NODE_MIN_W, Math.round(longest * CHAR_W + NODE_PAD_X)));
+  const h = Math.max(NODE_MIN_H, lines.length * LINE_H + NODE_PAD_Y);
+  return { w, h };
 }
 
 // ---------------------------------------------------------------------------
 // CLI parsing
 // ---------------------------------------------------------------------------
+const USAGE =
+  "usage: node mermaid-to-drawio.mjs <model.json> <out.drawio> [--theme light|dark] [--pin-ports]";
+
 function parseArgs(argv) {
-  const args = { theme: null, positional: [] };
+  const args = { theme: null, pinPorts: false, positional: [] };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--theme") {
       args.theme = argv[++i];
       if (!["light", "dark"].includes(args.theme)) {
         die(`invalid --theme "${args.theme}"`, "use --theme light or --theme dark");
       }
+    } else if (argv[i] === "--pin-ports") {
+      args.pinPorts = true;
     } else if (argv[i].startsWith("-")) {
-      die(`unknown flag "${argv[i]}"`, "usage: node mermaid-to-drawio.mjs <model.json> <out.drawio> [--theme light|dark]");
+      die(`unknown flag "${argv[i]}"`, USAGE);
     } else {
       args.positional.push(argv[i]);
     }
   }
   if (args.positional.length !== 2) {
-    die("expected an input model and an output path", "usage: node mermaid-to-drawio.mjs <model.json> <out.drawio> [--theme light|dark]");
+    die("expected an input model and an output path", USAGE);
   }
   return args;
 }
@@ -261,15 +300,22 @@ function layout(model, iconById) {
   const direction = model.direction ?? "LR";
   const horizontal = direction === "LR" || direction === "RL";
 
-  // Per-node box size. Image vertices reserve clearance for the label below.
+  // Per-node box size. Plain vertices are sized to their wrapped label so text
+  // never overflows; image vertices stay square and reserve clearance below for
+  // as many label lines as the wrapped name needs.
   const size = new Map();
   for (const n of model.nodes) {
-    const iconic = iconById.has(n.id);
-    size.set(n.id, {
-      w: iconic ? ICON_SIZE : NODE_W,
-      h: iconic ? ICON_SIZE : NODE_H,
-      clearance: iconic ? ICON_LABEL_CLEARANCE : 0,
-    });
+    if (iconById.has(n.id)) {
+      const iconLines = wrapLines(n.label, ICON_WRAP).length;
+      size.set(n.id, {
+        w: ICON_SIZE,
+        h: ICON_SIZE,
+        clearance: ICON_LABEL_CLEARANCE + (iconLines - 1) * LINE_H,
+      });
+    } else {
+      const { w, h } = plainBoxSize(n.label);
+      size.set(n.id, { w, h, clearance: 0 });
+    }
   }
 
   // Group-major banding (swimlanes). Each top-level group is one band — a column
@@ -377,7 +423,7 @@ function computeGroupBoxes(model, pos, groupById) {
 // ---------------------------------------------------------------------------
 // XML emission
 // ---------------------------------------------------------------------------
-function emit(model, theme, pos, groupById, groupBoxes, iconById) {
+function emit(model, theme, pos, groupById, groupBoxes, iconById, pinPorts) {
   const pal = PALETTE[theme];
   const cells = [];
 
@@ -424,33 +470,41 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
     const colors = pal[role];
     const icon = iconById.get(n.id);
     let style;
+    let value;
     if (icon) {
       style =
         `shape=image;html=1;image=${icon};imageBorder=none;` +
         `verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;` +
         `fontSize=12;fontColor=${pal.font};`;
+      value = wrapNodeLabel(n.label, ICON_WRAP);
     } else {
       style =
         `rounded=1;whiteSpace=wrap;html=1;arcSize=8;fontSize=13;` +
         `fillColor=${colors.fill};strokeColor=${colors.stroke};fontColor=${pal.font};` +
         (n.role === "external" ? "dashed=1;" : "");
+      value = wrapNodeLabel(n.label, NODE_WRAP);
     }
     cells.push(
-      `        <mxCell id="${esc(nodeCellId(n.id))}" value="${esc(n.label)}" style="${esc(style)}" vertex="1" parent="${esc(parent.id)}">\n` +
+      `        <mxCell id="${esc(nodeCellId(n.id))}" value="${value}" style="${esc(style)}" vertex="1" parent="${esc(parent.id)}">\n` +
         `          <mxGeometry x="${p.x - parent.ox}" y="${p.y - parent.oy}" width="${p.w}" height="${p.h}" as="geometry"/>\n` +
         `        </mxCell>`,
     );
   }
 
-  // Edges. Pick each endpoint's side from the real geometry (an explicit
-  // fromSide/toSide wins), then spread edges that share a node side into parallel
-  // ports so their lines — and labels — separate instead of stacking. Labels are
-  // word-wrapped and drawn on an opaque background so long text stays readable.
+  // Edges. By default we emit *floating* connections — no fixed exit/entry
+  // ports — so draw.io's own layout engine (run by export-drawio.sh) chooses the
+  // optimal side and route after it repositions the nodes. Baking in ports here
+  // would be computed from our fallback positions and go stale the moment the
+  // engine moves a node, which is what makes arrows attach at odd points. An
+  // explicit fromSide/toSide in the model is always honored (author intent), and
+  // `--pin-ports` restores geometry-derived ports for a static file that will be
+  // opened without an auto-layout pass. Edges that share a pinned side fan out
+  // onto parallel ports so their lines and labels separate instead of stacking.
   const edges = model.edges ?? [];
   const sides = edges.map((e) => {
     const a = pos.get(e.from);
     const b = pos.get(e.to);
-    const auto = a && b ? portsFor(a, b) : { exit: null, entry: null };
+    const auto = pinPorts && a && b ? portsFor(a, b) : { exit: null, entry: null };
     return { exit: e.fromSide ?? auto.exit, entry: e.toSide ?? auto.entry };
   });
   // Fractional offset of each edge within its (node, side) bundle.
@@ -513,7 +567,7 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
 // Main
 // ---------------------------------------------------------------------------
 async function main() {
-  const { theme: themeFlag, positional } = parseArgs(process.argv.slice(2));
+  const { theme: themeFlag, pinPorts, positional } = parseArgs(process.argv.slice(2));
   const [inputPath, outputPath] = positional;
 
   let raw;
@@ -542,7 +596,7 @@ async function main() {
 
   const { pos, groupById } = layout(model, iconById);
   const groupBoxes = computeGroupBoxes(model, pos, groupById);
-  const xml = emit(model, theme, pos, groupById, groupBoxes, iconById);
+  const xml = emit(model, theme, pos, groupById, groupBoxes, iconById, pinPorts);
 
   try {
     await writeFile(outputPath, xml, "utf8");

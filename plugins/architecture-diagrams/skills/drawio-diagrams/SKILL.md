@@ -25,7 +25,17 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/mermaid-to-drawio.mjs" model.json out.drawio
   datastore, queue, cache, gateway, external, actor, client, job).
 - Edges use `orthogonalEdgeStyle` with rounded corners: solid arrows for `sync`,
   dashed for `async`, open-arrow lines for `data`, double-headed for `bidirectional`.
-  `fromSide`/`toSide` hints become exit/entry points.
+- **Edges float by default** — no fixed exit/entry ports — so draw.io's layout
+  engine (Path B) picks the optimal side and route after it repositions nodes.
+  Pinning ports here would be computed from the fallback coordinates and go stale
+  the moment the engine moves a node, which is what makes arrows attach at odd
+  points. An explicit `fromSide`/`toSide` in the model is still honored. Pass
+  `--pin-ports` only for a static file you will hand over *without* an auto-layout
+  pass — it restores geometry-derived, fanned-out ports so sibling edges don't
+  stack.
+- **Nodes are sized to their label.** Plain vertices grow (within a clamp) and
+  labels wrap so text never overflows the box; icon vertices stay square with the
+  wrapped label beneath. Correct sizes also give the layout engine better spacing.
 - **Flow edges animate.** `async` (events) and `data` (streams) carry
   `flowAnimation=1`, so they show draw.io's moving-dash "flow" animation;
   `sync` and `bidirectional` stay static. This is why the diagram-architect should
@@ -87,15 +97,17 @@ in both themes, how model fields map to cells, and the export CLI flags.
 
 ## Layout guarantees
 
-The converter keeps branchy diagrams readable without manual cleanup:
+The converter keeps diagrams readable without manual cleanup:
 
-- **Edges leave and enter on the side that faces the other node**, and several
-  edges sharing one node side fan out onto parallel ports — so a node with two
-  outgoing edges (for example writes-to-database and publishes-to-bus) never
-  stacks them into one overlapping line.
-- **Edge labels are word-wrapped** and drawn on an opaque background, so long
-  text neither overflows the line nor becomes unreadable where it crosses one.
+- **Routing is left to draw.io's engine by default** (floating edges), so arrows
+  attach at the optimal side after layout. With `--pin-ports` (static files),
+  edges sharing one node side fan out onto parallel ports so a node with two
+  outgoing edges never stacks them into one overlapping line.
+- **Nodes are sized to their label and labels wrap**, so text never overflows the
+  box; edge labels are word-wrapped and drawn on an opaque background so long text
+  neither overflows the line nor becomes unreadable where it crosses one.
 
-If you hand-edit the XML, keep these invariants: distinct `exitX/exitY` +
-`entryX/entryY` per sibling edge, and `&lt;br&gt;` (never a raw `<br>`) inside a
-`value="..."` attribute — a raw break makes draw.io drop the whole cell.
+If you hand-edit the XML, keep these invariants: `&lt;br&gt;` (never a raw
+`<br>`) inside a `value="..."` attribute — a raw break makes draw.io drop the
+whole cell — and, if you pin ports, distinct `exitX/exitY` + `entryX/entryY` per
+sibling edge.
