@@ -11,7 +11,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import process from "node:process";
-import { die, log } from "./lib/tools.mjs";
+import { CREDIT, die, log } from "./lib/tools.mjs";
 
 // ---------------------------------------------------------------------------
 // Layout constants (pixels).
@@ -568,6 +568,9 @@ function main() {
       exportBorder: false,
       loadPosition: "default",
       libraries: [],
+      // Attribution, in the document metadata rather than on the canvas — it
+      // never draws as a shape, so the imported diagram stays clean.
+      generatedBy: CREDIT,
     },
     embeddedResources: { index: 0, resources: [] },
     stage: {

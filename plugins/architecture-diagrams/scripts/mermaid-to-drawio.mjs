@@ -16,7 +16,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
-import { die, log } from "./lib/tools.mjs";
+import { CREDIT, die, log } from "./lib/tools.mjs";
 
 // ---------------------------------------------------------------------------
 // Geometry constants (pixels). Tuned for readable spacing with orthogonal
@@ -492,6 +492,9 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById) {
 
   const background = theme === "dark" ? ` background="${pal.background}"` : "";
   return (
+    // Attribution comment. It lives in the source only; draw.io never draws XML
+    // comments, so it cannot leak into an exported PNG/SVG/JPEG.
+    `<!-- ${CREDIT} -->\n` +
     `<mxfile host="app.diagrams.net" type="device">\n` +
     `  <diagram id="diagram-1" name="${esc(model.title)}">\n` +
     `    <mxGraphModel dx="800" dy="600" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0"${background}>\n` +

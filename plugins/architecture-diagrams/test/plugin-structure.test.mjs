@@ -7,6 +7,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { PLUGIN_ROOT } from "./helpers.mjs";
+import { CREDIT } from "../scripts/lib/tools.mjs";
 
 const KEBAB = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
 const SEMVER = /^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$/;
@@ -86,6 +87,23 @@ test("every role default resolves to a bundled icon (svg + 256px png)", () => {
     const png = path.join(PLUGIN_ROOT, "assets", "icons", "png", "256", `${name}.png`);
     assert.ok(existsSync(svg), `role "${role}" default ${iconId}: missing bundled ${name}.svg`);
     assert.ok(existsSync(png), `role "${role}" default ${iconId}: missing bundled 256px ${name}.png`);
+  }
+});
+
+test("the attribution line is identical everywhere it is duplicated", () => {
+  // CREDIT is single-sourced in tools.mjs, but export-drawio.sh (shell, cannot
+  // import it) and the mermaid skill (authored text) mirror the wording. Pin all
+  // copies to CREDIT so they can never drift apart.
+  assert.ok(!CREDIT.includes("--"), "CREDIT must not contain '--' (illegal in an XML comment)");
+  const mirrors = [
+    path.join(PLUGIN_ROOT, "scripts", "export-drawio.sh"),
+    path.join(PLUGIN_ROOT, "skills", "mermaid-diagrams", "SKILL.md"),
+  ];
+  for (const file of mirrors) {
+    assert.ok(
+      readFileSync(file, "utf8").includes(CREDIT),
+      `${path.relative(PLUGIN_ROOT, file)} must contain the exact CREDIT string`,
+    );
   }
 });
 

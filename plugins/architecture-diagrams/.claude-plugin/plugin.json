@@ -1,6 +1,6 @@
 {
   "name": "architecture-diagrams",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Turn a system description into clean architecture diagrams as Mermaid and Gliffy, with tech-stack icons, aligned labels, and human-sounding copy.",
   "author": {
     "name": "Hasan Emre Tekce",
