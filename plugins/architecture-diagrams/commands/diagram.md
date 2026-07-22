@@ -14,7 +14,10 @@ Read `$ARGUMENTS` and split it into a subject and flags:
 - **Subject** — everything that is not a flag. If it is an existing directory
   or file path, treat it as a codebase to analyze; otherwise treat it as a
   prose description of the system.
-- `--format` — `mermaid`, `drawio`, `gliffy`, or `all`. Default `all`.
+- `--format` — `auto`, `mermaid`, `drawio`, `gliffy`, or `all`. Default
+  `auto`, which routes by diagram kind (see step 5). Only produce Gliffy when
+  the user asks for it explicitly — `--format gliffy`, `--format all`, or the
+  word "gliffy"/"confluence" in the request.
 - `--type` — force the diagram kind (`architecture`, `sequence`,
   `c4-container`, `c4-context`, `er`, `flowchart`, `block`, `class`). If
   omitted, the architect picks it.
@@ -48,27 +51,47 @@ that embed images, a rasterized PNG produced via
 `${CLAUDE_PLUGIN_ROOT}/scripts/fetch-icon.mjs`. Nodes without a known tech
 keep their role-based styling and no icon — that is fine.
 
-## 5. Render each requested format
+## 5. Render — one format per diagram, chosen by kind
+
+This is the rule that keeps output clean; follow it exactly. **Mermaid draws
+flows. draw.io draws architecture. They are never mixed, and a `.drawio` is
+never produced by translating a Mermaid diagram** — it is always built from the
+diagram model through the draw.io path.
 
 Derive the base name by slugging the model title (the `slug` helper in
-`${CLAUDE_PLUGIN_ROOT}/scripts/lib/tools.mjs` shows the rule). Then, for each
-format selected by `--format`:
+`${CLAUDE_PLUGIN_ROOT}/scripts/lib/tools.mjs` shows the rule).
 
-- **mermaid** — best for flows (auth, request lifecycles, sequences) and quick
-  architecture. Run the `mermaid-diagrams` skill: it writes `<name>.mmd`
-  (source), `<name>.drawio`, and `<name>.jpeg` (rendered raster).
-- **drawio** — best for general architecture, drawn the draw.io way. Run the
-  `drawio-diagrams` skill: it emits a raw `.drawio`, then lets **draw.io's own
-  layout engine** arrange it (`--layout horizontalFlow`) and writes the editable
-  `<name>.drawio` with that layout baked in. If the model has any `data`/`async`
-  flow edges, also write an animated `<name>.svg` (draw.io animates flows and the
-  SVG keeps the animation); otherwise a `<name>.jpeg` is fine.
-- **gliffy** — run the `gliffy-diagrams` skill. It writes `<name>.gliffy`,
-  a best-effort basic-shapes JSON the user imports manually in Gliffy via
-  "Import a Diagram".
+### With `--format auto` (the default), route by the model's `kind`
 
-With `--format all`, use distinct base names per format (for example
-`<name>-mermaid.drawio` and `<name>.drawio`) so nothing overwrites.
+- **`kind: sequence`** (auth flows, login, request lifecycles — anything ordered
+  in time) → **Mermaid only**. Run the `mermaid-diagrams` skill: it writes
+  `<name>.mmd` and renders `<name>.jpeg`. Do **not** produce a `.drawio` or a
+  Gliffy file for a flow.
+- **every other kind** (`architecture`, `c4-container`, `c4-context`, `block`,
+  `flowchart`, `er`, `class`) → **draw.io only**, drawn the draw.io way. Run the
+  `drawio-diagrams` skill: it emits a raw `.drawio` from the model, then lets
+  **draw.io's own layout engine** arrange it (`--layout horizontalFlow`) and
+  writes the editable `<name>.drawio` with that layout baked in. If the model has
+  any `data`/`async` flow edges, also write an animated `<name>.svg` (draw.io
+  animates flows and the SVG keeps it); otherwise a `<name>.jpeg` is fine. Do
+  **not** produce a Mermaid diagram for architecture.
+
+Never emit Gliffy under `auto`.
+
+### Explicit `--format` overrides the routing
+
+Only when the user asked for a specific format:
+
+- **`mermaid`** — force Mermaid via the `mermaid-diagrams` skill (`.mmd` +
+  `.jpeg`), even for architecture. A power-user escape hatch; `auto` never does
+  this.
+- **`drawio`** — force the draw.io path via the `drawio-diagrams` skill.
+- **`gliffy`** — run the `gliffy-diagrams` skill. It writes `<name>.gliffy`, a
+  best-effort basic-shapes JSON the user imports manually in Gliffy via "Import a
+  Diagram". Produce this only on explicit request.
+- **`all`** — produce all three, using distinct base names per format (for
+  example `<name>-mermaid.jpeg`, `<name>.drawio`, `<name>.gliffy`) so nothing
+  overwrites.
 
 Each skill's scripts check for their external tools (`mmdc`, `drawio`, an
 SVG rasterizer) before rendering. **Source artifacts are always written even

@@ -28,7 +28,11 @@ touch production code — you only read it.
      plausible but unconfirmed, leave it out or say so in the summary.
    - Given a prose description: model exactly what is described. Fill obvious
      structural gaps (a web app implies a client) but add nothing speculative.
-3. Pick the `kind` that fits the question being asked:
+3. Pick the `kind` that fits the question being asked. **This choice also picks
+   the renderer**, so be honest about it: `sequence` is rendered as a Mermaid
+   flow; every other kind is rendered as a draw.io architecture diagram. Use
+   `sequence` only for genuine time-ordered interactions — never reach for it to
+   describe a system's structure, and never model an architecture as a sequence.
    - `architecture` — infrastructure and topology, cloud services, tech logos.
    - `sequence` — auth flows, request lifecycles, anything ordered in time.
    - `c4-container` — service decomposition of one system (`c4-context` for

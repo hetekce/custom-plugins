@@ -41,9 +41,12 @@ tech-stack icons, and renders the result.
 
 ## What you get
 
-- **Format:** Mermaid by default; Gliffy on request; both with `both`.
-- **Diagram types:** architecture (logos + groups), flowchart, C4-style container/context, block, and
-  sequence — chosen to fit what you're describing.
+- **Format:** picked by what you're drawing. **Flows** (auth, logins, request lifecycles) render as
+  **Mermaid**; **architecture** (topology, C4 container/context, block, flowchart, ER) renders as
+  **draw.io**, laid out by draw.io's own engine. The two are never mixed. **Gliffy** is produced only
+  when you ask for it (`--format gliffy`). Force any format with `--format mermaid|drawio|gliffy|all`.
+- **Diagram types:** architecture (logos + groups), flowchart, C4-style container/context, block, ER,
+  and sequence — chosen to fit what you're describing.
 - **Icons:** ~250 tech logos bundled under [`assets/icons/`](assets/icons) (data engineering, data
   science, databases, cloud, languages, DevOps), generated from permissively licensed sets (Iconify
   `logos`, Devicon, Simple Icons). Nodes with no logo get a modern Lucide icon by role — including a
@@ -57,7 +60,8 @@ tech-stack icons, and renders the result.
 | --- | --- | --- |
 | Command | `/diagram` | Entry point: description or code path → rendered diagram. |
 | Agent | `diagram-architect` | Works out diagram type and the node/edge model from the system. |
-| Skill | `mermaid-diagrams` | Authoring elegant Mermaid and rendering it to SVG/PNG. |
+| Skill | `mermaid-diagrams` | Authoring elegant Mermaid for flows and rendering it to JPEG. |
+| Skill | `drawio-diagrams` | Building architecture as `.drawio`, laid out by draw.io's own engine. |
 | Skill | `gliffy-diagrams` | Authoring `.gliffy` JSON for Confluence / the Gliffy app. |
 | Skill | `tech-stack-icons` | Resolving, fetching, and rasterizing technology logos. |
 | Skill | `diagram-copywriter` | Making titles, labels, and captions read like a human wrote them. |

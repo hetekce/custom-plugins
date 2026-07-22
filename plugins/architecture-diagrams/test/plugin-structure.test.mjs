@@ -90,6 +90,26 @@ test("every role default resolves to a bundled icon (svg + 256px png)", () => {
   }
 });
 
+test("the /diagram command routes flows to Mermaid and architecture to draw.io", () => {
+  // Vital contract: Mermaid renders flows only; architecture is always draw.io,
+  // built from the model — never a Mermaid-derived .drawio. Guard the command
+  // doc so a rewrite cannot quietly reintroduce the mixing that produced
+  // shapeless output.
+  const cmd = readFileSync(path.join(PLUGIN_ROOT, "commands", "diagram.md"), "utf8");
+  assert.match(cmd, /Default\s+`auto`/, "default format must be auto (route by kind)");
+  assert.match(
+    cmd,
+    /a `\.drawio` is\s+never produced by translating a Mermaid diagram/,
+    "the command must forbid building a .drawio from a Mermaid diagram",
+  );
+  assert.match(cmd, /`kind: sequence`[\s\S]*?Mermaid only/, "sequence must route to Mermaid only");
+  assert.match(
+    cmd,
+    /every other kind[\s\S]*?draw\.io only/,
+    "non-sequence kinds must route to draw.io only",
+  );
+});
+
 test("the attribution line is identical everywhere it is duplicated", () => {
   // CREDIT is single-sourced in tools.mjs, but export-drawio.sh (shell, cannot
   // import it) and the mermaid skill (authored text) mirror the wording. Pin all

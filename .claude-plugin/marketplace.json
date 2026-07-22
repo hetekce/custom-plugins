@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "architecture-diagrams",
-      "description": "Turn a system description into clean architecture diagrams as Mermaid and Gliffy, with tech-stack icons, aligned labels, and human-sounding copy.",
+      "description": "Turn a system description into clean diagrams: Mermaid for flows and draw.io for architecture (laid out by draw.io's own engine), with tech-stack icons, aligned labels, and human-sounding copy.",
       "source": "./plugins/architecture-diagrams",
       "category": "documentation",
       "author": {

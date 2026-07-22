@@ -1,6 +1,6 @@
 ---
 name: drawio-diagrams
-description: Produce an editable .drawio (mxGraph XML) diagram, plus a .jpeg export, from a diagram-model JSON. Use when the user wants a draw.io file, the .drawio artifact of a Mermaid diagram, or a diagram they can edit in draw.io or import into Confluence.
+description: Produce an editable .drawio (mxGraph XML) diagram, laid out by draw.io's own engine, from a diagram-model JSON. This is the renderer for architecture (topology, C4 container/context, block, flowchart, ER) — never build a .drawio by translating a Mermaid diagram; always build it from the model. Use it for any architecture diagram, or when the user wants a draw.io file to edit or import into Confluence.
 ---
 
 # Draw.io diagrams

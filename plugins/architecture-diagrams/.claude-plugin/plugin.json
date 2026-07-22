@@ -1,7 +1,7 @@
 {
   "name": "architecture-diagrams",
-  "version": "0.2.0",
-  "description": "Turn a system description into clean architecture diagrams as Mermaid and Gliffy, with tech-stack icons, aligned labels, and human-sounding copy.",
+  "version": "0.3.0",
+  "description": "Turn a system description into clean diagrams: Mermaid for flows and draw.io for architecture (laid out by draw.io's own engine), with tech-stack icons, aligned labels, and human-sounding copy.",
   "author": {
     "name": "Hasan Emre Tekce",
     "url": "https://github.com/hetekce"

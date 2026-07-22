@@ -1,6 +1,6 @@
 ---
 name: mermaid-diagrams
-description: Turn the diagram-model JSON into elegant Mermaid source and a rendered image. Use when producing a Mermaid diagram or .mmd file from the diagram model — architecture, flowchart, sequence, C4 container, or ER views — including the .jpeg render.
+description: Turn the diagram-model JSON into elegant Mermaid source and a rendered image (.mmd + .jpeg). This is the flow renderer — use it by default only for `kind: sequence` (auth flows, logins, request lifecycles, anything ordered in time). Architecture is drawn with draw.io, not here. It can still render other kinds when the user forces `--format mermaid`.
 ---
 
 # Mermaid diagrams
@@ -49,7 +49,11 @@ not only through our CLI config:
 - Backtick-markdown labels wrap and allow emphasis: ``db["`**Postgres**\norders, payments`"]``.
 - Labels in sentence case; edge labels are a short verb or protocol ("writes to", "gRPC").
 
-## Render (three artifacts per diagram)
+## Render (two artifacts per flow)
+
+A flow produces exactly two files: the `.mmd` source and its `.jpeg` render. It
+does **not** get a `.drawio` — that is the draw.io renderer's job for
+architecture diagrams, built from the model, not from this Mermaid source.
 
 1. Write `<name>.mmd` — `name` is the kebab-case slug of the model title. Put one
    attribution comment right after the frontmatter block (Mermaid ignores `%%`
@@ -65,7 +69,5 @@ not only through our CLI config:
    The script needs `mmdc` (`npm i -g @mermaid-js/mermaid-cli`). It renders a PNG at scale 3 with
    the logos and devicon icon packs, then converts to JPEG via ImageMagick or sharp; with neither
    present it keeps the PNG and warns.
-3. `<name>.drawio` — produced by the **drawio-diagrams** skill (`mermaid-to-drawio.mjs`) from the
-   same diagram model. Do not build it here.
 
 Always write the `.mmd` first; a failed render must never cost the source artifact.
