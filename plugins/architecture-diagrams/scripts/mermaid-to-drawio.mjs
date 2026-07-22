@@ -473,7 +473,9 @@ function emit(model, theme, pos, groupById, groupBoxes, iconById, pinPorts) {
     let value;
     if (icon) {
       style =
-        `shape=image;html=1;image=${icon};imageBorder=none;` +
+        // imageAspect=1 keeps the logo's aspect ratio even if draw.io widens the
+        // cell to fit the label on export, so the icon is never stretched.
+        `shape=image;html=1;image=${icon};imageBorder=none;imageAspect=1;` +
         `verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;` +
         `fontSize=12;fontColor=${pal.font};`;
       value = wrapNodeLabel(n.label, ICON_WRAP);
