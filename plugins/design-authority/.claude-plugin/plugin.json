@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "design-authority",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Turn a one-line request into a complete Claude Design prompt. Decides the colour system with measured contrast, the type scale, motion, and every component state up front — then refuses to emit the prompt if anything is still vague.",
   "author": {
     "name": "Hasan Emre Tekce",

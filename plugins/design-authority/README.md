@@ -34,6 +34,24 @@ The first run writes `design/direction.json` in your repo — the product's desi
 Every later screen is rendered from it, so screen five is consistent with screen one because both
 read the same file, not because anyone remembered.
 
+### Order matters, in one place
+
+The direction file is built **from** the accent hue, and brand assets are rendered **from** the
+direction. So the two halves of `brand-identity` sit on opposite sides of it:
+
+```
+1. brand-identity   choose the hue          ─┐  only if you have no brand colour
+2. design-direction write direction.json    ─┘  needs brand.accentHue to exist
+3. design-screen    render a screen prompt      one per screen, all inherit the direction
+4. brand-identity   generate a mark             needs direction.json for its colours
+```
+
+Ask for a logo before a direction exists and the plugin will decline rather than invent a palette
+— otherwise the mark and the interface end up as two different brands.
+
+You run the outputs yourself: the screen prompt goes into Claude Design, the mark prompt goes into
+the image model. The plugin generates; it does not call them.
+
 ## What it decides for you
 
 - **The whole colour system.** A twelve-step role-mapped neutral ramp and five semantic roles, in

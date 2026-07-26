@@ -37,12 +37,29 @@ Infer, and state what you inferred so it can be corrected:
 
 ## Deriving the brand colour
 
+The direction is built **from** the accent hue — `spec.json` needs `brand.accentHue` before this
+skill can write anything. So the hue is settled here, first, not afterwards.
+
 If the product has no brand colour, derive one rather than defaulting. Read
 `${CLAUDE_PLUGIN_ROOT}/skills/design-direction/references/brand-colour.md` for the method — it
 covers which hue bands are exhausted in which markets, how the emotional job narrows the choice,
 and why the accent never needs to survive as a button fill.
 
+Interrogate rather than pick. `brand-identity` wraps this, but the tool is the same:
+
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/scripts/brand.mjs scan --step 15   # every hue, with verdicts
+node ${CLAUDE_PLUGIN_ROOT}/scripts/brand.mjs probe --hue 245  # one hue in detail
+```
+
+If the user already has a brand colour, probe it anyway. It may turn out to carry borders and
+icons but not text, which is a real finding worth reporting before it is baked into the file.
+
 State the hue you chose and why in one sentence, before writing anything.
+
+**A mark is a separate job, and it comes later.** Logos and illustrations are rendered from the
+colours in `direction.json`, so they cannot be generated until this file exists. Finish the
+direction, then use `brand-identity` for assets.
 
 ## Writing the file
 

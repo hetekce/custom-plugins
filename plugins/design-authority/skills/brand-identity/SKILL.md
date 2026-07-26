@@ -9,6 +9,37 @@ argument-hint: [what the brand is for, or a hue to check]
 Two jobs, and they are different. The colour is a decision the plugin can make and defend. The
 mark is a decision a person makes, which the plugin can only give them something to react to.
 
+## The two jobs sit on opposite sides of the direction file
+
+This is the first thing to get right, because the two halves of this skill run at different times
+and depend on each other in opposite directions.
+
+```
+choose the hue  ──▶  design-direction  ──▶  generate the mark
+   (before)              writes                  (after)
+                   design/direction.json
+```
+
+**Choosing the hue comes BEFORE the direction exists.** The direction is built from the accent
+hue — `spec.json` needs `brand.accentHue` before `direction.mjs init` can run. So if the user has
+no brand colour, this skill runs first, and its output is a number and a sentence of reasoning
+that go into the spec.
+
+**Generating a mark comes AFTER the direction exists.** The mark is rendered in the product's own
+colours, read out of `direction.json`. Without it, `identity.mjs` refuses rather than inventing a
+palette nobody agreed to.
+
+So decide which half you are in before doing anything:
+
+```bash
+ls design/direction.json 2>/dev/null && echo "direction exists — you can generate assets" \
+  || echo "no direction yet — you are choosing the hue, and design-direction runs next"
+```
+
+If the user asks for a logo and no direction exists, do not generate one. Choose the hue, run
+`design-direction`, and then come back — otherwise the mark and the interface will be two
+different brands.
+
 ## Say this before generating a mark
 
 Do not let the user believe a generated logo is a logo. State it plainly, once, in your own words:

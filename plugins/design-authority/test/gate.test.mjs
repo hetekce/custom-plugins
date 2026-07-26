@@ -1,5 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { buildDirection } from "../scripts/lib/direction.mjs";
 import { runGate, formatGaps, REQUIRED_STATES } from "../scripts/lib/gate.mjs";
 import { knownMarkets, localeRules } from "../scripts/lib/locale.mjs";
@@ -187,6 +192,27 @@ test("locale is a pack, and no market is the default", () => {
 test("the direction carries no market-specific default", () => {
   const d = direction(); // no localeCode given
   assert.notEqual(d.locale.market, "de", "German must never be what you get by not choosing");
+});
+
+test("a brand asset cannot be generated before the direction exists", () => {
+  // The order is load-bearing: the direction is built FROM the accent hue, and assets are
+  // rendered FROM the direction. Generating a mark first would invent a palette nobody agreed
+  // to, and the mark and the interface would end up as two different brands.
+  const scripts = path.resolve(fileURLToPath(new URL("../scripts", import.meta.url)));
+  const dir = mkdtempSync(path.join(tmpdir(), "design-authority-order-"));
+  writeFileSync(
+    path.join(dir, "identity.json"),
+    JSON.stringify({ feeling: "calm", mark: { kind: "abstract", idea: "a relay handing on" } })
+  );
+
+  const run = spawnSync(process.execPath, [path.join(scripts, "identity.mjs"), "mark", "--identity", "identity.json"], {
+    cwd: dir,
+    encoding: "utf8",
+  });
+
+  assert.notEqual(run.status, 0, "generating a mark without a direction must fail");
+  assert.match(run.stderr, /no direction file/i);
+  assert.equal(run.stdout.trim(), "", "nothing may be emitted when it refuses");
 });
 
 test("an unknown framework is reported, not silently ignored", () => {
