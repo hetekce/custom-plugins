@@ -85,6 +85,23 @@ Spec shape, with a worked example at `${CLAUDE_PLUGIN_ROOT}/examples/invoice-scr
 
 `decisions` is not optional padding. A design system whose choices cannot be explained six months later is a stylesheet. Every non-obvious call gets an entry with its reason.
 
+## Export it for the design tool and the codebase
+
+```bash
+node ${CLAUDE_PLUGIN_ROOT}/scripts/direction.mjs export
+```
+
+Writes `design/tokens.css` and `design/design-system.md`, both generated from the direction.
+
+This matters for consistency across a whole product, not just one screen. A design tool that keeps
+its own design system — Claude Design does, at organization level, seeded from a codebase or a
+document — becomes a second source of truth the moment someone edits it there. Seeding it from
+`tokens.css` and re-exporting when a decision changes is what keeps the repo and the tool from
+drifting into two different systems.
+
+Tell the user both files are generated and must not be hand-edited. If they want a value changed,
+it changes in `direction.json` and everything re-renders.
+
 ## Then write the rationale beside it
 
 Create `design/direction.md` — prose next to the file, never instead of it. It explains *why*, links each rule to what it came from, and is where a future reader argues with a decision. The file holds the values; the markdown holds the arguments.

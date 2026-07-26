@@ -1,0 +1,292 @@
+/* Generated from design/direction.json — do not edit by hand.
+ *
+ * Regenerate with:  direction.mjs export
+ *
+ * Primitives carry no intent and are never applied to a component directly; components consume
+ * the semantic names, which is what makes light mode a remap rather than a repaint.
+ *
+ * 52 colour pairings were measured against WCAG 2.2 when this was
+ * built, and all of them passed. Changing a value here without re-running the build silently
+ * discards that guarantee.
+ */
+
+:root {
+  /* type */
+  --font-ui: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --text-label: 13px;
+  --leading-label: 1.5;
+  --text-compact: 15px;
+  --leading-compact: 1.5;
+  --text-body: 16px;
+  --leading-body: 1.55;
+  --text-lede: 18px;
+  --leading-lede: 1.5;
+  --text-subsection: 20px;
+  --leading-subsection: 1.4;
+  --text-section: 24px;
+  --leading-section: 1.3;
+  --text-title: 32px;
+  --leading-title: 1.15;
+  --text-page-title: 43px;
+  --leading-page-title: 1.08;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --tracking-display: -0.03em;
+  --tracking-body: 0;
+  --measure-reading: 68ch;
+
+  /* space */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --rhythm-tight: 8px;
+  --rhythm-copy: 16px;
+  --rhythm-group: 32px;
+  --rhythm-section: 64px;
+
+  /* shape */
+  --radius-control: 4px;
+  --radius-surface: 6px;
+  --radius-container: 8px;
+  --radius-pill: 9999px;
+
+  /* density */
+  --control-height-compact: 32px;
+  --control-height-default: 36px;
+  --control-height-touch: 44px;
+  --touch-target-min: 44px;
+
+  /* motion */
+  --duration-state: 150ms;
+  --duration-disclosure: 200ms;
+  --duration-route: 220ms;
+  --duration-confirmation: 400ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-exit: ease-out;
+
+  /* dark — the primary designed mode */
+  /* primitives — never applied directly to a component */
+  --color-background-100: #090a0b;
+  --color-background-200: #050506;
+  --color-gray-100: #191a1c;
+  --color-gray-200: #1f2122;
+  --color-gray-300: #282a2d;
+  --color-gray-400: #303335;
+  --color-gray-500: #45484b;
+  --color-gray-600: #66696d;
+  --color-gray-700: #82878b;
+  --color-gray-800: #94999e;
+  --color-gray-900: #a6abb1;
+  --color-gray-1000: #eceef0;
+
+  /* semantic — this is what components consume */
+  --surface-page: var(--color-background-100);
+  --surface-canvas: var(--color-background-200);
+  --surface-raised: var(--color-gray-100);
+  --surface-hover: var(--color-gray-200);
+  --surface-active: var(--color-gray-300);
+  --border-subtle: var(--color-gray-400);
+  --border-hover: var(--color-gray-500);
+  --border-strong: var(--color-gray-600);
+  --fill-contrast: var(--color-gray-700);
+  --text-disabled: var(--color-gray-800);
+  --text-secondary: var(--color-gray-900);
+  --text-primary: var(--color-gray-1000);
+  --text-on-fill: var(--color-background-100);
+
+  --accent-text: #05abab;
+  --accent-boundary: #058686;
+  --accent-tint: #042222;
+  --info-text: #05abab;
+  --info-boundary: #058686;
+  --info-tint: #042222;
+  --success-text: #25b057;
+  --success-boundary: #028b3f;
+  --success-tint: #102214;
+  --warning-text: #cf8c32;
+  --warning-boundary: #a86b02;
+  --warning-tint: #271a09;
+  --danger-text: #ec776c;
+  --danger-boundary: #c5544b;
+  --danger-tint: #2b1614;
+
+  --elevation-flat: none;
+  --elevation-raised: 0 0 0 1px rgba(255,255,255,0.08);
+  --elevation-overlay: 0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.6);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* primitives — never applied directly to a component */
+    --color-background-100: #ffffff;
+    --color-background-200: #f9fafb;
+    --color-gray-100: #f3f5f6;
+    --color-gray-200: #ebedef;
+    --color-gray-300: #e3e5e8;
+    --color-gray-400: #dbdee1;
+    --color-gray-500: #c9ccd0;
+    --color-gray-600: #90959b;
+    --color-gray-700: #7b8187;
+    --color-gray-800: #6f757b;
+    --color-gray-900: #62676d;
+    --color-gray-1000: #1d2125;
+
+    /* semantic — this is what components consume */
+    --surface-page: var(--color-background-100);
+    --surface-canvas: var(--color-background-200);
+    --surface-raised: var(--color-gray-100);
+    --surface-hover: var(--color-gray-200);
+    --surface-active: var(--color-gray-300);
+    --border-subtle: var(--color-gray-400);
+    --border-hover: var(--color-gray-500);
+    --border-strong: var(--color-gray-600);
+    --fill-contrast: var(--color-gray-700);
+    --text-disabled: var(--color-gray-800);
+    --text-secondary: var(--color-gray-900);
+    --text-primary: var(--color-gray-1000);
+    --text-on-fill: var(--color-background-100);
+
+    --accent-text: #047879;
+    --accent-boundary: #019e9f;
+    --accent-tint: #e3f8f8;
+    --info-text: #047879;
+    --info-boundary: #019e9f;
+    --info-tint: #e3f8f8;
+    --success-text: #027c37;
+    --success-boundary: #32a155;
+    --success-tint: #eaf8ec;
+    --warning-text: #975f00;
+    --warning-boundary: #c57e06;
+    --warning-tint: #fdf1e4;
+    --danger-text: #be3e38;
+    --danger-boundary: #e7645a;
+    --danger-tint: #ffeeec;
+
+    --elevation-flat: none;
+    --elevation-raised: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06);
+    --elevation-overlay: 0 8px 16px -4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08);
+  }
+}
+
+:root[data-theme="light"] {
+  /* primitives — never applied directly to a component */
+  --color-background-100: #ffffff;
+  --color-background-200: #f9fafb;
+  --color-gray-100: #f3f5f6;
+  --color-gray-200: #ebedef;
+  --color-gray-300: #e3e5e8;
+  --color-gray-400: #dbdee1;
+  --color-gray-500: #c9ccd0;
+  --color-gray-600: #90959b;
+  --color-gray-700: #7b8187;
+  --color-gray-800: #6f757b;
+  --color-gray-900: #62676d;
+  --color-gray-1000: #1d2125;
+
+  /* semantic — this is what components consume */
+  --surface-page: var(--color-background-100);
+  --surface-canvas: var(--color-background-200);
+  --surface-raised: var(--color-gray-100);
+  --surface-hover: var(--color-gray-200);
+  --surface-active: var(--color-gray-300);
+  --border-subtle: var(--color-gray-400);
+  --border-hover: var(--color-gray-500);
+  --border-strong: var(--color-gray-600);
+  --fill-contrast: var(--color-gray-700);
+  --text-disabled: var(--color-gray-800);
+  --text-secondary: var(--color-gray-900);
+  --text-primary: var(--color-gray-1000);
+  --text-on-fill: var(--color-background-100);
+
+  --accent-text: #047879;
+  --accent-boundary: #019e9f;
+  --accent-tint: #e3f8f8;
+  --info-text: #047879;
+  --info-boundary: #019e9f;
+  --info-tint: #e3f8f8;
+  --success-text: #027c37;
+  --success-boundary: #32a155;
+  --success-tint: #eaf8ec;
+  --warning-text: #975f00;
+  --warning-boundary: #c57e06;
+  --warning-tint: #fdf1e4;
+  --danger-text: #be3e38;
+  --danger-boundary: #e7645a;
+  --danger-tint: #ffeeec;
+
+  --elevation-flat: none;
+  --elevation-raised: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06);
+  --elevation-overlay: 0 8px 16px -4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+:root[data-theme="dark"] {
+  /* primitives — never applied directly to a component */
+  --color-background-100: #090a0b;
+  --color-background-200: #050506;
+  --color-gray-100: #191a1c;
+  --color-gray-200: #1f2122;
+  --color-gray-300: #282a2d;
+  --color-gray-400: #303335;
+  --color-gray-500: #45484b;
+  --color-gray-600: #66696d;
+  --color-gray-700: #82878b;
+  --color-gray-800: #94999e;
+  --color-gray-900: #a6abb1;
+  --color-gray-1000: #eceef0;
+
+  /* semantic — this is what components consume */
+  --surface-page: var(--color-background-100);
+  --surface-canvas: var(--color-background-200);
+  --surface-raised: var(--color-gray-100);
+  --surface-hover: var(--color-gray-200);
+  --surface-active: var(--color-gray-300);
+  --border-subtle: var(--color-gray-400);
+  --border-hover: var(--color-gray-500);
+  --border-strong: var(--color-gray-600);
+  --fill-contrast: var(--color-gray-700);
+  --text-disabled: var(--color-gray-800);
+  --text-secondary: var(--color-gray-900);
+  --text-primary: var(--color-gray-1000);
+  --text-on-fill: var(--color-background-100);
+
+  --accent-text: #05abab;
+  --accent-boundary: #058686;
+  --accent-tint: #042222;
+  --info-text: #05abab;
+  --info-boundary: #058686;
+  --info-tint: #042222;
+  --success-text: #25b057;
+  --success-boundary: #028b3f;
+  --success-tint: #102214;
+  --warning-text: #cf8c32;
+  --warning-boundary: #a86b02;
+  --warning-tint: #271a09;
+  --danger-text: #ec776c;
+  --danger-boundary: #c5544b;
+  --danger-tint: #2b1614;
+
+  --elevation-flat: none;
+  --elevation-raised: 0 0 0 1px rgba(255,255,255,0.08);
+  --elevation-overlay: 0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.6);
+}
+
+/* Reduced motion is a designed state, not a fallback.
+ * Transform and layout animations are disabled; opacity and colour survive. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, color, background-color, border-color !important;
+    transition-duration: 150ms !important;
+    scroll-behavior: auto !important;
+  }
+}

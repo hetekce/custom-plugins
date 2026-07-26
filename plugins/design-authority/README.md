@@ -52,6 +52,28 @@ Ask for a logo before a direction exists and the plugin will decline rather than
 You run the outputs yourself: the screen prompt goes into Claude Design, the mark prompt goes into
 the image model. The plugin generates; it does not call them.
 
+### Seeding a design tool's own design system
+
+Claude Design keeps a design system at the organization level: set it up once and later projects
+inherit it, from inputs including a codebase or a document. Export both from the direction:
+
+```
+direction.mjs export
+```
+
+- `design/tokens.css` — CSS custom properties for both modes, primitives aliased to semantic
+  names. This is a codebase-shaped input for the design tool **and** the exact artifact the
+  Angular contract requires, so it does double duty.
+- `design/design-system.md` — the rules a token file cannot carry: the accent budget, what must
+  never move, and why each decision was made.
+
+Both are generated, never edited. `direction.json` stays the single source of truth, which is what
+keeps the repo and the design tool from drifting into two different systems. Re-export whenever a
+decision changes.
+
+The export refuses if the direction no longer holds — a token file that quietly fails contrast is
+worse than none, because everything downstream inherits it.
+
 ## What it decides for you
 
 - **The whole colour system.** A twelve-step role-mapped neutral ramp and five semantic roles, in

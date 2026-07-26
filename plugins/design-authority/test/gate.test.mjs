@@ -194,6 +194,44 @@ test("the direction carries no market-specific default", () => {
   assert.notEqual(d.locale.market, "de", "German must never be what you get by not choosing");
 });
 
+test("the token export carries both modes and consumes semantics, not primitives", async () => {
+  const { renderTokensCss } = await import("../scripts/lib/export.mjs");
+  const css = renderTokensCss(direction());
+
+  // Both modes, and the theme attribute must be able to win over the media query in both
+  // directions — otherwise a viewer's explicit choice loses to their OS setting.
+  assert.match(css, /@media \(prefers-color-scheme: dark\)/);
+  assert.match(css, /:root\[data-theme="dark"\]/);
+  assert.match(css, /:root\[data-theme="light"\]/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+
+  // Semantic names alias primitives; that is what makes the second mode a remap.
+  assert.match(css, /--text-primary: var\(--color-gray-1000\)/);
+  assert.match(css, /--surface-page: var\(--color-background-100\)/);
+
+  // Every semantic role that components consume must exist.
+  for (const name of ["surface-raised", "border-subtle", "text-secondary", "accent-text", "danger-tint"]) {
+    assert.ok(css.includes(`--${name}:`), `missing --${name}`);
+  }
+});
+
+test("the export refuses a direction that does not hold", async () => {
+  const scripts = path.resolve(fileURLToPath(new URL("../scripts", import.meta.url)));
+  const dir = mkdtempSync(path.join(tmpdir(), "design-authority-export-"));
+  const broken = direction();
+  broken.color.measured[0].ratio = 21; // no longer matches its colours
+  writeFileSync(path.join(dir, "direction.json"), JSON.stringify(broken));
+
+  const run = spawnSync(
+    process.execPath,
+    [path.join(scripts, "direction.mjs"), "export", "--file", "direction.json", "--dir", "."],
+    { cwd: dir, encoding: "utf8" }
+  );
+
+  assert.notEqual(run.status, 0, "a broken direction must not export");
+  assert.match(run.stderr, /refusing to export/i);
+});
+
 test("a brand asset cannot be generated before the direction exists", () => {
   // The order is load-bearing: the direction is built FROM the accent hue, and assets are
   // rendered FROM the direction. Generating a mark first would invent a palette nobody agreed

@@ -4,6 +4,7 @@
 //   direction.mjs init  --spec <spec.json> [--out design/direction.json]
 //   direction.mjs check [--file design/direction.json]
 //   direction.mjs show  [--file design/direction.json]
+//   direction.mjs export [--file design/direction.json] [--dir design/]
 //
 // `init` refuses to overwrite an existing direction. Consistency is inherited from disk:
 // later screens read this file and may only EXTEND it, never silently contradict it.
@@ -12,6 +13,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { buildDirection } from "./lib/direction.mjs";
 import { runGate, formatGaps } from "./lib/gate.mjs";
+import { renderTokensCss, renderDesignSystemDoc } from "./lib/export.mjs";
 
 const DEFAULT_OUT = "design/direction.json";
 
@@ -95,6 +97,34 @@ if (args.command === "check") {
   process.exit(0);
 }
 
+if (args.command === "export") {
+  const file = resolve(args.file ?? DEFAULT_OUT);
+  if (!existsSync(file)) die(`no direction at ${file}. Run "direction.mjs init --spec <spec.json>" first.`);
+  const direction = readJson(file);
+
+  // Never export something that does not hold — a token file that quietly fails contrast is
+  // worse than none, because everything downstream inherits it.
+  const gate = runGate(direction);
+  if (!gate.ok) die(`refusing to export a direction that does not hold:\n\n${formatGaps(gate.items)}`);
+
+  const dir = resolve(args.dir ?? dirname(file));
+  mkdirSync(dir, { recursive: true });
+  const css = resolve(dir, "tokens.css");
+  const doc = resolve(dir, "design-system.md");
+  writeFileSync(css, renderTokensCss(direction));
+  writeFileSync(doc, renderDesignSystemDoc(direction));
+
+  process.stdout.write(
+    `wrote ${css}\n` +
+      `wrote ${doc}\n\n` +
+      `Both are generated from ${file}. Regenerate rather than editing them.\n\n` +
+      `tokens.css is the implementation artifact and is also a codebase-shaped input for a design\n` +
+      `tool's design system. design-system.md carries the rules a token file cannot: the accent\n` +
+      `budget, what must never move, and why each decision was made.\n`
+  );
+  process.exit(0);
+}
+
 if (args.command === "show") {
   const file = resolve(args.file ?? DEFAULT_OUT);
   if (!existsSync(file)) die(`no direction at ${file}.`);
@@ -116,5 +146,6 @@ die(
   `usage:\n` +
     `  direction.mjs init  --spec <spec.json> [--out design/direction.json]\n` +
     `  direction.mjs check [--file design/direction.json]\n` +
-    `  direction.mjs show  [--file design/direction.json]\n`
+    `  direction.mjs show  [--file design/direction.json]\n` +
+    `  direction.mjs export [--file design/direction.json] [--dir design/]\n`
 );
