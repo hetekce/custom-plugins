@@ -1,0 +1,1244 @@
+{
+  "$schema": "./direction.schema.json",
+  "directionVersion": "1.0.0",
+  "createdAt": "2026-07-26T10:39:57.179Z",
+  "product": {
+    "name": "Relay",
+    "domain": "watching deployments go out and catching the ones that go wrong",
+    "audience": "an on-call platform engineer, usually with the dashboard on a second monitor while doing something else",
+    "nouns": [
+      "deployment",
+      "pipeline",
+      "rollback",
+      "commit",
+      "environment",
+      "incident",
+      "build"
+    ],
+    "screens": [
+      "deployment list",
+      "deployment detail",
+      "pipeline run",
+      "incident timeline"
+    ]
+  },
+  "brand": {
+    "accentHue": 195,
+    "neutralHue": 250,
+    "source": "derived",
+    "rationale": "A cyan-leaning blue at OKLCH hue 195, chosen because the status roles already own green, amber and red on this product — a deployment dashboard is mostly status, so the accent has to stay clear of all three signal hues to avoid reading as a fourth status. The neutral is cool (hue 250) rather than warm: this surface is watched on a dark second monitor for hours, and a cool ramp sits back further behind the status colours."
+  },
+  "color": {
+    "space": "OKLCH",
+    "why": "Equal HSL lightness is not equal perceived lightness. Stripe rebuilt in CIELAB, Linear in LCH, Geist in OKLCH — all for this reason.",
+    "primaryMode": "dark",
+    "rampRoles": {
+      "background-100": "page",
+      "background-200": "canvas behind the page",
+      "gray-100": "raised surface",
+      "gray-200": "hover surface",
+      "gray-300": "active surface",
+      "gray-400": "border, resting",
+      "gray-500": "border, hover",
+      "gray-600": "border carrying state",
+      "gray-700": "high-contrast fill",
+      "gray-800": "text, disabled",
+      "gray-900": "text, secondary",
+      "gray-1000": "text, primary"
+    },
+    "modes": {
+      "light": {
+        "ramp": {
+          "background-100": {
+            "hex": "#ffffff",
+            "role": "page",
+            "oklch": {
+              "L": 1,
+              "C": 0,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "background-200": {
+            "hex": "#f9fafb",
+            "role": "canvas behind the page",
+            "oklch": {
+              "L": 0.985,
+              "C": 0.002,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-100": {
+            "hex": "#f3f5f6",
+            "role": "raised surface",
+            "oklch": {
+              "L": 0.968,
+              "C": 0.003,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-200": {
+            "hex": "#ebedef",
+            "role": "hover surface",
+            "oklch": {
+              "L": 0.945,
+              "C": 0.004,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-300": {
+            "hex": "#e3e5e8",
+            "role": "active surface",
+            "oklch": {
+              "L": 0.922,
+              "C": 0.004,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-400": {
+            "hex": "#dbdee1",
+            "role": "border, resting",
+            "oklch": {
+              "L": 0.898,
+              "C": 0.005,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-500": {
+            "hex": "#c9ccd0",
+            "role": "border, hover",
+            "oklch": {
+              "L": 0.845,
+              "C": 0.006,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-600": {
+            "hex": "#90959b",
+            "role": "border carrying state",
+            "oklch": {
+              "L": 0.668,
+              "C": 0.01,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-700": {
+            "hex": "#7b8187",
+            "role": "high-contrast fill",
+            "oklch": {
+              "L": 0.6,
+              "C": 0.011,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-800": {
+            "hex": "#6f757b",
+            "role": "text, disabled",
+            "oklch": {
+              "L": 0.56,
+              "C": 0.012,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-900": {
+            "hex": "#62676d",
+            "role": "text, secondary",
+            "oklch": {
+              "L": 0.512,
+              "C": 0.012,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-1000": {
+            "hex": "#1d2125",
+            "role": "text, primary",
+            "oklch": {
+              "L": 0.245,
+              "C": 0.01,
+              "H": 250
+            },
+            "inGamut": true
+          }
+        },
+        "semantic": {
+          "accent": {
+            "hue": 195,
+            "text": "#047879",
+            "boundary": "#019e9f",
+            "tint": "#e3f8f8",
+            "chroma": 0.088
+          },
+          "info": {
+            "hue": 195,
+            "text": "#047879",
+            "boundary": "#019e9f",
+            "tint": "#e3f8f8",
+            "chroma": 0.088
+          },
+          "success": {
+            "hue": 150,
+            "text": "#027c37",
+            "boundary": "#32a155",
+            "tint": "#eaf8ec",
+            "chroma": 0.141
+          },
+          "warning": {
+            "hue": 70,
+            "text": "#975f00",
+            "boundary": "#c57e06",
+            "tint": "#fdf1e4",
+            "chroma": 0.116
+          },
+          "danger": {
+            "hue": 27,
+            "text": "#be3e38",
+            "boundary": "#e7645a",
+            "tint": "#ffeeec",
+            "chroma": 0.165
+          }
+        }
+      },
+      "dark": {
+        "ramp": {
+          "background-100": {
+            "hex": "#090a0b",
+            "role": "page",
+            "oklch": {
+              "L": 0.145,
+              "C": 0.002,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "background-200": {
+            "hex": "#050506",
+            "role": "canvas behind the page",
+            "oklch": {
+              "L": 0.115,
+              "C": 0.002,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-100": {
+            "hex": "#191a1c",
+            "role": "raised surface",
+            "oklch": {
+              "L": 0.218,
+              "C": 0.004,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-200": {
+            "hex": "#1f2122",
+            "role": "hover surface",
+            "oklch": {
+              "L": 0.245,
+              "C": 0.004,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-300": {
+            "hex": "#282a2d",
+            "role": "active surface",
+            "oklch": {
+              "L": 0.285,
+              "C": 0.005,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-400": {
+            "hex": "#303335",
+            "role": "border, resting",
+            "oklch": {
+              "L": 0.318,
+              "C": 0.005,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-500": {
+            "hex": "#45484b",
+            "role": "border, hover",
+            "oklch": {
+              "L": 0.4,
+              "C": 0.006,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-600": {
+            "hex": "#66696d",
+            "role": "border carrying state",
+            "oklch": {
+              "L": 0.52,
+              "C": 0.008,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-700": {
+            "hex": "#82878b",
+            "role": "high-contrast fill",
+            "oklch": {
+              "L": 0.62,
+              "C": 0.009,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-800": {
+            "hex": "#94999e",
+            "role": "text, disabled",
+            "oklch": {
+              "L": 0.68,
+              "C": 0.009,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-900": {
+            "hex": "#a6abb1",
+            "role": "text, secondary",
+            "oklch": {
+              "L": 0.74,
+              "C": 0.01,
+              "H": 250
+            },
+            "inGamut": true
+          },
+          "gray-1000": {
+            "hex": "#eceef0",
+            "role": "text, primary",
+            "oklch": {
+              "L": 0.948,
+              "C": 0.004,
+              "H": 250
+            },
+            "inGamut": true
+          }
+        },
+        "semantic": {
+          "accent": {
+            "hue": 195,
+            "text": "#05abab",
+            "boundary": "#058686",
+            "tint": "#042222",
+            "chroma": 0.114
+          },
+          "info": {
+            "hue": 195,
+            "text": "#05abab",
+            "boundary": "#058686",
+            "tint": "#042222",
+            "chroma": 0.114
+          },
+          "success": {
+            "hue": 150,
+            "text": "#25b057",
+            "boundary": "#028b3f",
+            "tint": "#102214",
+            "chroma": 0.171
+          },
+          "warning": {
+            "hue": 70,
+            "text": "#cf8c32",
+            "boundary": "#a86b02",
+            "tint": "#271a09",
+            "chroma": 0.13
+          },
+          "danger": {
+            "hue": 27,
+            "text": "#ec776c",
+            "boundary": "#c5544b",
+            "tint": "#2b1614",
+            "chroma": 0.147
+          }
+        }
+      }
+    },
+    "accentBudget": {
+      "rule": "At most one accent visible per screen. The primary action is ink, not accent.",
+      "accentIsFor": [
+        "links",
+        "focus rings",
+        "selected state"
+      ],
+      "accentIsNeverFor": [
+        "button fills",
+        "section backgrounds",
+        "decorative panels"
+      ],
+      "why": "Vercel states it as policy — design in monochrome first, and their primary CTA is ink. Revolut bans its accent as a button surface; Framer reserves blue for links, focus and selection."
+    },
+    "colorIsNeverTheOnlySignal": "Every status carries a word and a glyph as well as a colour. Remove colour entirely and the screen still parses.",
+    "measured": [
+      {
+        "mode": "light",
+        "pair": "text primary on page",
+        "fg": "#1d2125",
+        "bg": "#ffffff",
+        "ratio": 16.19,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text primary on raised",
+        "fg": "#1d2125",
+        "bg": "#f3f5f6",
+        "ratio": 14.81,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text secondary on page",
+        "fg": "#62676d",
+        "bg": "#ffffff",
+        "ratio": 5.7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text secondary on raised",
+        "fg": "#62676d",
+        "bg": "#f3f5f6",
+        "ratio": 5.21,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text disabled on page",
+        "fg": "#6f757b",
+        "bg": "#ffffff",
+        "ratio": 4.66,
+        "required": 3,
+        "rule": "usability floor (1.4.3 exempts disabled)",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "border carrying state on page",
+        "fg": "#90959b",
+        "bg": "#ffffff",
+        "ratio": 3.01,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent text on page",
+        "fg": "#047879",
+        "bg": "#ffffff",
+        "ratio": 5.29,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent text on raised",
+        "fg": "#047879",
+        "bg": "#f3f5f6",
+        "ratio": 4.83,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent text on its own tint",
+        "fg": "#047879",
+        "bg": "#e3f8f8",
+        "ratio": 4.8,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent boundary on page",
+        "fg": "#019e9f",
+        "bg": "#ffffff",
+        "ratio": 3.28,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info text on page",
+        "fg": "#047879",
+        "bg": "#ffffff",
+        "ratio": 5.29,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info text on raised",
+        "fg": "#047879",
+        "bg": "#f3f5f6",
+        "ratio": 4.83,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info text on its own tint",
+        "fg": "#047879",
+        "bg": "#e3f8f8",
+        "ratio": 4.8,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info boundary on page",
+        "fg": "#019e9f",
+        "bg": "#ffffff",
+        "ratio": 3.28,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success text on page",
+        "fg": "#027c37",
+        "bg": "#ffffff",
+        "ratio": 5.32,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success text on raised",
+        "fg": "#027c37",
+        "bg": "#f3f5f6",
+        "ratio": 4.87,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success text on its own tint",
+        "fg": "#027c37",
+        "bg": "#eaf8ec",
+        "ratio": 4.85,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success boundary on page",
+        "fg": "#32a155",
+        "bg": "#ffffff",
+        "ratio": 3.29,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning text on page",
+        "fg": "#975f00",
+        "bg": "#ffffff",
+        "ratio": 5.31,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning text on raised",
+        "fg": "#975f00",
+        "bg": "#f3f5f6",
+        "ratio": 4.85,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning text on its own tint",
+        "fg": "#975f00",
+        "bg": "#fdf1e4",
+        "ratio": 4.77,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning boundary on page",
+        "fg": "#c57e06",
+        "bg": "#ffffff",
+        "ratio": 3.3,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger text on page",
+        "fg": "#be3e38",
+        "bg": "#ffffff",
+        "ratio": 5.33,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger text on raised",
+        "fg": "#be3e38",
+        "bg": "#f3f5f6",
+        "ratio": 4.87,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger text on its own tint",
+        "fg": "#be3e38",
+        "bg": "#ffeeec",
+        "ratio": 4.74,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger boundary on page",
+        "fg": "#e7645a",
+        "bg": "#ffffff",
+        "ratio": 3.29,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text primary on page",
+        "fg": "#eceef0",
+        "bg": "#090a0b",
+        "ratio": 17.03,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text primary on raised",
+        "fg": "#eceef0",
+        "bg": "#191a1c",
+        "ratio": 14.97,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text secondary on page",
+        "fg": "#a6abb1",
+        "bg": "#090a0b",
+        "ratio": 8.56,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text secondary on raised",
+        "fg": "#a6abb1",
+        "bg": "#191a1c",
+        "ratio": 7.53,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text disabled on page",
+        "fg": "#94999e",
+        "bg": "#090a0b",
+        "ratio": 6.89,
+        "required": 3,
+        "rule": "usability floor (1.4.3 exempts disabled)",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "border carrying state on page",
+        "fg": "#66696d",
+        "bg": "#090a0b",
+        "ratio": 3.59,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent text on page",
+        "fg": "#05abab",
+        "bg": "#090a0b",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent text on raised",
+        "fg": "#05abab",
+        "bg": "#191a1c",
+        "ratio": 6.15,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent text on its own tint",
+        "fg": "#05abab",
+        "bg": "#042222",
+        "ratio": 5.9,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent boundary on page",
+        "fg": "#058686",
+        "bg": "#090a0b",
+        "ratio": 4.49,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info text on page",
+        "fg": "#05abab",
+        "bg": "#090a0b",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info text on raised",
+        "fg": "#05abab",
+        "bg": "#191a1c",
+        "ratio": 6.15,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info text on its own tint",
+        "fg": "#05abab",
+        "bg": "#042222",
+        "ratio": 5.9,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info boundary on page",
+        "fg": "#058686",
+        "bg": "#090a0b",
+        "ratio": 4.49,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success text on page",
+        "fg": "#25b057",
+        "bg": "#090a0b",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success text on raised",
+        "fg": "#25b057",
+        "bg": "#191a1c",
+        "ratio": 6.15,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success text on its own tint",
+        "fg": "#25b057",
+        "bg": "#102214",
+        "ratio": 5.88,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success boundary on page",
+        "fg": "#028b3f",
+        "bg": "#090a0b",
+        "ratio": 4.49,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning text on page",
+        "fg": "#cf8c32",
+        "bg": "#090a0b",
+        "ratio": 7.02,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning text on raised",
+        "fg": "#cf8c32",
+        "bg": "#191a1c",
+        "ratio": 6.17,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning text on its own tint",
+        "fg": "#cf8c32",
+        "bg": "#271a09",
+        "ratio": 6.01,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning boundary on page",
+        "fg": "#a86b02",
+        "bg": "#090a0b",
+        "ratio": 4.49,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger text on page",
+        "fg": "#ec776c",
+        "bg": "#090a0b",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger text on raised",
+        "fg": "#ec776c",
+        "bg": "#191a1c",
+        "ratio": 6.15,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger text on its own tint",
+        "fg": "#ec776c",
+        "bg": "#2b1614",
+        "ratio": 6.04,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger boundary on page",
+        "fg": "#c5544b",
+        "bg": "#090a0b",
+        "ratio": 4.47,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      }
+    ]
+  },
+  "type": {
+    "families": {
+      "ui": {
+        "role": "everything — prose, UI, headings",
+        "requirement": "one variable family, self-hosted, no CDN, with tabular numerals. Must carry the full character set of every language the product ships in.",
+        "fallback": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+      },
+      "mono": {
+        "role": "identifiers and operational strings only — reference codes, IDs, paths, commands, keys",
+        "never": "prose, labels, or headings",
+        "fallback": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+      }
+    },
+    "regimes": {
+      "ui": {
+        "ratio": 1.125,
+        "use": "controls, labels, table cells, form fields, body copy",
+        "steps": [
+          {
+            "name": "label",
+            "px": 13,
+            "lineHeight": 1.5
+          },
+          {
+            "name": "compact",
+            "px": 15,
+            "lineHeight": 1.5
+          },
+          {
+            "name": "body",
+            "px": 16,
+            "lineHeight": 1.55
+          },
+          {
+            "name": "lede",
+            "px": 18,
+            "lineHeight": 1.5
+          },
+          {
+            "name": "subsection",
+            "px": 20,
+            "lineHeight": 1.4
+          }
+        ]
+      },
+      "display": {
+        "ratio": 1.333,
+        "use": "page titles and section headings only",
+        "steps": [
+          {
+            "name": "section",
+            "px": 24,
+            "lineHeight": 1.3
+          },
+          {
+            "name": "title",
+            "px": 32,
+            "lineHeight": 1.15
+          },
+          {
+            "name": "page-title",
+            "px": 43,
+            "lineHeight": 1.08
+          }
+        ]
+      }
+    },
+    "weights": {
+      "available": [
+        400,
+        500,
+        600
+      ],
+      "ceiling": 600,
+      "why": "Geist stops at 600 and has no 700; Stripe sets display at 300; Linear's signature is 510. Hierarchy comes from small weight shifts, not from shouting."
+    },
+    "tracking": {
+      "display": "-0.03em",
+      "body": "0",
+      "rule": "Never letterspace lowercase body text. Never negative tracking on a string over 20 characters, at any size.",
+      "why": "Every reference system pulls negative tracking at display and none at body. The 20-character guard exists because long unbroken words are where tight tracking hurts most."
+    },
+    "measure": {
+      "reading": "68ch",
+      "headline": "20ch",
+      "why": "Geist's published reading width. Beyond it the eye loses the line return."
+    },
+    "minimums": {
+      "bodyLineHeight": 1.45,
+      "inputFontSize": 16,
+      "why": "Inputs stay at 16px because anything smaller triggers zoom on iOS."
+    }
+  },
+  "space": {
+    "base": 4,
+    "scale": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      48,
+      64
+    ],
+    "rhythm": {
+      "tight": 8,
+      "copy": 16,
+      "group": 32,
+      "section": 64
+    },
+    "why": "Linear, Geist and Revolut all run a 4px base; Stripe runs 8. Four gives finer density control and every reference section rhythm lands on it.",
+    "rule": "A screen never contains a spacing value that is not on the scale."
+  },
+  "shape": {
+    "radii": {
+      "control": 4,
+      "surface": 6,
+      "container": 8,
+      "pill": 9999
+    },
+    "pillRule": "Pills are for status badges only. Never on an action — Stripe bans pill radii on buttons.",
+    "elevation": [
+      {
+        "name": "flat",
+        "light": "none",
+        "dark": "none",
+        "use": "page and canvas"
+      },
+      {
+        "name": "raised",
+        "light": "0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06)",
+        "dark": "0 0 0 1px rgba(255,255,255,0.08)",
+        "use": "cards, table containers"
+      },
+      {
+        "name": "overlay",
+        "light": "0 8px 16px -4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08)",
+        "dark": "0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.6)",
+        "use": "modal, drawer, popover, toast"
+      }
+    ],
+    "bordersVsShadows": "Borders carry structure; shadows only mark what floats above the page. In dark the shadow is dropped and a white-alpha ring carries elevation, because a drop shadow does not read on near-black."
+  },
+  "motion": {
+    "durations": {
+      "state": 150,
+      "disclosure": 200,
+      "route": 220,
+      "confirmation": 400
+    },
+    "easings": {
+      "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "exit": "ease-out"
+    },
+    "animates": [
+      {
+        "what": "state change — hover, press, selection",
+        "duration": 150,
+        "easing": "ease-out",
+        "properties": [
+          "opacity",
+          "transform"
+        ]
+      },
+      {
+        "what": "disclosure — accordion, drawer, popover",
+        "duration": 200,
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "properties": [
+          "transform",
+          "opacity"
+        ]
+      },
+      {
+        "what": "route transition",
+        "duration": 220,
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "properties": [
+          "opacity"
+        ]
+      },
+      {
+        "what": "confirmation that a committed, hard-to-undo action succeeded — once, at the peak",
+        "duration": 400,
+        "easing": "ease-out",
+        "properties": [
+          "transform",
+          "opacity"
+        ]
+      }
+    ],
+    "neverAnimates": [
+      "a value the person is reading — figures do not count up or re-flow under the eye",
+      "a row or item under the reader's cursor",
+      "anything that delays the person completing their task",
+      "layout properties (width, height, margin, padding) — transform and opacity only"
+    ],
+    "reducedMotion": {
+      "behaviour": "Transform and layout animations are disabled; opacity and colour survive.",
+      "rule": "Motion is never the only signal that something happened. Every animated state change also changes text, icon, or shape.",
+      "why": "Motion's published contract, the cleanest of the systems studied. Reduced motion is a designed state, not a fallback."
+    },
+    "deletionTest": "Disable every animation. If the flow does not feel broken, the animation was decoration and is removed."
+  },
+  "density": {
+    "modes": {
+      "compact": {
+        "controlHeight": 32,
+        "rowHeight": 32,
+        "use": "data tables on pointer devices"
+      },
+      "default": {
+        "controlHeight": 36,
+        "rowHeight": 44,
+        "use": "forms and general UI on pointer devices"
+      },
+      "touch": {
+        "controlHeight": 44,
+        "rowHeight": 48,
+        "use": "any touch input"
+      }
+    },
+    "minimumTouchTarget": 44,
+    "rule": "Density is one token swap, not a redesign. Touch targets never fall below 44x44 regardless of mode.",
+    "why": "44px is the WCAG target-size floor for a touch target."
+  },
+  "responsive": {
+    "referenceWidths": [
+      360,
+      768,
+      1280
+    ],
+    "approach": "mobile-first; layout adapts rather than scales",
+    "containerQueries": "Anything whose width is not the viewport's is sized with container queries, not media queries. A card in a sidebar and the same card in a main column are the same component at different widths.",
+    "rules": [
+      "Nothing scrolls horizontally at 360px. Wide content (tables, code) scrolls inside its own overflow-x container.",
+      "Grid and flex children carry min-width: 0, so a long string cannot force the page wider.",
+      "Touch targets are at least 44x44 at every width.",
+      "A table becomes a stack of cards below 768px — it does not shrink into unreadable columns."
+    ]
+  },
+  "locale": {
+    "code": "en-US",
+    "market": "en",
+    "label": "English",
+    "note": null,
+    "universal": {
+      "containment": {
+        "rule": "A long string never widens the page. Grid and flex children carry min-width: 0, and wide content scrolls inside its own overflow-x container.",
+        "why": "Without min-width: 0 a flex child defaults to min-content, so one unbroken string forces the whole layout wider."
+      },
+      "neverTruncate": [
+        "form labels",
+        "table headers — a truncated header destroys the meaning of the whole column",
+        "identifiers a person may transcribe (account numbers, tax IDs, reference codes)"
+      ],
+      "truncation": {
+        "rule": "Where vertical space is genuinely fixed, a value may truncate — and then the full string is recoverable on hover AND keyboard focus.",
+        "default": "Wrapping is the default. Truncation is the exception that must be argued for."
+      },
+      "expansion": {
+        "rule": "If the product is or will be translated, reserve room: 200-300% for UI strings under 10 characters, 180-200% for 11-20, 140-160% for 31-50.",
+        "why": "Short strings are the worst case — a one-word button label is where translation breaks layouts first.",
+        "source": "W3C, Text size in translation"
+      },
+      "identifiers": {
+        "rule": "Identifiers wrap with overflow-wrap: anywhere and never hyphenate — a hyphen inserted into an account number reads as part of the number."
+      },
+      "lang": {
+        "rule": "The html element carries a lang attribute matching the content language.",
+        "why": "Hyphenation, quotation marks and screen-reader pronunciation all key off it. Without it, hyphens: auto silently does nothing."
+      },
+      "tracking": {
+        "display": "-0.03em",
+        "body": "0",
+        "rule": "Never letterspace lowercase body text. Never negative tracking on a string over 20 characters, at any size.",
+        "why": "Every reference system pulls negative tracking at display and none at body. The 20-character guard exists because long unbroken words are where tight tracking hurts most."
+      },
+      "bodyLineHeight": 1.45
+    },
+    "text": {
+      "css": "overflow-wrap: break-word; word-break: normal;",
+      "never": "word-break: break-all"
+    },
+    "typography": null,
+    "forms": null,
+    "tracking": {
+      "display": "-0.03em",
+      "body": "0",
+      "rule": "Never letterspace lowercase body text. Never negative tracking on a string over 20 characters, at any size.",
+      "why": "Every reference system pulls negative tracking at display and none at body. The 20-character guard exists because long unbroken words are where tight tracking hurts most."
+    },
+    "bodyLineHeight": 1.45,
+    "formats": {
+      "currency": "State the convention explicitly — $1,234.56 (US) and £1,234.56 (UK) differ from €1.234,56.",
+      "date": "Unambiguous only. 12 Mar 2026, or ISO 2026-03-12. Never a bare numeric form that reads differently in another market.",
+      "numbers": "Comma-grouped in threes, period as the decimal separator."
+    },
+    "density": null,
+    "testCorpus": [
+      "internationalization",
+      "responsibilities",
+      "acknowledgement"
+    ]
+  },
+  "accessibility": {
+    "target": "WCAG 2.2 AA",
+    "contrast": "Measured with the SC 1.4.3 formula, never estimated. Every pairing above carries its ratio.",
+    "focus": "Visible focus on every interactive element, at 3:1 against the adjacent surface.",
+    "keyboard": "Every interactive element reachable and operable by keyboard.",
+    "colorIndependence": "Colour is never the only carrier of meaning."
+  },
+  "decisions": [
+    {
+      "id": "dark-first",
+      "date": "2026-07-26",
+      "what": "Dark is the primary designed mode; light is designed second, not derived by inversion.",
+      "why": "The screen lives on a second monitor during on-call rotations that run overnight. Light mode still gets a hand-tuned ramp because incident reviews happen in daylight and get screenshotted into documents."
+    },
+    {
+      "id": "accent-avoids-status-hues",
+      "date": "2026-07-26",
+      "what": "The accent is cyan (hue 195), deliberately not green, amber or red.",
+      "why": "On a product where most of the pixels are status, an accent near a signal hue gets read as a signal. Cyan is far enough from success green (150) to never be mistaken for it at a glance."
+    },
+    {
+      "id": "cool-neutral",
+      "date": "2026-07-26",
+      "what": "The neutral ramp is cool (hue 250), unlike the warm default.",
+      "why": "A warm neutral competes with amber. On a status-dense dark surface the ramp has to recede completely, and a cool grey does that better next to warning colours."
+    }
+  ]
+}

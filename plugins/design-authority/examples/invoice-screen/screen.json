@@ -1,0 +1,103 @@
+{
+  "title": "invoice detail screen",
+  "article": "an",
+  "audience": "a self-employed tradesman checking what he was charged for leads last month, often at 21:00 after a full day on site",
+  "arrivingFrom": "the invoice list, or a link in the monthly billing email",
+  "firstThing": "the total he owes, the date it is due, and whether it is already paid — before any line item, before any navigation",
+  "feeling": "that nothing is hidden. He has been billed for leads and he can see exactly which ones, at what price, with the VAT broken out. No surprise line, no fee he has to hunt for.",
+  "reassurance": "that the amount matches the leads he actually received, and that he can prove it to his Steuerberater without calling support",
+  "anxiety": "the fear of an unexplained charge. A tradesman buying leads on credit is spending money before he has earned it, and an invoice he cannot reconcile line by line is a reason to churn.",
+  "distinctFrom": "The lead inbox is about opportunity and speed — it should feel like a live feed worth checking. This screen is the opposite: it is a document, it is settled, and it should feel closed. Nothing on it should invite browsing.",
+  "composition": {
+    "leads": "The amount due, set in the display regime at 43px, with the status badge directly beside it and the due date immediately under it. This block sits top-left, on the rule-of-thirds line rather than centred, and owns the first fixation.",
+    "supports": "The line-item table — one row per lead, with the trade, the postcode, the date received and the price. Beneath it the VAT breakdown and the total, right-aligned in tabular numerals so the digits form a column the eye can add up.",
+    "oneClickAway": "Download as PDF, the payment method on file, and 'dispute a line' on each row. All three are secondary — outline or text buttons, never competing with the amount.",
+    "cut": "The account navigation is reduced to a single back link. No sidebar, no related-invoices carousel, no upsell to a larger lead package. This is a document a person came to read and possibly forward to their accountant; anything that invites them elsewhere is noise on a page whose whole job is to settle a question.",
+    "competingElements": 3
+  },
+  "states": {
+    "empty": "There is no empty invoice — an invoice always has at least one line. The nearest state is a zero-total invoice in a month with no lead purchases: the amount block still leads, showing 0,00 € with a 'Keine Leistungen' badge in the neutral high-contrast fill rather than a status colour, and the table area carries one sentence explaining that no leads were bought in that period, plus a link back to the lead inbox. The layout does not collapse — the same three blocks stay in the same places, so the screen is recognisably the same document.",
+    "loading": "The amount block, the table and the totals render as skeletons at the exact dimensions their content will occupy, so nothing shifts when data arrives. Skeleton fills use the hover-surface step, not a shimmer animation — a moving gradient on a money screen reads as activity that is not happening. The status badge area stays empty rather than showing a placeholder badge, because a wrong status glimpsed for 300ms is worse than no status.",
+    "error": "When the invoice cannot be loaded, the amount block is replaced by a single line in the danger text colour with a warning glyph beside it, stating what failed in plain German and what to do next — 'Diese Rechnung konnte nicht geladen werden. Bitte in einer Minute erneut versuchen.' — with a retry button in the primary ink style. The page frame, the back link and the header stay exactly where they are. The error does not become a full-page takeover, because the person still needs the route back to the invoice list."
+  },
+  "components": {
+    "button": {
+      "variants": [
+        "primary (ink)",
+        "secondary (outline)",
+        "text"
+      ],
+      "accessibleName": "the verb and its object, never 'click here' — 'Rechnung als PDF herunterladen'",
+      "never": "carry the accent colour as a fill, sit at pill radius, or animate its width when its label changes",
+      "states": {
+        "default": "primary is the ink fill (gray-1000) with page-coloured text; secondary is a 1px border at the resting border step with primary text; text is primary text with no border",
+        "hover": "primary lifts one step lighter; secondary swaps its border to the hover border step and its background to the hover surface; text gains the hover surface behind it",
+        "focus-visible": "a 2px accent ring at 2px offset, in addition to whatever the hover state shows — never instead of it",
+        "active": "the surface drops to the active step and the label shifts down by 1px; no scale transform, because a button that shrinks under a thumb reads as a mis-tap",
+        "disabled": "the disabled text step on the raised surface, no border change, cursor not-allowed, and the reason stated adjacent rather than in a tooltip alone",
+        "loading": "the label is replaced by a spinner at the label's exact width so the button does not resize, and the accessible name gains 'wird ausgeführt'"
+      }
+    },
+    "badge": {
+      "variants": [
+        "paid",
+        "open",
+        "overdue",
+        "neutral"
+      ],
+      "accessibleName": "the status word itself, read out as part of the amount block",
+      "never": "use colour as its only signal, or appear in more than one size on the same screen",
+      "states": {
+        "default": "tint background, 1px border in the same hue's boundary grade, the status text grade for the label, a leading glyph, and the German status word — four redundant encodings before colour perception is needed"
+      }
+    },
+    "table": {
+      "variants": [
+        "line items"
+      ],
+      "accessibleName": "a caption naming the billing period, associated with the table",
+      "never": "truncate a column header, right-align anything that is not a number, or shrink below its minimum column widths instead of scrolling",
+      "states": {
+        "default": "rows separated by the resting border step, not by alternating fills; amounts right-aligned in tabular numerals; the trade and postcode left-aligned; headers wrap to two lines rather than truncating",
+        "row-hover": "the hover surface fills the row; no border change, no lift, no shadow",
+        "row-selected": "the active surface plus a 2px accent bar on the leading edge, and the row's checkbox checked — selection is never colour alone",
+        "sorted": "the active column header carries a directional glyph and aria-sort; the header text gains weight 600 while the others stay 500",
+        "empty": "a single row spanning the table with one sentence and no illustration, at the same row height as a data row so the table does not change shape",
+        "loading": "three skeleton rows at the real row height, using the hover-surface step",
+        "error": "the table frame and headers remain; the body is replaced by one line in the danger text grade with a retry text button beside it"
+      }
+    },
+    "link": {
+      "variants": [
+        "inline",
+        "back"
+      ],
+      "accessibleName": "the destination, never 'mehr'",
+      "never": "be distinguished from body text by colour alone",
+      "states": {
+        "default": "accent text grade with a 1px underline at 0.1em offset — the underline is the non-colour signal",
+        "hover": "the underline thickens to 2px; the colour does not change",
+        "focus-visible": "a 2px accent ring at 2px offset around the text box",
+        "visited": "unchanged — inside an authenticated product, visited state leaks browsing history into the UI and carries no useful meaning here"
+      }
+    }
+  },
+  "responsive": [
+    "The line-item table becomes a stack of cards below 768px: each lead is one card with the trade as its heading, the price right-aligned in the same tabular numerals, and the postcode and date as secondary text. It does not become a horizontally scrolling table on a phone, because a tradesman checking a bill one-handed cannot scroll a table sideways.",
+    "The amount block and the status badge stay side by side down to 360px; the badge wraps under the amount rather than shrinking its text.",
+    "The line-item card sizes from its own container, so the same card renders correctly inside the invoice detail column and inside the narrower summary panel on the invoice list."
+  ],
+  "acceptance": [
+    "The total, the due date and the status are all readable in the first fixation, without scrolling, at 360px.",
+    "Every line item's price and the VAT total align on their decimal separators in tabular numerals.",
+    "A 34-character compound (Umsatzsteuer-Identifikationsnummer) renders in the VAT block without horizontal scroll and without breaking mid-morpheme.",
+    "The IBAN in the payment block renders in groups of four, is never truncated, and copies without spaces.",
+    "Printed or exported to PDF, the page still reads as the same document — the status badge survives without its background colour."
+  ],
+  "antiGoals": [
+    "a progress bar or stepper implying the invoice is a workflow — it is a document, not a process",
+    "an illustration in the zero-total state",
+    "a countdown timer on the due date"
+  ],
+  "framework": "angular"
+}

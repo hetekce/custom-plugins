@@ -1,0 +1,96 @@
+{
+  "title": "deployment list",
+  "article": "a",
+  "audience": "an on-call platform engineer glancing at a second monitor every few minutes, not reading it",
+  "arrivingFrom": "a pinned browser tab that stays open for the whole rotation",
+  "firstThing": "whether anything is currently broken — before any list, any filter, any navigation",
+  "feeling": "that nothing needs them right now. The default state of this screen is calm, and calm has to be visibly different from unexamined.",
+  "reassurance": "that the screen is live and is actually watching, so an absence of red means nothing is wrong rather than nothing has loaded",
+  "anxiety": "the fear of having missed something. An on-call engineer who has to re-read the whole list to be sure is being made to do the machine's job.",
+  "distinctFrom": "The incident timeline is read closely, once, under pressure — it is a document. This screen is glanced at fifty times and read properly twice. It is instrumentation, and it must survive being seen out of the corner of an eye.",
+
+  "composition": {
+    "leads": "A single status line across the top, stating in words how many deployments are in flight and whether any are failing. It is the only element sized above the UI regime. When everything is healthy it says so in plain language rather than showing a green tick, because a tick is ambiguous between 'healthy' and 'not yet checked'.",
+    "supports": "The deployment rows, newest first: environment, service, commit subject, who triggered it, and the status. The status column carries a glyph and a word, and failing rows also carry a leading severity stripe so a failure is detectable in peripheral vision without reading.",
+    "oneClickAway": "Filtering by environment, the full pipeline run for any row, and rollback on a failed row. Rollback is never the primary button on this screen — it lives inside the row's detail, because a one-click rollback next to a glanceable list is a mis-click waiting to happen.",
+    "cut": "Charts. There is no deploy-frequency graph, no lead-time sparkline, no success-rate donut. Those belong on a weekly review page read deliberately; on a screen watched in peripheral vision they add motion and colour that compete with the only signal that matters. Also cut: a relative-time column that re-renders every second.",
+    "competingElements": 2
+  },
+
+  "states": {
+    "empty": "No deployments in the selected window. The status line still leads and states the window explicitly — 'No deployments in the last 24 hours' — so an empty list is never confused with a broken feed. Below it, one line offers to widen the window, and the last known deployment is shown greyed with its date, which is the fastest way for an engineer to tell 'quiet' apart from 'disconnected'. No illustration.",
+    "loading": "The status line renders first and says it is loading, because on this screen the top line is the whole answer and it must never be blank. Rows render as skeletons at exact row height using the hover-surface step, three of them, without shimmer — animated placeholders on an instrumentation screen read as activity in the system being watched. Nothing shifts position when real rows arrive.",
+    "error": "When the feed cannot be reached, the status line turns to the danger text grade with a warning glyph and states plainly that the list is stale, including the timestamp of the last successful update — staleness is the dangerous failure here, because a frozen list looks identical to a calm one. Existing rows stay visible but drop to the secondary text grade to signal they are no longer live. A retry control sits in the status line itself, not in a separate banner."
+  },
+
+  "components": {
+    "badge": {
+      "variants": ["succeeded", "running", "failed", "rolled back"],
+      "accessibleName": "the status word, announced as part of the row",
+      "never": "rely on colour alone, or animate — a pulsing 'running' badge on a list of forty rows turns the screen into noise",
+      "states": {
+        "default": "tint background, 1px border at the hue's boundary grade, the status text grade for the label, a leading glyph, and the status word"
+      }
+    },
+    "table": {
+      "variants": ["deployment rows"],
+      "accessibleName": "a caption naming the environment filter and time window",
+      "never": "truncate the commit subject to fewer than 60 characters, reorder rows while the pointer is over them, or auto-refresh a row under the cursor",
+      "states": {
+        "default": "rows separated by the resting border step; timestamps in tabular numerals; failing rows carry a 2px severity stripe on the leading edge",
+        "row-hover": "the hover surface fills the row, no lift and no shadow",
+        "row-selected": "the active surface plus a 2px accent bar on the leading edge and an aria-selected row",
+        "sorted": "the active header carries a directional glyph and aria-sort; only its weight changes, from 500 to 600",
+        "empty": "a single row at normal row height carrying one sentence, so the table keeps its shape",
+        "loading": "three skeleton rows at real row height in the hover-surface step",
+        "error": "headers stay; the body is replaced by one line in the danger text grade with a retry text button"
+      }
+    },
+    "button": {
+      "variants": ["primary (ink)", "secondary (outline)", "text"],
+      "accessibleName": "the verb and its object — 'Retry loading deployments', never 'Retry'",
+      "never": "use the accent as a fill, sit at pill radius, or resize when its label changes",
+      "states": {
+        "default": "primary is the ink fill with page-coloured text; secondary is a 1px border at the resting step; text has neither",
+        "hover": "primary lifts one step; secondary moves its border to the hover step and gains the hover surface; text gains the hover surface",
+        "focus-visible": "a 2px accent ring at 2px offset, in addition to the hover treatment rather than instead of it",
+        "active": "the surface drops to the active step and the label shifts 1px down; no scale transform",
+        "disabled": "the disabled text step on the raised surface, with the reason stated next to it rather than only in a tooltip",
+        "loading": "a spinner at the label's exact width so the control does not resize, and the accessible name gains 'in progress'"
+      }
+    },
+    "tabs": {
+      "variants": ["environment filter"],
+      "accessibleName": "the environment name",
+      "never": "be equal-width fixed tabs — environment names vary in length and a fixed row clips the longest",
+      "states": {
+        "default": "secondary text on the page surface, no border",
+        "hover": "primary text plus the hover surface",
+        "focus-visible": "a 2px accent ring at 2px offset",
+        "selected": "primary text at weight 600 with a 2px accent underline — weight and rule both change, so selection survives without colour",
+        "disabled": "the disabled text step, not focusable, with the reason adjacent"
+      }
+    }
+  },
+
+  "responsive": [
+    "Below 768px the rows become cards: service and environment as the heading, status badge beneath, commit subject as secondary text truncated at the card's own width. The severity stripe moves to the card's leading edge.",
+    "The status line never wraps to more than two lines; if the summary would exceed that, it drops the least severe clause rather than growing.",
+    "The row sizes from its own container, so the same row component renders correctly in the full-width list and in the narrower panel on the incident timeline."
+  ],
+
+  "acceptance": [
+    "Whether anything is broken is answerable from the top line alone, without reading a single row, at 360px.",
+    "A failing row is identifiable in peripheral vision from the severity stripe alone, with the screen desaturated to greyscale.",
+    "Nothing on the screen animates while the list is idle.",
+    "A stale feed is visibly different from a calm feed within two seconds of the connection dropping.",
+    "Timestamps align on their digits in tabular numerals across all rows."
+  ],
+
+  "antiGoals": [
+    "a deploy-frequency chart or any sparkline on this screen",
+    "a pulsing or spinning indicator on a running deployment",
+    "a relative timestamp that re-renders on a timer",
+    "a green tick as the only signal that everything is healthy"
+  ]
+}

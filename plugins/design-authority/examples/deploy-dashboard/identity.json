@@ -1,0 +1,16 @@
+{
+  "feeling": "that nothing needs you right now, and that the absence of alarm is trustworthy because the system is visibly watching",
+  "mark": {
+    "kind": "abstract",
+    "idea": "a relay handing something on — the moment of transfer, not the runner. A shape that reads as one thing passing to the next without depicting an arrow.",
+    "construction": "two identical forms on a 4-unit grid, offset so their overlap is the subject; stroke weight equal to one grid unit throughout",
+    "antiGoals": ["a chevron or play triangle", "two chain links", "a baton"]
+  },
+  "imagery": {
+    "kind": "empty-state illustration",
+    "placement": "the deployment list when no deployments exist in the selected window",
+    "moment": "an on-call engineer who needs to tell a quiet system apart from a broken feed",
+    "says": "the window is genuinely empty, and the connection is fine",
+    "motif": "the interval itself — evenly spaced marks with one gap, drawn as a timeline rather than as an object"
+  }
+}

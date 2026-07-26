@@ -25,6 +25,27 @@
         "c4"
       ],
       "homepage": "https://github.com/hetekce/custom-plugins/tree/main/plugins/architecture-diagrams"
+    },
+    {
+      "name": "design-authority",
+      "description": "Turn a one-line request into a complete Claude Design prompt. Decides the colour system with measured contrast, the type scale, motion, and every component state up front — then refuses to emit the prompt if anything is still vague.",
+      "source": "./plugins/design-authority",
+      "category": "design",
+      "author": {
+        "name": "Hasan Emre Tekce",
+        "url": "https://github.com/hetekce"
+      },
+      "keywords": [
+        "design",
+        "design-system",
+        "ui",
+        "ux",
+        "design-tokens",
+        "accessibility",
+        "wcag",
+        "claude-design"
+      ],
+      "homepage": "https://github.com/hetekce/custom-plugins/tree/main/plugins/design-authority"
     }
   ]
 }

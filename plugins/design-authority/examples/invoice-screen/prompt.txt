@@ -1,0 +1,338 @@
+Design an invoice detail screen for Handwerk Leads: buying qualified job leads, and the invoices for them.
+Every decision below is already made. Execute them; do not substitute your own.
+Two independent runs of this prompt should produce two executions of the same design.
+
+INTENT — THE FIRST TWO SECONDS
+────────────────────────────────────────────────────────────────────────
+The person: a self-employed tradesman checking what he was charged for leads last month, often at 21:00 after a full day on site.
+They arrive from the invoice list, or a link in the monthly billing email, and what they need to know first is: the total he owes, the date it is due, and whether it is already paid — before any line item, before any navigation
+What this screen should make them feel: that nothing is hidden. He has been billed for leads and he can see exactly which ones, at what price, with the VAT broken out. No surprise line, no fee he has to hunt for.
+What it is reassuring them about: that the amount matches the leads he actually received, and that he can prove it to his Steuerberater without calling support
+The anxiety it removes: the fear of an unexplained charge. A tradesman buying leads on credit is spending money before he has earned it, and an invoice he cannot reconcile line by line is a reason to churn.
+This is not interchangeable with any other screen in the product. The lead inbox is about opportunity and speed — it should feel like a live feed worth checking. This screen is the opposite: it is a document, it is settled, and it should feel closed. Nothing on it should invite browsing.
+
+COLOUR
+────────────────────────────────────────────────────────────────────────
+Colour is authored in OKLCH and stated as hex. Equal HSL lightness is not equal perceived lightness. Stripe rebuilt in CIELAB, Linear in LCH, Geist in OKLCH — all for this reason.
+The primary designed mode is light. The other mode is designed, not inverted — its ramp is tuned separately and its accents carry different chroma.
+
+LIGHT MODE
+  background-100  #ffffff   page
+  background-200  #fbfaf9   canvas behind the page
+  gray-100        #f5f4f2   raised surface
+  gray-200        #eeedea   hover surface
+  gray-300        #e6e5e2   active surface
+  gray-400        #dfddda   border, resting
+  gray-500        #ceccc8   border, hover
+  gray-600        #97948e   border carrying state
+  gray-700        #838079   high-contrast fill
+  gray-800        #78746d   text, disabled
+  gray-900        #6a665f   text, secondary
+  gray-1000       #23201b   text, primary
+
+  accent   text #0370b2   border/icon #2293e1   tint #e8f5ff
+  info     — the same values as accent, by design
+  success  text #027c37   border/icon #32a155   tint #eaf8ec
+  warning  text #975f00   border/icon #c57e06   tint #fdf1e4
+  danger   text #bf3f38   border/icon #e7645a   tint #ffeeec
+
+DARK MODE
+  background-100  #0a0a09   page
+  background-200  #050504   canvas behind the page
+  gray-100        #1b1a18   raised surface
+  gray-200        #21201e   hover surface
+  gray-300        #2b2a27   active surface
+  gray-400        #33322f   border, resting
+  gray-500        #494744   border, hover
+  gray-600        #6b6964   border carrying state
+  gray-700        #898680   high-contrast fill
+  gray-800        #9b9892   text, disabled
+  gray-900        #aeaaa4   text, secondary
+  gray-1000       #efeeeb   text, primary
+
+  accent   text #40a0e9   border/icon #0e7ec4   tint #0e1f2c
+  info     — the same values as accent, by design
+  success  text #25b057   border/icon #028b3f   tint #102214
+  warning  text #cf8c32   border/icon #a86b02   tint #271a09
+  danger   text #ec776c   border/icon #c5544b   tint #2b1614
+
+MEASURED CONTRAST — every pairing, with the rule it satisfies:
+  [pass] light text primary on page               #23201b on #ffffff  16.23:1  (needs 4.5, SC 1.4.3)
+  [pass] light text primary on raised             #23201b on #f5f4f2  14.76:1  (needs 4.5, SC 1.4.3)
+  [pass] light text secondary on page             #6a665f on #ffffff  5.7:1  (needs 4.5, SC 1.4.3)
+  [pass] light text secondary on raised           #6a665f on #f5f4f2  5.19:1  (needs 4.5, SC 1.4.3)
+  [pass] light text disabled on page              #78746d on #ffffff  4.64:1  (needs 3, usability floor (1.4.3 exempts disabled))
+  [pass] light border carrying state on page      #97948e on #ffffff  3.02:1  (needs 3, SC 1.4.11)
+  [pass] light accent text on page                #0370b2 on #ffffff  5.29:1  (needs 4.5, SC 1.4.3)
+  [pass] light accent text on raised              #0370b2 on #f5f4f2  4.81:1  (needs 4.5, SC 1.4.3)
+  [pass] light accent text on its own tint        #0370b2 on #e8f5ff  4.77:1  (needs 4.5, SC 1.4.3)
+  [pass] light accent boundary on page            #2293e1 on #ffffff  3.31:1  (needs 3, SC 1.4.11)
+  [pass] light info text on page                  #0370b2 on #ffffff  5.29:1  (needs 4.5, SC 1.4.3)
+  [pass] light info text on raised                #0370b2 on #f5f4f2  4.81:1  (needs 4.5, SC 1.4.3)
+  [pass] light info text on its own tint          #0370b2 on #e8f5ff  4.77:1  (needs 4.5, SC 1.4.3)
+  [pass] light info boundary on page              #2293e1 on #ffffff  3.31:1  (needs 3, SC 1.4.11)
+  [pass] light success text on page               #027c37 on #ffffff  5.32:1  (needs 4.5, SC 1.4.3)
+  [pass] light success text on raised             #027c37 on #f5f4f2  4.84:1  (needs 4.5, SC 1.4.3)
+  [pass] light success text on its own tint       #027c37 on #eaf8ec  4.85:1  (needs 4.5, SC 1.4.3)
+  [pass] light success boundary on page           #32a155 on #ffffff  3.29:1  (needs 3, SC 1.4.11)
+  [pass] light warning text on page               #975f00 on #ffffff  5.31:1  (needs 4.5, SC 1.4.3)
+  [pass] light warning text on raised             #975f00 on #f5f4f2  4.83:1  (needs 4.5, SC 1.4.3)
+  [pass] light warning text on its own tint       #975f00 on #fdf1e4  4.77:1  (needs 4.5, SC 1.4.3)
+  [pass] light warning boundary on page           #c57e06 on #ffffff  3.3:1  (needs 3, SC 1.4.11)
+  [pass] light danger text on page                #bf3f38 on #ffffff  5.27:1  (needs 4.5, SC 1.4.3)
+  [pass] light danger text on raised              #bf3f38 on #f5f4f2  4.79:1  (needs 4.5, SC 1.4.3)
+  [pass] light danger text on its own tint        #bf3f38 on #ffeeec  4.69:1  (needs 4.5, SC 1.4.3)
+  [pass] light danger boundary on page            #e7645a on #ffffff  3.29:1  (needs 3, SC 1.4.11)
+  [pass] dark  text primary on page               #efeeeb on #0a0a09  17.07:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text primary on raised             #efeeeb on #1b1a18  14.98:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text secondary on page             #aeaaa4 on #0a0a09  8.56:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text secondary on raised           #aeaaa4 on #1b1a18  7.52:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text disabled on page              #9b9892 on #0a0a09  6.88:1  (needs 3, usability floor (1.4.3 exempts disabled))
+  [pass] dark  border carrying state on page      #6b6964 on #0a0a09  3.61:1  (needs 3, SC 1.4.11)
+  [pass] dark  accent text on page                #40a0e9 on #0a0a09  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  accent text on raised              #40a0e9 on #1b1a18  6.14:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  accent text on its own tint        #40a0e9 on #0e1f2c  5.93:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  accent boundary on page            #0e7ec4 on #0a0a09  4.52:1  (needs 3, SC 1.4.11)
+  [pass] dark  info text on page                  #40a0e9 on #0a0a09  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  info text on raised                #40a0e9 on #1b1a18  6.14:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  info text on its own tint          #40a0e9 on #0e1f2c  5.93:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  info boundary on page              #0e7ec4 on #0a0a09  4.52:1  (needs 3, SC 1.4.11)
+  [pass] dark  success text on page               #25b057 on #0a0a09  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  success text on raised             #25b057 on #1b1a18  6.14:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  success text on its own tint       #25b057 on #102214  5.88:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  success boundary on page           #028b3f on #0a0a09  4.49:1  (needs 3, SC 1.4.11)
+  [pass] dark  warning text on page               #cf8c32 on #0a0a09  7.02:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  warning text on raised             #cf8c32 on #1b1a18  6.16:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  warning text on its own tint       #cf8c32 on #271a09  6.01:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  warning boundary on page           #a86b02 on #0a0a09  4.49:1  (needs 3, SC 1.4.11)
+  [pass] dark  danger text on page                #ec776c on #0a0a09  6.99:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  danger text on raised              #ec776c on #1b1a18  6.14:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  danger text on its own tint        #ec776c on #2b1614  6.04:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  danger boundary on page            #c5544b on #0a0a09  4.47:1  (needs 3, SC 1.4.11)
+
+ACCENT BUDGET: At most one accent visible per screen. The primary action is ink, not accent.
+  Accent is for: links, focus rings, selected state.
+  Accent is never for: button fills, section backgrounds, decorative panels.
+  Every status carries a word and a glyph as well as a colour. Remove colour entirely and the screen still parses.
+
+TYPOGRAPHY
+────────────────────────────────────────────────────────────────────────
+Families: one variable family, self-hosted, no CDN, with tabular numerals. The typeface must carry ß and capital ẞ (U+1E9E) and well-drawn umlauts. All-caps headings need vertical headroom so Ä Ö Ü are not clipped. Fallback stack: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif
+Monospace is for identifiers and operational strings only — reference codes, IDs, paths, commands, keys. Never for prose, labels, or headings.
+
+UI regime — ratio 1.125, for controls, labels, table cells, form fields, body copy:
+  label         13px / line-height 1.5
+  compact       15px / line-height 1.5
+  body          16px / line-height 1.55
+  lede          18px / line-height 1.5
+  subsection    20px / line-height 1.4
+DISPLAY regime — ratio 1.333, for page titles and section headings only:
+  section       24px / line-height 1.3
+  title         32px / line-height 1.15
+  page-title    43px / line-height 1.08
+
+Weights: 400, 500, 600. Ceiling 600 — nothing heavier exists in this system. Geist stops at 600 and has no 700; Stripe sets display at 300; Linear's signature is 510. Hierarchy comes from small weight shifts, not from shouting.
+Tracking: -0.02em at display, 0 at body. Never negative on any string over 20 characters, at any size. Reference systems pull about -5% at display. DIN 1450 requires adequate character spacing and compounds already produce long unbroken letter runs, so the tracking is halved rather than dropped.
+Measure: reading text never exceeds 68ch; a headline never exceeds 20ch. Geist's published reading width. Beyond it the eye loses the line return.
+Minimums: body line-height at least 1.5; input font-size 16px. Inputs stay at 16px because anything smaller triggers zoom on iOS.
+
+SPACE
+────────────────────────────────────────────────────────────────────────
+Base unit 4px. Scale: 4, 8, 12, 16, 24, 32, 48, 64.
+Vertical rhythm — tight 8, within copy 16, between groups 32, between sections 64.
+A screen never contains a spacing value that is not on the scale.
+Density: compact 32px controls (data tables on pointer devices); default 36px controls (forms and general UI on pointer devices); touch 44px controls (any touch input).
+Density is one token swap, not a redesign. Touch targets never fall below 44x44 regardless of mode.
+
+SHAPE AND DEPTH
+────────────────────────────────────────────────────────────────────────
+Radii — controls 4px, surfaces 6px, containers 8px.
+Pills are for status badges only. Never on an action — Stripe bans pill radii on buttons.
+Elevation:
+  flat     light: none
+           dark:  none
+           for:   page and canvas
+  raised   light: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06)
+           dark:  0 0 0 1px rgba(255,255,255,0.08)
+           for:   cards, table containers
+  overlay  light: 0 8px 16px -4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08)
+           dark:  0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.6)
+           for:   modal, drawer, popover, toast
+Borders carry structure; shadows only mark what floats above the page. In dark the shadow is dropped and a white-alpha ring carries elevation, because a drop shadow does not read on near-black.
+
+MOTION
+────────────────────────────────────────────────────────────────────────
+What moves, and exactly how:
+  state change — hover, press, selection
+      150ms, ease-out, animating opacity and transform
+  disclosure — accordion, drawer, popover
+      200ms, cubic-bezier(0.4, 0, 0.2, 1), animating transform and opacity
+  route transition
+      220ms, cubic-bezier(0.4, 0, 0.2, 1), animating opacity
+  confirmation that a committed, hard-to-undo action succeeded — once, at the peak
+      400ms, ease-out, animating transform and opacity
+
+What must NOT move:
+- a value the person is reading — figures do not count up or re-flow under the eye
+- a row or item under the reader's cursor
+- anything that delays the person completing their task
+- layout properties (width, height, margin, padding) — transform and opacity only
+
+Reduced motion: Transform and layout animations are disabled; opacity and colour survive. Motion is never the only signal that something happened. Every animated state change also changes text, icon, or shape.
+Deletion test: Disable every animation. If the flow does not feel broken, the animation was decoration and is removed.
+
+COMPOSITION
+────────────────────────────────────────────────────────────────────────
+What leads: The amount due, set in the display regime at 43px, with the status badge directly beside it and the due date immediately under it. This block sits top-left, on the rule-of-thirds line rather than centred, and owns the first fixation.
+What supports it: The line-item table — one row per lead, with the trade, the postcode, the date received and the price. Beneath it the VAT breakdown and the total, right-aligned in tabular numerals so the digits form a column the eye can add up.
+What is one click away: Download as PDF, the payment method on file, and 'dispute a line' on each row. All three are secondary — outline or text buttons, never competing with the amount.
+What was cut, and why: The account navigation is reduced to a single back link. No sidebar, no related-invoices carousel, no upsell to a larger lead package. This is a document a person came to read and possibly forward to their accountant; anything that invites them elsewhere is noise on a page whose whole job is to settle a question.
+At most 3 things may compete for attention. Everything else serves the path from first landing point to the action.
+
+THE THREE STATES, COMPOSED AS ONE PRODUCT
+────────────────────────────────────────────────────────────────────────
+EMPTY:   There is no empty invoice — an invoice always has at least one line. The nearest state is a zero-total invoice in a month with no lead purchases: the amount block still leads, showing 0,00 € with a 'Keine Leistungen' badge in the neutral high-contrast fill rather than a status colour, and the table area carries one sentence explaining that no leads were bought in that period, plus a link back to the lead inbox. The layout does not collapse — the same three blocks stay in the same places, so the screen is recognisably the same document.
+LOADING: The amount block, the table and the totals render as skeletons at the exact dimensions their content will occupy, so nothing shifts when data arrives. Skeleton fills use the hover-surface step, not a shimmer animation — a moving gradient on a money screen reads as activity that is not happening. The status badge area stays empty rather than showing a placeholder badge, because a wrong status glimpsed for 300ms is worse than no status.
+ERROR:   When the invoice cannot be loaded, the amount block is replaced by a single line in the danger text colour with a warning glyph beside it, stating what failed in plain German and what to do next — 'Diese Rechnung konnte nicht geladen werden. Bitte in einer Minute erneut versuchen.' — with a retry button in the primary ink style. The page frame, the back link and the header stay exactly where they are. The error does not become a full-page takeover, because the person still needs the route back to the invoice list.
+
+COMPONENTS
+────────────────────────────────────────────────────────────────────────
+BUTTON — variants: primary (ink), secondary (outline), text
+  default         primary is the ink fill (gray-1000) with page-coloured text; secondary is a 1px border at the resting border step with primary text; text is primary text with no border
+  hover           primary lifts one step lighter; secondary swaps its border to the hover border step and its background to the hover surface; text gains the hover surface behind it
+  focus-visible   a 2px accent ring at 2px offset, in addition to whatever the hover state shows — never instead of it
+  active          the surface drops to the active step and the label shifts down by 1px; no scale transform, because a button that shrinks under a thumb reads as a mis-tap
+  disabled        the disabled text step on the raised surface, no border change, cursor not-allowed, and the reason stated adjacent rather than in a tooltip alone
+  loading         the label is replaced by a spinner at the label's exact width so the button does not resize, and the accessible name gains 'wird ausgeführt'
+  accessible name  the verb and its object, never 'click here' — 'Rechnung als PDF herunterladen'
+  NEVER            carry the accent colour as a fill, sit at pill radius, or animate its width when its label changes
+
+BADGE — variants: paid, open, overdue, neutral
+  default         tint background, 1px border in the same hue's boundary grade, the status text grade for the label, a leading glyph, and the German status word — four redundant encodings before colour perception is needed
+  accessible name  the status word itself, read out as part of the amount block
+  NEVER            use colour as its only signal, or appear in more than one size on the same screen
+
+TABLE — variants: line items
+  default         rows separated by the resting border step, not by alternating fills; amounts right-aligned in tabular numerals; the trade and postcode left-aligned; headers wrap to two lines rather than truncating
+  row-hover       the hover surface fills the row; no border change, no lift, no shadow
+  row-selected    the active surface plus a 2px accent bar on the leading edge, and the row's checkbox checked — selection is never colour alone
+  sorted          the active column header carries a directional glyph and aria-sort; the header text gains weight 600 while the others stay 500
+  empty           a single row spanning the table with one sentence and no illustration, at the same row height as a data row so the table does not change shape
+  loading         three skeleton rows at the real row height, using the hover-surface step
+  error           the table frame and headers remain; the body is replaced by one line in the danger text grade with a retry text button beside it
+  accessible name  a caption naming the billing period, associated with the table
+  NEVER            truncate a column header, right-align anything that is not a number, or shrink below its minimum column widths instead of scrolling
+
+LINK — variants: inline, back
+  default         accent text grade with a 1px underline at 0.1em offset — the underline is the non-colour signal
+  hover           the underline thickens to 2px; the colour does not change
+  focus-visible   a 2px accent ring at 2px offset around the text box
+  visited         unchanged — inside an authenticated product, visited state leaks browsing history into the UI and carries no useful meaning here
+  accessible name  the destination, never 'mehr'
+  NEVER            be distinguished from body text by colour alone
+
+RESPONSIVE
+────────────────────────────────────────────────────────────────────────
+Reference widths 360, 768, 1280. mobile-first; layout adapts rather than scales.
+Anything whose width is not the viewport's is sized with container queries, not media queries. A card in a sidebar and the same card in a main column are the same component at different widths.
+- Nothing scrolls horizontally at 360px. Wide content (tables, code) scrolls inside its own overflow-x container.
+- Grid and flex children carry min-width: 0, so a long string cannot force the page wider.
+- Touch targets are at least 44x44 at every width.
+- A table becomes a stack of cards below 768px — it does not shrink into unreadable columns.
+- The line-item table becomes a stack of cards below 768px: each lead is one card with the trade as its heading, the price right-aligned in the same tabular numerals, and the postcode and date as secondary text. It does not become a horizontally scrolling table on a phone, because a tradesman checking a bill one-handed cannot scroll a table sideways.
+- The amount block and the status badge stay side by side down to 360px; the badge wraps under the amount rather than shrinking its text.
+- The line-item card sizes from its own container, so the same card renders correctly inside the invoice detail column and inside the narrower summary panel on the invoice list.
+
+LANGUAGE AND LOCALE
+────────────────────────────────────────────────────────────────────────
+Content language: German (de-DE). German compounds break layouts tuned on English. These rules are not optional in this market.
+
+The html element carries a lang attribute matching the content language. Hyphenation, quotation marks and screen-reader pronunciation all key off it. Without it, hyphens: auto silently does nothing.
+A long string never widens the page. Grid and flex children carry min-width: 0, and wide content scrolls inside its own overflow-x container. Without min-width: 0 a flex child defaults to min-content, so one unbroken string forces the whole layout wider.
+Wrapping is the default. Truncation is the exception that must be argued for. Where vertical space is genuinely fixed, a value may truncate — and then the full string is recoverable on hover AND keyboard focus.
+Never truncate: form labels; table headers — a truncated header destroys the meaning of the whole column; identifiers a person may transcribe (account numbers, tax IDs, reference codes).
+Identifiers wrap with overflow-wrap: anywhere and never hyphenate — a hyphen inserted into an account number reads as part of the number.
+If the product is or will be translated, reserve room: 200-300% for UI strings under 10 characters, 180-200% for 11-20, 140-160% for 31-50. Short strings are the worst case — a one-word button label is where translation breaks layouts first. (W3C, Text size in translation)
+
+Text containers: hyphens: auto; overflow-wrap: break-word; word-break: normal;. hyphenate-limit-chars: 6 3 3. Never word-break: break-all — it breaks at linguistically wrong points and disables hyphenation in some browsers. For strings over ~15 characters, the translator inserts &shy; at morpheme boundaries. Compounds break between their components, not inside one.
+Typeface: The typeface must carry ß and capital ẞ (U+1E9E) and well-drawn umlauts. All-caps headings need vertical headroom so Ä Ö Ü are not clipped. DIN 1450 measures legibility by x-height and requires open, distinguishable letterforms.
+Forms: labels top-aligned — a left-aligned label column forces a width some German label will always break; required asterisk on the label; errors text below the field, with the field border in the error state.
+
+Formats — currency: 1.234,56 € — symbol after the amount, separated by a non-breaking space so they never split at a line break
+          date: TT.MM.JJJJ — two-digit day and month, four-digit year, a fixed 10 characters
+          numbers: Dot-grouped for money; space-grouped in threes for counts. Four-digit numbers are not grouped. (DIN 5008)
+
+The layout must survive this corpus at 360px without horizontal scroll or a mid-word break: Umsatzsteuer-Identifikationsnummer, Benachrichtigungseinstellungen, Gewährleistungsansprüche, Rechnungsempfänger, Leistungszeitraum.
+
+ACCESSIBILITY — A DESIGN CONSTRAINT, NOT A REVIEW STEP
+────────────────────────────────────────────────────────────────────────
+Target WCAG 2.2 AA.
+- Measured with the SC 1.4.3 formula, never estimated. Every pairing above carries its ratio.
+- Visible focus on every interactive element, at 3:1 against the adjacent surface.
+- Every interactive element reachable and operable by keyboard.
+- Colour is never the only carrier of meaning.
+
+IMPLEMENTATION CONTRACT — ANGULAR
+────────────────────────────────────────────────────────────────────────
+The design must be buildable in this stack without fighting it. This constrains what the design may assume, not how it looks:
+- Standalone components. No NgModules.
+- Signals for component state. No `zone.js`-dependent patterns — the app runs zoneless, so anything relying on automatic change detection after an async callback will not update.
+- `ChangeDetectionStrategy.OnPush` on every component.
+- Native control flow — `@if`, `@for`, `@switch`. Not `*ngIf`, `*ngFor`, `*ngSwitch`.
+- `@for` always carries a `track` expression.
+- Separate files: `.ts`, `.html`, `.css`. No inline `template:` or `styles:`.
+Styling:
+- TailwindCSS utility classes in the template. Design tokens are exposed as CSS custom properties on `:root` and referenced from the Tailwind theme, so a token change is one edit rather than a find-and-replace across templates.
+- Light and dark are two sets of custom-property values on the same names — never two sets of utility classes. The mode switch reassigns variables; no component knows which mode it is in.
+- Component-scoped `.css` only for what utilities genuinely cannot express: container queries, `:focus-visible` rings that need an offset against a specific surface, and reduced-motion blocks.
+Assets:
+- Fonts are self-hosted and served from the application's own origin. No Google Fonts link, no CDN, no `@import` from a remote host.
+- Fonts are declared with `@font-face` and `font-display: swap`, subset to the character set the product actually ships, and preloaded for the weight used above the fold.
+- Icons are inline SVG components, not an icon font and not a sprite fetched at runtime.
+Accessibility mechanics:
+- Focus is visible via `:focus-visible`, never suppressed with `outline: none` without a replacement.
+- Reduced motion is handled in CSS with `@media (prefers-reduced-motion: reduce)`, so it applies whether or not the component has hydrated.
+- A component's accessible name comes from its content or an `aria-label` bound in the template — never from a title attribute alone.
+
+REFUSE THESE
+────────────────────────────────────────────────────────────────────────
+If the design would contain any of the following, do not produce it — choose a different solution:
+- a purple-blue gradient hero
+- a glassmorphism card
+- an emoji standing in for an icon
+- a shadow on everything
+- more than one accent colour competing on a screen
+- animation that delays a person doing their job
+- an illustration that says nothing
+- a dark mode that is the light mode with inverted values
+- a centred hero over a grid of three feature cards
+- placeholder copy — every string is the real string
+- a progress bar or stepper implying the invoice is a workflow — it is a document, not a process
+- an illustration in the zero-total state
+- a countdown timer on the due date
+- a CDN font link or remote stylesheet
+- inline templates or inline styles in the component decorator
+- `*ngIf` / `*ngFor` / `*ngSwitch`
+- `::ng-deep` or global style overrides reaching into another component
+- a design that requires a runtime JavaScript theme switcher to be legible — both modes must work from CSS alone
+- any layout that depends on measuring the viewport in JavaScript
+
+ACCEPTANCE CHECKS — JUDGE THE RESULT AGAINST THESE
+────────────────────────────────────────────────────────────────────────
+ 1. Every colour pairing on the screen matches a measured ratio above. Nothing was introduced that was not measured.
+ 2. At most one accent is visible. The primary action is ink, not accent.
+ 3. Remove all colour: every status is still readable from its word and glyph.
+ 4. Every interactive element has a visible focus state at 3:1 against its surface, and is reachable by keyboard.
+ 5. Touch targets are at least 44x44.
+ 6. Nothing scrolls horizontally at 360px. Wide content scrolls inside its own container.
+ 7. Every spacing value is on the scale. There is no arbitrary pixel.
+ 8. The empty, loading and error states are visibly the same product as the populated one.
+ 9. Every animation carries a duration and an easing from the table above, and the deletion test was applied.
+10. Type never exceeds weight 600, and reading text never exceeds 68ch.
+11. The German corpus renders without clipping or horizontal scroll at 360px: Umsatzsteuer-Identifikationsnummer, Benachrichtigungseinstellungen, Gewährleistungsansprüche.
+12. Numbers and dates follow the stated conventions: TT.MM.JJJJ, Dot-grouped for money; space-grouped in threes for counts.
+13. The total, the due date and the status are all readable in the first fixation, without scrolling, at 360px.
+14. Every line item's price and the VAT total align on their decimal separators in tabular numerals.
+15. A 34-character compound (Umsatzsteuer-Identifikationsnummer) renders in the VAT block without horizontal scroll and without breaking mid-morpheme.
+16. The IBAN in the payment block renders in groups of four, is never truncated, and copies without spaces.
+17. Printed or exported to PDF, the page still reads as the same document — the status badge survives without its background colour.

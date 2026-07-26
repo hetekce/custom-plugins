@@ -1,0 +1,1260 @@
+{
+  "$schema": "./direction.schema.json",
+  "directionVersion": "1.0.0",
+  "createdAt": "2026-07-26T10:39:54.842Z",
+  "product": {
+    "name": "Handwerk Leads",
+    "domain": "buying qualified job leads, and the invoices for them",
+    "audience": "a self-employed German tradesman — Elektriker, Dachdecker, Sanitär — who buys leads between jobs, usually on a phone in a van or a laptop at the kitchen table after hours",
+    "nouns": [
+      "invoice",
+      "lead",
+      "Rechnung",
+      "Leistungszeitraum",
+      "tradesman",
+      "job",
+      "payout",
+      "VAT",
+      "Umsatzsteuer"
+    ],
+    "screens": [
+      "lead inbox",
+      "invoice list",
+      "invoice detail",
+      "payment confirmation"
+    ]
+  },
+  "brand": {
+    "accentHue": 245,
+    "neutralHue": 85,
+    "source": "derived",
+    "rationale": "A true blue at OKLCH hue 245, deliberately short of the 260-280 band where every fintech brand already sits. It is used for links, focus and selection only — the primary action is ink, so the accent never has to carry a button fill and can stay dark enough to pass as text. The neutral is warm (hue 85, chroma under 0.013) because this is money software a tradesman reads at the end of a long day, and a cool blue-grey reads as cold tech."
+  },
+  "color": {
+    "space": "OKLCH",
+    "why": "Equal HSL lightness is not equal perceived lightness. Stripe rebuilt in CIELAB, Linear in LCH, Geist in OKLCH — all for this reason.",
+    "primaryMode": "light",
+    "rampRoles": {
+      "background-100": "page",
+      "background-200": "canvas behind the page",
+      "gray-100": "raised surface",
+      "gray-200": "hover surface",
+      "gray-300": "active surface",
+      "gray-400": "border, resting",
+      "gray-500": "border, hover",
+      "gray-600": "border carrying state",
+      "gray-700": "high-contrast fill",
+      "gray-800": "text, disabled",
+      "gray-900": "text, secondary",
+      "gray-1000": "text, primary"
+    },
+    "modes": {
+      "light": {
+        "ramp": {
+          "background-100": {
+            "hex": "#ffffff",
+            "role": "page",
+            "oklch": {
+              "L": 1,
+              "C": 0,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "background-200": {
+            "hex": "#fbfaf9",
+            "role": "canvas behind the page",
+            "oklch": {
+              "L": 0.985,
+              "C": 0.002,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-100": {
+            "hex": "#f5f4f2",
+            "role": "raised surface",
+            "oklch": {
+              "L": 0.968,
+              "C": 0.003,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-200": {
+            "hex": "#eeedea",
+            "role": "hover surface",
+            "oklch": {
+              "L": 0.945,
+              "C": 0.004,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-300": {
+            "hex": "#e6e5e2",
+            "role": "active surface",
+            "oklch": {
+              "L": 0.922,
+              "C": 0.004,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-400": {
+            "hex": "#dfddda",
+            "role": "border, resting",
+            "oklch": {
+              "L": 0.898,
+              "C": 0.005,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-500": {
+            "hex": "#ceccc8",
+            "role": "border, hover",
+            "oklch": {
+              "L": 0.845,
+              "C": 0.006,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-600": {
+            "hex": "#97948e",
+            "role": "border carrying state",
+            "oklch": {
+              "L": 0.668,
+              "C": 0.01,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-700": {
+            "hex": "#838079",
+            "role": "high-contrast fill",
+            "oklch": {
+              "L": 0.6,
+              "C": 0.011,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-800": {
+            "hex": "#78746d",
+            "role": "text, disabled",
+            "oklch": {
+              "L": 0.56,
+              "C": 0.012,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-900": {
+            "hex": "#6a665f",
+            "role": "text, secondary",
+            "oklch": {
+              "L": 0.512,
+              "C": 0.012,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-1000": {
+            "hex": "#23201b",
+            "role": "text, primary",
+            "oklch": {
+              "L": 0.245,
+              "C": 0.01,
+              "H": 85
+            },
+            "inGamut": true
+          }
+        },
+        "semantic": {
+          "accent": {
+            "hue": 245,
+            "text": "#0370b2",
+            "boundary": "#2293e1",
+            "tint": "#e8f5ff",
+            "chroma": 0.132
+          },
+          "info": {
+            "hue": 245,
+            "text": "#0370b2",
+            "boundary": "#2293e1",
+            "tint": "#e8f5ff",
+            "chroma": 0.132
+          },
+          "success": {
+            "hue": 150,
+            "text": "#027c37",
+            "boundary": "#32a155",
+            "tint": "#eaf8ec",
+            "chroma": 0.141
+          },
+          "warning": {
+            "hue": 70,
+            "text": "#975f00",
+            "boundary": "#c57e06",
+            "tint": "#fdf1e4",
+            "chroma": 0.116
+          },
+          "danger": {
+            "hue": 27,
+            "text": "#bf3f38",
+            "boundary": "#e7645a",
+            "tint": "#ffeeec",
+            "chroma": 0.165
+          }
+        }
+      },
+      "dark": {
+        "ramp": {
+          "background-100": {
+            "hex": "#0a0a09",
+            "role": "page",
+            "oklch": {
+              "L": 0.145,
+              "C": 0.002,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "background-200": {
+            "hex": "#050504",
+            "role": "canvas behind the page",
+            "oklch": {
+              "L": 0.115,
+              "C": 0.002,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-100": {
+            "hex": "#1b1a18",
+            "role": "raised surface",
+            "oklch": {
+              "L": 0.218,
+              "C": 0.004,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-200": {
+            "hex": "#21201e",
+            "role": "hover surface",
+            "oklch": {
+              "L": 0.245,
+              "C": 0.004,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-300": {
+            "hex": "#2b2a27",
+            "role": "active surface",
+            "oklch": {
+              "L": 0.285,
+              "C": 0.005,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-400": {
+            "hex": "#33322f",
+            "role": "border, resting",
+            "oklch": {
+              "L": 0.318,
+              "C": 0.005,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-500": {
+            "hex": "#494744",
+            "role": "border, hover",
+            "oklch": {
+              "L": 0.4,
+              "C": 0.006,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-600": {
+            "hex": "#6b6964",
+            "role": "border carrying state",
+            "oklch": {
+              "L": 0.52,
+              "C": 0.008,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-700": {
+            "hex": "#898680",
+            "role": "high-contrast fill",
+            "oklch": {
+              "L": 0.62,
+              "C": 0.009,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-800": {
+            "hex": "#9b9892",
+            "role": "text, disabled",
+            "oklch": {
+              "L": 0.68,
+              "C": 0.009,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-900": {
+            "hex": "#aeaaa4",
+            "role": "text, secondary",
+            "oklch": {
+              "L": 0.74,
+              "C": 0.01,
+              "H": 85
+            },
+            "inGamut": true
+          },
+          "gray-1000": {
+            "hex": "#efeeeb",
+            "role": "text, primary",
+            "oklch": {
+              "L": 0.948,
+              "C": 0.004,
+              "H": 85
+            },
+            "inGamut": true
+          }
+        },
+        "semantic": {
+          "accent": {
+            "hue": 245,
+            "text": "#40a0e9",
+            "boundary": "#0e7ec4",
+            "tint": "#0e1f2c",
+            "chroma": 0.14
+          },
+          "info": {
+            "hue": 245,
+            "text": "#40a0e9",
+            "boundary": "#0e7ec4",
+            "tint": "#0e1f2c",
+            "chroma": 0.14
+          },
+          "success": {
+            "hue": 150,
+            "text": "#25b057",
+            "boundary": "#028b3f",
+            "tint": "#102214",
+            "chroma": 0.171
+          },
+          "warning": {
+            "hue": 70,
+            "text": "#cf8c32",
+            "boundary": "#a86b02",
+            "tint": "#271a09",
+            "chroma": 0.13
+          },
+          "danger": {
+            "hue": 27,
+            "text": "#ec776c",
+            "boundary": "#c5544b",
+            "tint": "#2b1614",
+            "chroma": 0.147
+          }
+        }
+      }
+    },
+    "accentBudget": {
+      "rule": "At most one accent visible per screen. The primary action is ink, not accent.",
+      "accentIsFor": [
+        "links",
+        "focus rings",
+        "selected state"
+      ],
+      "accentIsNeverFor": [
+        "button fills",
+        "section backgrounds",
+        "decorative panels"
+      ],
+      "why": "Vercel states it as policy — design in monochrome first, and their primary CTA is ink. Revolut bans its accent as a button surface; Framer reserves blue for links, focus and selection."
+    },
+    "colorIsNeverTheOnlySignal": "Every status carries a word and a glyph as well as a colour. Remove colour entirely and the screen still parses.",
+    "measured": [
+      {
+        "mode": "light",
+        "pair": "text primary on page",
+        "fg": "#23201b",
+        "bg": "#ffffff",
+        "ratio": 16.23,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text primary on raised",
+        "fg": "#23201b",
+        "bg": "#f5f4f2",
+        "ratio": 14.76,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text secondary on page",
+        "fg": "#6a665f",
+        "bg": "#ffffff",
+        "ratio": 5.7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text secondary on raised",
+        "fg": "#6a665f",
+        "bg": "#f5f4f2",
+        "ratio": 5.19,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "text disabled on page",
+        "fg": "#78746d",
+        "bg": "#ffffff",
+        "ratio": 4.64,
+        "required": 3,
+        "rule": "usability floor (1.4.3 exempts disabled)",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "border carrying state on page",
+        "fg": "#97948e",
+        "bg": "#ffffff",
+        "ratio": 3.02,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent text on page",
+        "fg": "#0370b2",
+        "bg": "#ffffff",
+        "ratio": 5.29,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent text on raised",
+        "fg": "#0370b2",
+        "bg": "#f5f4f2",
+        "ratio": 4.81,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent text on its own tint",
+        "fg": "#0370b2",
+        "bg": "#e8f5ff",
+        "ratio": 4.77,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "accent boundary on page",
+        "fg": "#2293e1",
+        "bg": "#ffffff",
+        "ratio": 3.31,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info text on page",
+        "fg": "#0370b2",
+        "bg": "#ffffff",
+        "ratio": 5.29,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info text on raised",
+        "fg": "#0370b2",
+        "bg": "#f5f4f2",
+        "ratio": 4.81,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info text on its own tint",
+        "fg": "#0370b2",
+        "bg": "#e8f5ff",
+        "ratio": 4.77,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "info boundary on page",
+        "fg": "#2293e1",
+        "bg": "#ffffff",
+        "ratio": 3.31,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success text on page",
+        "fg": "#027c37",
+        "bg": "#ffffff",
+        "ratio": 5.32,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success text on raised",
+        "fg": "#027c37",
+        "bg": "#f5f4f2",
+        "ratio": 4.84,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success text on its own tint",
+        "fg": "#027c37",
+        "bg": "#eaf8ec",
+        "ratio": 4.85,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "success boundary on page",
+        "fg": "#32a155",
+        "bg": "#ffffff",
+        "ratio": 3.29,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning text on page",
+        "fg": "#975f00",
+        "bg": "#ffffff",
+        "ratio": 5.31,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning text on raised",
+        "fg": "#975f00",
+        "bg": "#f5f4f2",
+        "ratio": 4.83,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning text on its own tint",
+        "fg": "#975f00",
+        "bg": "#fdf1e4",
+        "ratio": 4.77,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "warning boundary on page",
+        "fg": "#c57e06",
+        "bg": "#ffffff",
+        "ratio": 3.3,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger text on page",
+        "fg": "#bf3f38",
+        "bg": "#ffffff",
+        "ratio": 5.27,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger text on raised",
+        "fg": "#bf3f38",
+        "bg": "#f5f4f2",
+        "ratio": 4.79,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger text on its own tint",
+        "fg": "#bf3f38",
+        "bg": "#ffeeec",
+        "ratio": 4.69,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "light",
+        "pair": "danger boundary on page",
+        "fg": "#e7645a",
+        "bg": "#ffffff",
+        "ratio": 3.29,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text primary on page",
+        "fg": "#efeeeb",
+        "bg": "#0a0a09",
+        "ratio": 17.07,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text primary on raised",
+        "fg": "#efeeeb",
+        "bg": "#1b1a18",
+        "ratio": 14.98,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text secondary on page",
+        "fg": "#aeaaa4",
+        "bg": "#0a0a09",
+        "ratio": 8.56,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text secondary on raised",
+        "fg": "#aeaaa4",
+        "bg": "#1b1a18",
+        "ratio": 7.52,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "text disabled on page",
+        "fg": "#9b9892",
+        "bg": "#0a0a09",
+        "ratio": 6.88,
+        "required": 3,
+        "rule": "usability floor (1.4.3 exempts disabled)",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "border carrying state on page",
+        "fg": "#6b6964",
+        "bg": "#0a0a09",
+        "ratio": 3.61,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent text on page",
+        "fg": "#40a0e9",
+        "bg": "#0a0a09",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent text on raised",
+        "fg": "#40a0e9",
+        "bg": "#1b1a18",
+        "ratio": 6.14,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent text on its own tint",
+        "fg": "#40a0e9",
+        "bg": "#0e1f2c",
+        "ratio": 5.93,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "accent boundary on page",
+        "fg": "#0e7ec4",
+        "bg": "#0a0a09",
+        "ratio": 4.52,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info text on page",
+        "fg": "#40a0e9",
+        "bg": "#0a0a09",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info text on raised",
+        "fg": "#40a0e9",
+        "bg": "#1b1a18",
+        "ratio": 6.14,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info text on its own tint",
+        "fg": "#40a0e9",
+        "bg": "#0e1f2c",
+        "ratio": 5.93,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "info boundary on page",
+        "fg": "#0e7ec4",
+        "bg": "#0a0a09",
+        "ratio": 4.52,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success text on page",
+        "fg": "#25b057",
+        "bg": "#0a0a09",
+        "ratio": 7,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success text on raised",
+        "fg": "#25b057",
+        "bg": "#1b1a18",
+        "ratio": 6.14,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success text on its own tint",
+        "fg": "#25b057",
+        "bg": "#102214",
+        "ratio": 5.88,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "success boundary on page",
+        "fg": "#028b3f",
+        "bg": "#0a0a09",
+        "ratio": 4.49,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning text on page",
+        "fg": "#cf8c32",
+        "bg": "#0a0a09",
+        "ratio": 7.02,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning text on raised",
+        "fg": "#cf8c32",
+        "bg": "#1b1a18",
+        "ratio": 6.16,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning text on its own tint",
+        "fg": "#cf8c32",
+        "bg": "#271a09",
+        "ratio": 6.01,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "warning boundary on page",
+        "fg": "#a86b02",
+        "bg": "#0a0a09",
+        "ratio": 4.49,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger text on page",
+        "fg": "#ec776c",
+        "bg": "#0a0a09",
+        "ratio": 6.99,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger text on raised",
+        "fg": "#ec776c",
+        "bg": "#1b1a18",
+        "ratio": 6.14,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger text on its own tint",
+        "fg": "#ec776c",
+        "bg": "#2b1614",
+        "ratio": 6.04,
+        "required": 4.5,
+        "rule": "SC 1.4.3",
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "pair": "danger boundary on page",
+        "fg": "#c5544b",
+        "bg": "#0a0a09",
+        "ratio": 4.47,
+        "required": 3,
+        "rule": "SC 1.4.11",
+        "pass": true
+      }
+    ]
+  },
+  "type": {
+    "families": {
+      "ui": {
+        "role": "everything — prose, UI, headings",
+        "requirement": "one variable family, self-hosted, no CDN, with tabular numerals. The typeface must carry ß and capital ẞ (U+1E9E) and well-drawn umlauts. All-caps headings need vertical headroom so Ä Ö Ü are not clipped.",
+        "fallback": "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+      },
+      "mono": {
+        "role": "identifiers and operational strings only — reference codes, IDs, paths, commands, keys",
+        "never": "prose, labels, or headings",
+        "fallback": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+      }
+    },
+    "regimes": {
+      "ui": {
+        "ratio": 1.125,
+        "use": "controls, labels, table cells, form fields, body copy",
+        "steps": [
+          {
+            "name": "label",
+            "px": 13,
+            "lineHeight": 1.5
+          },
+          {
+            "name": "compact",
+            "px": 15,
+            "lineHeight": 1.5
+          },
+          {
+            "name": "body",
+            "px": 16,
+            "lineHeight": 1.55
+          },
+          {
+            "name": "lede",
+            "px": 18,
+            "lineHeight": 1.5
+          },
+          {
+            "name": "subsection",
+            "px": 20,
+            "lineHeight": 1.4
+          }
+        ]
+      },
+      "display": {
+        "ratio": 1.333,
+        "use": "page titles and section headings only",
+        "steps": [
+          {
+            "name": "section",
+            "px": 24,
+            "lineHeight": 1.3
+          },
+          {
+            "name": "title",
+            "px": 32,
+            "lineHeight": 1.15
+          },
+          {
+            "name": "page-title",
+            "px": 43,
+            "lineHeight": 1.08
+          }
+        ]
+      }
+    },
+    "weights": {
+      "available": [
+        400,
+        500,
+        600
+      ],
+      "ceiling": 600,
+      "why": "Geist stops at 600 and has no 700; Stripe sets display at 300; Linear's signature is 510. Hierarchy comes from small weight shifts, not from shouting."
+    },
+    "tracking": {
+      "display": "-0.02em",
+      "body": "0",
+      "rule": "Never negative on any string over 20 characters, at any size.",
+      "why": "Reference systems pull about -5% at display. DIN 1450 requires adequate character spacing and compounds already produce long unbroken letter runs, so the tracking is halved rather than dropped."
+    },
+    "measure": {
+      "reading": "68ch",
+      "headline": "20ch",
+      "why": "Geist's published reading width. Beyond it the eye loses the line return."
+    },
+    "minimums": {
+      "bodyLineHeight": 1.5,
+      "inputFontSize": 16,
+      "why": "Inputs stay at 16px because anything smaller triggers zoom on iOS."
+    }
+  },
+  "space": {
+    "base": 4,
+    "scale": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      48,
+      64
+    ],
+    "rhythm": {
+      "tight": 8,
+      "copy": 16,
+      "group": 32,
+      "section": 64
+    },
+    "why": "Linear, Geist and Revolut all run a 4px base; Stripe runs 8. Four gives finer density control and every reference section rhythm lands on it.",
+    "rule": "A screen never contains a spacing value that is not on the scale."
+  },
+  "shape": {
+    "radii": {
+      "control": 4,
+      "surface": 6,
+      "container": 8,
+      "pill": 9999
+    },
+    "pillRule": "Pills are for status badges only. Never on an action — Stripe bans pill radii on buttons.",
+    "elevation": [
+      {
+        "name": "flat",
+        "light": "none",
+        "dark": "none",
+        "use": "page and canvas"
+      },
+      {
+        "name": "raised",
+        "light": "0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06)",
+        "dark": "0 0 0 1px rgba(255,255,255,0.08)",
+        "use": "cards, table containers"
+      },
+      {
+        "name": "overlay",
+        "light": "0 8px 16px -4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08)",
+        "dark": "0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.6)",
+        "use": "modal, drawer, popover, toast"
+      }
+    ],
+    "bordersVsShadows": "Borders carry structure; shadows only mark what floats above the page. In dark the shadow is dropped and a white-alpha ring carries elevation, because a drop shadow does not read on near-black."
+  },
+  "motion": {
+    "durations": {
+      "state": 150,
+      "disclosure": 200,
+      "route": 220,
+      "confirmation": 400
+    },
+    "easings": {
+      "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "exit": "ease-out"
+    },
+    "animates": [
+      {
+        "what": "state change — hover, press, selection",
+        "duration": 150,
+        "easing": "ease-out",
+        "properties": [
+          "opacity",
+          "transform"
+        ]
+      },
+      {
+        "what": "disclosure — accordion, drawer, popover",
+        "duration": 200,
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "properties": [
+          "transform",
+          "opacity"
+        ]
+      },
+      {
+        "what": "route transition",
+        "duration": 220,
+        "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "properties": [
+          "opacity"
+        ]
+      },
+      {
+        "what": "confirmation that a committed, hard-to-undo action succeeded — once, at the peak",
+        "duration": 400,
+        "easing": "ease-out",
+        "properties": [
+          "transform",
+          "opacity"
+        ]
+      }
+    ],
+    "neverAnimates": [
+      "a value the person is reading — figures do not count up or re-flow under the eye",
+      "a row or item under the reader's cursor",
+      "anything that delays the person completing their task",
+      "layout properties (width, height, margin, padding) — transform and opacity only"
+    ],
+    "reducedMotion": {
+      "behaviour": "Transform and layout animations are disabled; opacity and colour survive.",
+      "rule": "Motion is never the only signal that something happened. Every animated state change also changes text, icon, or shape.",
+      "why": "Motion's published contract, the cleanest of the systems studied. Reduced motion is a designed state, not a fallback."
+    },
+    "deletionTest": "Disable every animation. If the flow does not feel broken, the animation was decoration and is removed."
+  },
+  "density": {
+    "modes": {
+      "compact": {
+        "controlHeight": 32,
+        "rowHeight": 32,
+        "use": "data tables on pointer devices"
+      },
+      "default": {
+        "controlHeight": 36,
+        "rowHeight": 44,
+        "use": "forms and general UI on pointer devices"
+      },
+      "touch": {
+        "controlHeight": 44,
+        "rowHeight": 48,
+        "use": "any touch input"
+      }
+    },
+    "minimumTouchTarget": 44,
+    "rule": "Density is one token swap, not a redesign. Touch targets never fall below 44x44 regardless of mode.",
+    "why": "SAP Fiori is the German enterprise baseline: compact 32px, cozy 44px. B2B accounting products ship compact-first."
+  },
+  "responsive": {
+    "referenceWidths": [
+      360,
+      768,
+      1280
+    ],
+    "approach": "mobile-first; layout adapts rather than scales",
+    "containerQueries": "Anything whose width is not the viewport's is sized with container queries, not media queries. A card in a sidebar and the same card in a main column are the same component at different widths.",
+    "rules": [
+      "Nothing scrolls horizontally at 360px. Wide content (tables, code) scrolls inside its own overflow-x container.",
+      "Grid and flex children carry min-width: 0, so a long string cannot force the page wider.",
+      "Touch targets are at least 44x44 at every width.",
+      "A table becomes a stack of cards below 768px — it does not shrink into unreadable columns."
+    ]
+  },
+  "locale": {
+    "code": "de-DE",
+    "market": "de",
+    "label": "German",
+    "note": "German compounds break layouts tuned on English. These rules are not optional in this market.",
+    "universal": {
+      "containment": {
+        "rule": "A long string never widens the page. Grid and flex children carry min-width: 0, and wide content scrolls inside its own overflow-x container.",
+        "why": "Without min-width: 0 a flex child defaults to min-content, so one unbroken string forces the whole layout wider."
+      },
+      "neverTruncate": [
+        "form labels",
+        "table headers — a truncated header destroys the meaning of the whole column",
+        "identifiers a person may transcribe (account numbers, tax IDs, reference codes)"
+      ],
+      "truncation": {
+        "rule": "Where vertical space is genuinely fixed, a value may truncate — and then the full string is recoverable on hover AND keyboard focus.",
+        "default": "Wrapping is the default. Truncation is the exception that must be argued for."
+      },
+      "expansion": {
+        "rule": "If the product is or will be translated, reserve room: 200-300% for UI strings under 10 characters, 180-200% for 11-20, 140-160% for 31-50.",
+        "why": "Short strings are the worst case — a one-word button label is where translation breaks layouts first.",
+        "source": "W3C, Text size in translation"
+      },
+      "identifiers": {
+        "rule": "Identifiers wrap with overflow-wrap: anywhere and never hyphenate — a hyphen inserted into an account number reads as part of the number."
+      },
+      "lang": {
+        "rule": "The html element carries a lang attribute matching the content language.",
+        "why": "Hyphenation, quotation marks and screen-reader pronunciation all key off it. Without it, hyphens: auto silently does nothing."
+      },
+      "tracking": {
+        "display": "-0.03em",
+        "body": "0",
+        "rule": "Never letterspace lowercase body text. Never negative tracking on a string over 20 characters, at any size.",
+        "why": "Every reference system pulls negative tracking at display and none at body. The 20-character guard exists because long unbroken words are where tight tracking hurts most."
+      },
+      "bodyLineHeight": 1.45
+    },
+    "text": {
+      "css": "hyphens: auto; overflow-wrap: break-word; word-break: normal;",
+      "hyphenateLimitChars": "6 3 3",
+      "never": "word-break: break-all — it breaks at linguistically wrong points and disables hyphenation in some browsers",
+      "softHyphens": "For strings over ~15 characters, the translator inserts &shy; at morpheme boundaries. Compounds break between their components, not inside one."
+    },
+    "typography": {
+      "rule": "The typeface must carry ß and capital ẞ (U+1E9E) and well-drawn umlauts. All-caps headings need vertical headroom so Ä Ö Ü are not clipped.",
+      "why": "DIN 1450 measures legibility by x-height and requires open, distinguishable letterforms."
+    },
+    "forms": {
+      "labels": "top-aligned — a left-aligned label column forces a width some German label will always break",
+      "required": "asterisk on the label",
+      "errors": "text below the field, with the field border in the error state"
+    },
+    "tracking": {
+      "display": "-0.02em",
+      "body": "0",
+      "rule": "Never negative on any string over 20 characters, at any size.",
+      "why": "Reference systems pull about -5% at display. DIN 1450 requires adequate character spacing and compounds already produce long unbroken letter runs, so the tracking is halved rather than dropped."
+    },
+    "bodyLineHeight": 1.5,
+    "formats": {
+      "currency": "1.234,56 € — symbol after the amount, separated by a non-breaking space so they never split at a line break",
+      "date": "TT.MM.JJJJ — two-digit day and month, four-digit year, a fixed 10 characters",
+      "numbers": "Dot-grouped for money; space-grouped in threes for counts. Four-digit numbers are not grouped.",
+      "source": "DIN 5008"
+    },
+    "density": {
+      "why": "SAP Fiori is the German enterprise baseline: compact 32px, cozy 44px. B2B accounting products ship compact-first."
+    },
+    "testCorpus": [
+      "Umsatzsteuer-Identifikationsnummer",
+      "Benachrichtigungseinstellungen",
+      "Gewährleistungsansprüche",
+      "Rechnungsempfänger",
+      "Leistungszeitraum"
+    ]
+  },
+  "accessibility": {
+    "target": "WCAG 2.2 AA",
+    "contrast": "Measured with the SC 1.4.3 formula, never estimated. Every pairing above carries its ratio.",
+    "focus": "Visible focus on every interactive element, at 3:1 against the adjacent surface.",
+    "keyboard": "Every interactive element reachable and operable by keyboard.",
+    "colorIndependence": "Colour is never the only carrier of meaning."
+  },
+  "decisions": [
+    {
+      "id": "accent-is-not-a-fill",
+      "date": "2026-07-26",
+      "what": "The primary action is ink, not accent. Accent is reserved for links, focus rings and selection.",
+      "why": "Vercel states it as policy and their own primary CTA is ink; Revolut bans its accent as a button surface; Framer reserves blue for links and focus. It also removes the hardest constraint on the accent — it never needs to carry white text at a large size, so it can stay dark enough to pass 4.5:1 as text."
+    },
+    {
+      "id": "warm-neutral",
+      "date": "2026-07-26",
+      "what": "The neutral ramp is warm (OKLCH hue 85) rather than the conventional cool grey.",
+      "why": "Linear moved from a cool blue-ish grey to a warmer one in 2026 for exactly this reason. Accounting software read late in the day should not feel clinical."
+    },
+    {
+      "id": "halved-display-tracking",
+      "date": "2026-07-26",
+      "what": "Display tracking is -0.02em, roughly half what the reference systems use, and never negative on strings over 20 characters.",
+      "why": "Geist pulls about -5% at display and Framer says explicitly not to reduce it for accessibility. But DIN 1450 requires adequate character spacing and German compounds already produce long unbroken letter runs. Halving keeps the voice on a two-word heading without squeezing Umsatzsteuer-Identifikationsnummer."
+    }
+  ]
+}

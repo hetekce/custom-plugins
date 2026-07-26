@@ -1,0 +1,37 @@
+{
+  "product": {
+    "name": "Relay",
+    "domain": "watching deployments go out and catching the ones that go wrong",
+    "audience": "an on-call platform engineer, usually with the dashboard on a second monitor while doing something else",
+    "nouns": ["deployment", "pipeline", "rollback", "commit", "environment", "incident", "build"],
+    "screens": ["deployment list", "deployment detail", "pipeline run", "incident timeline"]
+  },
+  "brand": {
+    "accentHue": 195,
+    "neutralHue": 250,
+    "source": "derived",
+    "rationale": "A cyan-leaning blue at OKLCH hue 195, chosen because the status roles already own green, amber and red on this product — a deployment dashboard is mostly status, so the accent has to stay clear of all three signal hues to avoid reading as a fourth status. The neutral is cool (hue 250) rather than warm: this surface is watched on a dark second monitor for hours, and a cool ramp sits back further behind the status colours."
+  },
+  "localeCode": "en-US",
+  "primaryMode": "dark",
+  "decisions": [
+    {
+      "id": "dark-first",
+      "date": "2026-07-26",
+      "what": "Dark is the primary designed mode; light is designed second, not derived by inversion.",
+      "why": "The screen lives on a second monitor during on-call rotations that run overnight. Light mode still gets a hand-tuned ramp because incident reviews happen in daylight and get screenshotted into documents."
+    },
+    {
+      "id": "accent-avoids-status-hues",
+      "date": "2026-07-26",
+      "what": "The accent is cyan (hue 195), deliberately not green, amber or red.",
+      "why": "On a product where most of the pixels are status, an accent near a signal hue gets read as a signal. Cyan is far enough from success green (150) to never be mistaken for it at a glance."
+    },
+    {
+      "id": "cool-neutral",
+      "date": "2026-07-26",
+      "what": "The neutral ramp is cool (hue 250), unlike the warm default.",
+      "why": "A warm neutral competes with amber. On a status-dense dark surface the ramp has to recede completely, and a cool grey does that better next to warning colours."
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+Design a deployment list for Relay: watching deployments go out and catching the ones that go wrong.
+Every decision below is already made. Execute them; do not substitute your own.
+Two independent runs of this prompt should produce two executions of the same design.
+
+INTENT — THE FIRST TWO SECONDS
+────────────────────────────────────────────────────────────────────────
+The person: an on-call platform engineer glancing at a second monitor every few minutes, not reading it.
+They arrive from a pinned browser tab that stays open for the whole rotation, and what they need to know first is: whether anything is currently broken — before any list, any filter, any navigation
+What this screen should make them feel: that nothing needs them right now. The default state of this screen is calm, and calm has to be visibly different from unexamined.
+What it is reassuring them about: that the screen is live and is actually watching, so an absence of red means nothing is wrong rather than nothing has loaded
+The anxiety it removes: the fear of having missed something. An on-call engineer who has to re-read the whole list to be sure is being made to do the machine's job.
+This is not interchangeable with any other screen in the product. The incident timeline is read closely, once, under pressure — it is a document. This screen is glanced at fifty times and read properly twice. It is instrumentation, and it must survive being seen out of the corner of an eye.
+
+COLOUR
+────────────────────────────────────────────────────────────────────────
+Colour is authored in OKLCH and stated as hex. Equal HSL lightness is not equal perceived lightness. Stripe rebuilt in CIELAB, Linear in LCH, Geist in OKLCH — all for this reason.
+The primary designed mode is dark. The other mode is designed, not inverted — its ramp is tuned separately and its accents carry different chroma.
+
+LIGHT MODE
+  background-100  #ffffff   page
+  background-200  #f9fafb   canvas behind the page
+  gray-100        #f3f5f6   raised surface
+  gray-200        #ebedef   hover surface
+  gray-300        #e3e5e8   active surface
+  gray-400        #dbdee1   border, resting
+  gray-500        #c9ccd0   border, hover
+  gray-600        #90959b   border carrying state
+  gray-700        #7b8187   high-contrast fill
+  gray-800        #6f757b   text, disabled
+  gray-900        #62676d   text, secondary
+  gray-1000       #1d2125   text, primary
+
+  accent   text #047879   border/icon #019e9f   tint #e3f8f8
+  info     — the same values as accent, by design
+  success  text #027c37   border/icon #32a155   tint #eaf8ec
+  warning  text #975f00   border/icon #c57e06   tint #fdf1e4
+  danger   text #be3e38   border/icon #e7645a   tint #ffeeec
+
+DARK MODE
+  background-100  #090a0b   page
+  background-200  #050506   canvas behind the page
+  gray-100        #191a1c   raised surface
+  gray-200        #1f2122   hover surface
+  gray-300        #282a2d   active surface
+  gray-400        #303335   border, resting
+  gray-500        #45484b   border, hover
+  gray-600        #66696d   border carrying state
+  gray-700        #82878b   high-contrast fill
+  gray-800        #94999e   text, disabled
+  gray-900        #a6abb1   text, secondary
+  gray-1000       #eceef0   text, primary
+
+  accent   text #05abab   border/icon #058686   tint #042222
+  info     — the same values as accent, by design
+  success  text #25b057   border/icon #028b3f   tint #102214
+  warning  text #cf8c32   border/icon #a86b02   tint #271a09
+  danger   text #ec776c   border/icon #c5544b   tint #2b1614
+
+MEASURED CONTRAST — every pairing, with the rule it satisfies:
+  [pass] light text primary on page               #1d2125 on #ffffff  16.19:1  (needs 4.5, SC 1.4.3)
+  [pass] light text primary on raised             #1d2125 on #f3f5f6  14.81:1  (needs 4.5, SC 1.4.3)
+  [pass] light text secondary on page             #62676d on #ffffff  5.7:1  (needs 4.5, SC 1.4.3)
+  [pass] light text secondary on raised           #62676d on #f3f5f6  5.21:1  (needs 4.5, SC 1.4.3)
+  [pass] light text disabled on page              #6f757b on #ffffff  4.66:1  (needs 3, usability floor (1.4.3 exempts disabled))
+  [pass] light border carrying state on page      #90959b on #ffffff  3.01:1  (needs 3, SC 1.4.11)
+  [pass] light accent text on page                #047879 on #ffffff  5.29:1  (needs 4.5, SC 1.4.3)
+  [pass] light accent text on raised              #047879 on #f3f5f6  4.83:1  (needs 4.5, SC 1.4.3)
+  [pass] light accent text on its own tint        #047879 on #e3f8f8  4.8:1  (needs 4.5, SC 1.4.3)
+  [pass] light accent boundary on page            #019e9f on #ffffff  3.28:1  (needs 3, SC 1.4.11)
+  [pass] light info text on page                  #047879 on #ffffff  5.29:1  (needs 4.5, SC 1.4.3)
+  [pass] light info text on raised                #047879 on #f3f5f6  4.83:1  (needs 4.5, SC 1.4.3)
+  [pass] light info text on its own tint          #047879 on #e3f8f8  4.8:1  (needs 4.5, SC 1.4.3)
+  [pass] light info boundary on page              #019e9f on #ffffff  3.28:1  (needs 3, SC 1.4.11)
+  [pass] light success text on page               #027c37 on #ffffff  5.32:1  (needs 4.5, SC 1.4.3)
+  [pass] light success text on raised             #027c37 on #f3f5f6  4.87:1  (needs 4.5, SC 1.4.3)
+  [pass] light success text on its own tint       #027c37 on #eaf8ec  4.85:1  (needs 4.5, SC 1.4.3)
+  [pass] light success boundary on page           #32a155 on #ffffff  3.29:1  (needs 3, SC 1.4.11)
+  [pass] light warning text on page               #975f00 on #ffffff  5.31:1  (needs 4.5, SC 1.4.3)
+  [pass] light warning text on raised             #975f00 on #f3f5f6  4.85:1  (needs 4.5, SC 1.4.3)
+  [pass] light warning text on its own tint       #975f00 on #fdf1e4  4.77:1  (needs 4.5, SC 1.4.3)
+  [pass] light warning boundary on page           #c57e06 on #ffffff  3.3:1  (needs 3, SC 1.4.11)
+  [pass] light danger text on page                #be3e38 on #ffffff  5.33:1  (needs 4.5, SC 1.4.3)
+  [pass] light danger text on raised              #be3e38 on #f3f5f6  4.87:1  (needs 4.5, SC 1.4.3)
+  [pass] light danger text on its own tint        #be3e38 on #ffeeec  4.74:1  (needs 4.5, SC 1.4.3)
+  [pass] light danger boundary on page            #e7645a on #ffffff  3.29:1  (needs 3, SC 1.4.11)
+  [pass] dark  text primary on page               #eceef0 on #090a0b  17.03:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text primary on raised             #eceef0 on #191a1c  14.97:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text secondary on page             #a6abb1 on #090a0b  8.56:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text secondary on raised           #a6abb1 on #191a1c  7.53:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  text disabled on page              #94999e on #090a0b  6.89:1  (needs 3, usability floor (1.4.3 exempts disabled))
+  [pass] dark  border carrying state on page      #66696d on #090a0b  3.59:1  (needs 3, SC 1.4.11)
+  [pass] dark  accent text on page                #05abab on #090a0b  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  accent text on raised              #05abab on #191a1c  6.15:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  accent text on its own tint        #05abab on #042222  5.9:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  accent boundary on page            #058686 on #090a0b  4.49:1  (needs 3, SC 1.4.11)
+  [pass] dark  info text on page                  #05abab on #090a0b  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  info text on raised                #05abab on #191a1c  6.15:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  info text on its own tint          #05abab on #042222  5.9:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  info boundary on page              #058686 on #090a0b  4.49:1  (needs 3, SC 1.4.11)
+  [pass] dark  success text on page               #25b057 on #090a0b  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  success text on raised             #25b057 on #191a1c  6.15:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  success text on its own tint       #25b057 on #102214  5.88:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  success boundary on page           #028b3f on #090a0b  4.49:1  (needs 3, SC 1.4.11)
+  [pass] dark  warning text on page               #cf8c32 on #090a0b  7.02:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  warning text on raised             #cf8c32 on #191a1c  6.17:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  warning text on its own tint       #cf8c32 on #271a09  6.01:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  warning boundary on page           #a86b02 on #090a0b  4.49:1  (needs 3, SC 1.4.11)
+  [pass] dark  danger text on page                #ec776c on #090a0b  7:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  danger text on raised              #ec776c on #191a1c  6.15:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  danger text on its own tint        #ec776c on #2b1614  6.04:1  (needs 4.5, SC 1.4.3)
+  [pass] dark  danger boundary on page            #c5544b on #090a0b  4.47:1  (needs 3, SC 1.4.11)
+
+ACCENT BUDGET: At most one accent visible per screen. The primary action is ink, not accent.
+  Accent is for: links, focus rings, selected state.
+  Accent is never for: button fills, section backgrounds, decorative panels.
+  Every status carries a word and a glyph as well as a colour. Remove colour entirely and the screen still parses.
+
+TYPOGRAPHY
+────────────────────────────────────────────────────────────────────────
+Families: one variable family, self-hosted, no CDN, with tabular numerals. Must carry the full character set of every language the product ships in. Fallback stack: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif
+Monospace is for identifiers and operational strings only — reference codes, IDs, paths, commands, keys. Never for prose, labels, or headings.
+
+UI regime — ratio 1.125, for controls, labels, table cells, form fields, body copy:
+  label         13px / line-height 1.5
+  compact       15px / line-height 1.5
+  body          16px / line-height 1.55
+  lede          18px / line-height 1.5
+  subsection    20px / line-height 1.4
+DISPLAY regime — ratio 1.333, for page titles and section headings only:
+  section       24px / line-height 1.3
+  title         32px / line-height 1.15
+  page-title    43px / line-height 1.08
+
+Weights: 400, 500, 600. Ceiling 600 — nothing heavier exists in this system. Geist stops at 600 and has no 700; Stripe sets display at 300; Linear's signature is 510. Hierarchy comes from small weight shifts, not from shouting.
+Tracking: -0.03em at display, 0 at body. Never letterspace lowercase body text. Never negative tracking on a string over 20 characters, at any size. Every reference system pulls negative tracking at display and none at body. The 20-character guard exists because long unbroken words are where tight tracking hurts most.
+Measure: reading text never exceeds 68ch; a headline never exceeds 20ch. Geist's published reading width. Beyond it the eye loses the line return.
+Minimums: body line-height at least 1.45; input font-size 16px. Inputs stay at 16px because anything smaller triggers zoom on iOS.
+
+SPACE
+────────────────────────────────────────────────────────────────────────
+Base unit 4px. Scale: 4, 8, 12, 16, 24, 32, 48, 64.
+Vertical rhythm — tight 8, within copy 16, between groups 32, between sections 64.
+A screen never contains a spacing value that is not on the scale.
+Density: compact 32px controls (data tables on pointer devices); default 36px controls (forms and general UI on pointer devices); touch 44px controls (any touch input).
+Density is one token swap, not a redesign. Touch targets never fall below 44x44 regardless of mode.
+
+SHAPE AND DEPTH
+────────────────────────────────────────────────────────────────────────
+Radii — controls 4px, surfaces 6px, containers 8px.
+Pills are for status badges only. Never on an action — Stripe bans pill radii on buttons.
+Elevation:
+  flat     light: none
+           dark:  none
+           for:   page and canvas
+  raised   light: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.06)
+           dark:  0 0 0 1px rgba(255,255,255,0.08)
+           for:   cards, table containers
+  overlay  light: 0 8px 16px -4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.08)
+           dark:  0 0 0 1px rgba(255,255,255,0.12), 0 8px 24px rgba(0,0,0,0.6)
+           for:   modal, drawer, popover, toast
+Borders carry structure; shadows only mark what floats above the page. In dark the shadow is dropped and a white-alpha ring carries elevation, because a drop shadow does not read on near-black.
+
+MOTION
+────────────────────────────────────────────────────────────────────────
+What moves, and exactly how:
+  state change — hover, press, selection
+      150ms, ease-out, animating opacity and transform
+  disclosure — accordion, drawer, popover
+      200ms, cubic-bezier(0.4, 0, 0.2, 1), animating transform and opacity
+  route transition
+      220ms, cubic-bezier(0.4, 0, 0.2, 1), animating opacity
+  confirmation that a committed, hard-to-undo action succeeded — once, at the peak
+      400ms, ease-out, animating transform and opacity
+
+What must NOT move:
+- a value the person is reading — figures do not count up or re-flow under the eye
+- a row or item under the reader's cursor
+- anything that delays the person completing their task
+- layout properties (width, height, margin, padding) — transform and opacity only
+
+Reduced motion: Transform and layout animations are disabled; opacity and colour survive. Motion is never the only signal that something happened. Every animated state change also changes text, icon, or shape.
+Deletion test: Disable every animation. If the flow does not feel broken, the animation was decoration and is removed.
+
+COMPOSITION
+────────────────────────────────────────────────────────────────────────
+What leads: A single status line across the top, stating in words how many deployments are in flight and whether any are failing. It is the only element sized above the UI regime. When everything is healthy it says so in plain language rather than showing a green tick, because a tick is ambiguous between 'healthy' and 'not yet checked'.
+What supports it: The deployment rows, newest first: environment, service, commit subject, who triggered it, and the status. The status column carries a glyph and a word, and failing rows also carry a leading severity stripe so a failure is detectable in peripheral vision without reading.
+What is one click away: Filtering by environment, the full pipeline run for any row, and rollback on a failed row. Rollback is never the primary button on this screen — it lives inside the row's detail, because a one-click rollback next to a glanceable list is a mis-click waiting to happen.
+What was cut, and why: Charts. There is no deploy-frequency graph, no lead-time sparkline, no success-rate donut. Those belong on a weekly review page read deliberately; on a screen watched in peripheral vision they add motion and colour that compete with the only signal that matters. Also cut: a relative-time column that re-renders every second.
+At most 2 things may compete for attention. Everything else serves the path from first landing point to the action.
+
+THE THREE STATES, COMPOSED AS ONE PRODUCT
+────────────────────────────────────────────────────────────────────────
+EMPTY:   No deployments in the selected window. The status line still leads and states the window explicitly — 'No deployments in the last 24 hours' — so an empty list is never confused with a broken feed. Below it, one line offers to widen the window, and the last known deployment is shown greyed with its date, which is the fastest way for an engineer to tell 'quiet' apart from 'disconnected'. No illustration.
+LOADING: The status line renders first and says it is loading, because on this screen the top line is the whole answer and it must never be blank. Rows render as skeletons at exact row height using the hover-surface step, three of them, without shimmer — animated placeholders on an instrumentation screen read as activity in the system being watched. Nothing shifts position when real rows arrive.
+ERROR:   When the feed cannot be reached, the status line turns to the danger text grade with a warning glyph and states plainly that the list is stale, including the timestamp of the last successful update — staleness is the dangerous failure here, because a frozen list looks identical to a calm one. Existing rows stay visible but drop to the secondary text grade to signal they are no longer live. A retry control sits in the status line itself, not in a separate banner.
+
+COMPONENTS
+────────────────────────────────────────────────────────────────────────
+BADGE — variants: succeeded, running, failed, rolled back
+  default         tint background, 1px border at the hue's boundary grade, the status text grade for the label, a leading glyph, and the status word
+  accessible name  the status word, announced as part of the row
+  NEVER            rely on colour alone, or animate — a pulsing 'running' badge on a list of forty rows turns the screen into noise
+
+TABLE — variants: deployment rows
+  default         rows separated by the resting border step; timestamps in tabular numerals; failing rows carry a 2px severity stripe on the leading edge
+  row-hover       the hover surface fills the row, no lift and no shadow
+  row-selected    the active surface plus a 2px accent bar on the leading edge and an aria-selected row
+  sorted          the active header carries a directional glyph and aria-sort; only its weight changes, from 500 to 600
+  empty           a single row at normal row height carrying one sentence, so the table keeps its shape
+  loading         three skeleton rows at real row height in the hover-surface step
+  error           headers stay; the body is replaced by one line in the danger text grade with a retry text button
+  accessible name  a caption naming the environment filter and time window
+  NEVER            truncate the commit subject to fewer than 60 characters, reorder rows while the pointer is over them, or auto-refresh a row under the cursor
+
+BUTTON — variants: primary (ink), secondary (outline), text
+  default         primary is the ink fill with page-coloured text; secondary is a 1px border at the resting step; text has neither
+  hover           primary lifts one step; secondary moves its border to the hover step and gains the hover surface; text gains the hover surface
+  focus-visible   a 2px accent ring at 2px offset, in addition to the hover treatment rather than instead of it
+  active          the surface drops to the active step and the label shifts 1px down; no scale transform
+  disabled        the disabled text step on the raised surface, with the reason stated next to it rather than only in a tooltip
+  loading         a spinner at the label's exact width so the control does not resize, and the accessible name gains 'in progress'
+  accessible name  the verb and its object — 'Retry loading deployments', never 'Retry'
+  NEVER            use the accent as a fill, sit at pill radius, or resize when its label changes
+
+TABS — variants: environment filter
+  default         secondary text on the page surface, no border
+  hover           primary text plus the hover surface
+  focus-visible   a 2px accent ring at 2px offset
+  selected        primary text at weight 600 with a 2px accent underline — weight and rule both change, so selection survives without colour
+  disabled        the disabled text step, not focusable, with the reason adjacent
+  accessible name  the environment name
+  NEVER            be equal-width fixed tabs — environment names vary in length and a fixed row clips the longest
+
+RESPONSIVE
+────────────────────────────────────────────────────────────────────────
+Reference widths 360, 768, 1280. mobile-first; layout adapts rather than scales.
+Anything whose width is not the viewport's is sized with container queries, not media queries. A card in a sidebar and the same card in a main column are the same component at different widths.
+- Nothing scrolls horizontally at 360px. Wide content (tables, code) scrolls inside its own overflow-x container.
+- Grid and flex children carry min-width: 0, so a long string cannot force the page wider.
+- Touch targets are at least 44x44 at every width.
+- A table becomes a stack of cards below 768px — it does not shrink into unreadable columns.
+- Below 768px the rows become cards: service and environment as the heading, status badge beneath, commit subject as secondary text truncated at the card's own width. The severity stripe moves to the card's leading edge.
+- The status line never wraps to more than two lines; if the summary would exceed that, it drops the least severe clause rather than growing.
+- The row sizes from its own container, so the same row component renders correctly in the full-width list and in the narrower panel on the incident timeline.
+
+LANGUAGE AND LOCALE
+────────────────────────────────────────────────────────────────────────
+Content language: English (en-US).
+
+The html element carries a lang attribute matching the content language. Hyphenation, quotation marks and screen-reader pronunciation all key off it. Without it, hyphens: auto silently does nothing.
+A long string never widens the page. Grid and flex children carry min-width: 0, and wide content scrolls inside its own overflow-x container. Without min-width: 0 a flex child defaults to min-content, so one unbroken string forces the whole layout wider.
+Wrapping is the default. Truncation is the exception that must be argued for. Where vertical space is genuinely fixed, a value may truncate — and then the full string is recoverable on hover AND keyboard focus.
+Never truncate: form labels; table headers — a truncated header destroys the meaning of the whole column; identifiers a person may transcribe (account numbers, tax IDs, reference codes).
+Identifiers wrap with overflow-wrap: anywhere and never hyphenate — a hyphen inserted into an account number reads as part of the number.
+If the product is or will be translated, reserve room: 200-300% for UI strings under 10 characters, 180-200% for 11-20, 140-160% for 31-50. Short strings are the worst case — a one-word button label is where translation breaks layouts first. (W3C, Text size in translation)
+
+Text containers: overflow-wrap: break-word; word-break: normal;. Never word-break: break-all.
+
+Formats — currency: State the convention explicitly — $1,234.56 (US) and £1,234.56 (UK) differ from €1.234,56.
+          date: Unambiguous only. 12 Mar 2026, or ISO 2026-03-12. Never a bare numeric form that reads differently in another market.
+          numbers: Comma-grouped in threes, period as the decimal separator.
+
+The layout must survive this corpus at 360px without horizontal scroll or a mid-word break: internationalization, responsibilities, acknowledgement.
+
+ACCESSIBILITY — A DESIGN CONSTRAINT, NOT A REVIEW STEP
+────────────────────────────────────────────────────────────────────────
+Target WCAG 2.2 AA.
+- Measured with the SC 1.4.3 formula, never estimated. Every pairing above carries its ratio.
+- Visible focus on every interactive element, at 3:1 against the adjacent surface.
+- Every interactive element reachable and operable by keyboard.
+- Colour is never the only carrier of meaning.
+
+REFUSE THESE
+────────────────────────────────────────────────────────────────────────
+If the design would contain any of the following, do not produce it — choose a different solution:
+- a purple-blue gradient hero
+- a glassmorphism card
+- an emoji standing in for an icon
+- a shadow on everything
+- more than one accent colour competing on a screen
+- animation that delays a person doing their job
+- an illustration that says nothing
+- a dark mode that is the light mode with inverted values
+- a centred hero over a grid of three feature cards
+- placeholder copy — every string is the real string
+- a deploy-frequency chart or any sparkline on this screen
+- a pulsing or spinning indicator on a running deployment
+- a relative timestamp that re-renders on a timer
+- a green tick as the only signal that everything is healthy
+
+ACCEPTANCE CHECKS — JUDGE THE RESULT AGAINST THESE
+────────────────────────────────────────────────────────────────────────
+ 1. Every colour pairing on the screen matches a measured ratio above. Nothing was introduced that was not measured.
+ 2. At most one accent is visible. The primary action is ink, not accent.
+ 3. Remove all colour: every status is still readable from its word and glyph.
+ 4. Every interactive element has a visible focus state at 3:1 against its surface, and is reachable by keyboard.
+ 5. Touch targets are at least 44x44.
+ 6. Nothing scrolls horizontally at 360px. Wide content scrolls inside its own container.
+ 7. Every spacing value is on the scale. There is no arbitrary pixel.
+ 8. The empty, loading and error states are visibly the same product as the populated one.
+ 9. Every animation carries a duration and an easing from the table above, and the deletion test was applied.
+10. Type never exceeds weight 600, and reading text never exceeds 68ch.
+11. The English corpus renders without clipping or horizontal scroll at 360px: internationalization, responsibilities, acknowledgement.
+12. Numbers and dates follow the stated conventions: Unambiguous only. 12 Mar 2026, or ISO 2026-03-12. Never a bare numeric form that reads differently in another market., Comma-grouped in threes, period as the decimal separator.
+13. Whether anything is broken is answerable from the top line alone, without reading a single row, at 360px.
+14. A failing row is identifiable in peripheral vision from the severity stripe alone, with the screen desaturated to greyscale.
+15. Nothing on the screen animates while the list is idle.
+16. A stale feed is visibly different from a calm feed within two seconds of the connection dropping.
+17. Timestamps align on their digits in tabular numerals across all rows.

@@ -1,0 +1,37 @@
+{
+  "product": {
+    "name": "Handwerk Leads",
+    "domain": "buying qualified job leads, and the invoices for them",
+    "audience": "a self-employed German tradesman — Elektriker, Dachdecker, Sanitär — who buys leads between jobs, usually on a phone in a van or a laptop at the kitchen table after hours",
+    "nouns": ["invoice", "lead", "Rechnung", "Leistungszeitraum", "tradesman", "job", "payout", "VAT", "Umsatzsteuer"],
+    "screens": ["lead inbox", "invoice list", "invoice detail", "payment confirmation"]
+  },
+  "brand": {
+    "accentHue": 245,
+    "neutralHue": 85,
+    "source": "derived",
+    "rationale": "A true blue at OKLCH hue 245, deliberately short of the 260-280 band where every fintech brand already sits. It is used for links, focus and selection only — the primary action is ink, so the accent never has to carry a button fill and can stay dark enough to pass as text. The neutral is warm (hue 85, chroma under 0.013) because this is money software a tradesman reads at the end of a long day, and a cool blue-grey reads as cold tech."
+  },
+  "localeCode": "de-DE",
+  "primaryMode": "light",
+  "decisions": [
+    {
+      "id": "accent-is-not-a-fill",
+      "date": "2026-07-26",
+      "what": "The primary action is ink, not accent. Accent is reserved for links, focus rings and selection.",
+      "why": "Vercel states it as policy and their own primary CTA is ink; Revolut bans its accent as a button surface; Framer reserves blue for links and focus. It also removes the hardest constraint on the accent — it never needs to carry white text at a large size, so it can stay dark enough to pass 4.5:1 as text."
+    },
+    {
+      "id": "warm-neutral",
+      "date": "2026-07-26",
+      "what": "The neutral ramp is warm (OKLCH hue 85) rather than the conventional cool grey.",
+      "why": "Linear moved from a cool blue-ish grey to a warmer one in 2026 for exactly this reason. Accounting software read late in the day should not feel clinical."
+    },
+    {
+      "id": "halved-display-tracking",
+      "date": "2026-07-26",
+      "what": "Display tracking is -0.02em, roughly half what the reference systems use, and never negative on strings over 20 characters.",
+      "why": "Geist pulls about -5% at display and Framer says explicitly not to reduce it for accessibility. But DIN 1450 requires adequate character spacing and German compounds already produce long unbroken letter runs. Halving keeps the voice on a two-word heading without squeezing Umsatzsteuer-Identifikationsnummer."
+    }
+  ]
+}
